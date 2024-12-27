@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Categories</title>
+    <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
+    <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
+    <link rel="stylesheet" href="../../assets/css/admin/all.css">
+    <link rel="stylesheet" href="../../assets/css/admin/category.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside></aside>
+        <main>
+            <div class="category-management">
+                <div class="header">
+                    <h1>Category Management</h1>
+                    <button class="add-category-btn" id="openAddModal">Add Category</button>
+                </div>
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="category-list">
+                        <!-- Categories will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <span class="close" id="closeAddModal">&times;</span>
+            <h2>Add Category</h2>
+            <form id="addCategoryForm">
+                <label for="categoryName">Category Name</label>
+                <input type="text" id="categoryName" name="categoryName" required>
+
+                <label for="categoryImage">Category Image URL</label>
+                <input type="file" id="categoryImage" name="categoryImage" required>
+
+                <button type="submit" class="submit-btn">Add Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <div class="modal" id="editCategoryModal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModal">&times;</span>
+            <h2>Edit Category</h2>
+            <form id="editCategoryForm">
+                <input type="hidden" id="editCategoryId">
+                
+                <label for="editCategoryName">Category Name</label>
+                <input type="text" id="editCategoryName" name="categoryName" required>
+
+                <label for="editCategoryImage">Category Image URL</label>
+                <input type="file" id="editCategoryImage" name="categoryImage">
+
+                <button type="submit" class="submit-btn">Update Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Category Modal -->
+    <div class="modal" id="deleteCategoryModal">
+        <div class="modal-content">
+            <span class="close" id="closeDeleteModal">&times;</span>
+            <h2>Are you sure you want to delete this category?</h2>
+            <input type="hidden" id="deleteCategoryId">
+            <button class="cancel-btn" id="confirmDeleteBtn">Yes, Delete</button>
+            <button class="submit-btn" id="cancelDeleteBtn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/admin/main.js"></script>
+    <script src="../../assets/js/admin/category.js"></script>
+</body>
+
+</html>
