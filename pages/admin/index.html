@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
+    <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
+    <link rel="stylesheet" href="../../assets/css/admin/all.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <aside></aside>
+
+        <main>
+            <h1>Welcome Back , Admin</h1>
+
+            <div class="date">
+                <p id="currentDay">Today's Day: </p>
+            </div>
+
+            <div class="insigth">
+                <!--Start selling-->
+                <div class="sales">
+                    <span><i class="fas fa-chart-line"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1>25,023</h1>
+                        </div><!--left-->
+                        <div class="progress">
+                            <svg>
+                                <circle r="30" cy="40" cx="40"></circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div><!--progress-->
+                    </div><!--middle-->
+
+                    <small>last 24 houre</small>
+                </div><!--sales-->
+                <!--End selling-->
+
+                <!--Start expenses-->
+                <div class="expenses">
+                    <span><i class="fas fa-briefcase"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>user</h3>
+                            <h1>100</h1>
+                        </div><!--left-->
+                        <div class="progress">
+                            <svg>
+                                <circle r="30" cy="40" cx="40"></circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div><!--progress-->
+                    </div><!--middle-->
+
+                    <small>last 24 houre</small>
+                </div><!--expenses-->
+                <!--End expenses-->
+
+                <!--Start income-->
+                <div class="income">
+                    <span><i class="fas fa-chart-line"></i>
+                    </span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Products</h3>
+                            <h1>25,023</h1>
+                        </div><!--left-->
+                        <div class="progress">
+                            <svg>
+                                <circle r="30" cy="40" cx="40"></circle>
+                            </svg>
+                            <div class="number">80%</div>
+                        </div><!--progress-->
+                    </div><!--middle-->
+
+                    <small>last 24 houre</small>
+                </div><!--income-->
+                <!--End income-->
+            </div><!--insigth-->
+
+            <!-- start recent order -->
+            <div class="recent_order">
+                <h1>Recent Product</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>product Name</th>
+                            <th>product number</th>
+                            <th>pyments</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Mini USB</td>
+                            <td>456</td>
+                            <td>Due</td>
+                            <td class="warming">pending</td>
+                            <td class="primary">Details</td>
+                        </tr>
+                        <tr>
+                            <td>Mini USB</td>
+                            <td>456</td>
+                            <td>Due</td>
+                            <td class="warming">pending</td>
+                            <td class="primary">Details</td>
+                        </tr>
+                        <tr>
+                            <td>Mini USB</td>
+                            <td>456</td>
+                            <td>Due</td>
+                            <td class="warming">pending</td>
+                            <td class="primary">Details</td>
+                        </tr>
+                        <tr>
+                            <td>Mini USB</td>
+                            <td>456</td>
+                            <td>Due</td>
+                            <td class="warming">pending</td>
+                            <td class="primary">Details</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="seeMore" href="./allProduct.html">see more</a>
+            </div><!--recent_order-->
+            <!-- end recent order -->
+        </main>
+    </div>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/admin/main.js"></script>
+    <script src="../../assets/js/admin/dashboard.js"></script>
+</body>
+
+</html>
