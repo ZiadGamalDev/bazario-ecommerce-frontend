@@ -313,3 +313,69 @@ main .recent_order .seeMore {
 }
 /* Main section End */
 
+
+/* Responsive  */
+@media (max-width:1200px) {
+    .container {
+        width: 94%;
+        grid-template-columns: 7rem auto;
+    }
+    aside .top .logo img {
+       width: 75px;
+    }
+    aside .sidebar h3 {
+   display: none;
+    } 
+    aside .sidebar a:nth-last-child(){
+       position: relative;
+       margin-top: 1.8rem;
+    }
+    main .insigth {
+       display: grid;
+       grid-template-columns: repeat(1,1fr);
+    }
+   }
+   /* phones */
+   
+   @media (max-width:768px) {
+       .container {
+           width: 100%;
+           grid-template-columns: repeat(1,1fr);
+       }
+       aside {
+           position: fixed;
+           width: 18rem;
+           z-index: 3;
+           background-color: #fff;
+           display: none;
+       }
+       aside .top .logo img {
+           display: inline;
+       }
+       aside .sidebar h3  {
+           display: inline;
+       }
+       aside .sidebar a {
+           width: 100%;
+           height: 3.4rem;
+       }
+       aside .top div.close span i {
+           display: inline;
+           position: absolute;
+           right: 0;
+           margin-right: 30px;
+           font-size: 22px;
+       }
+       main .insigth {
+           display: grid;
+           grid-template-columns: repeat(1,1fr);
+           gap:0.6rem;
+           padding: 40px;
+       }
+       main .recent_order {
+           padding: 30px;
+           margin: 0 auto;
+       }
+   
+   }
+   /* End responsive */
