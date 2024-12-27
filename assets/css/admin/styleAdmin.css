@@ -1,0 +1,314 @@
+ 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+ 
+:root {
+    --primary: #1A76D1;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box ;
+    text-decoration: none;
+    border: 0;
+    list-style: none;
+    appearance: none;
+}
+body {
+    font-family: "poppins",sans-serif;
+    width: 100vw;
+    height: 100vh;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    background-color: #f6f6f9;
+}
+.container {
+    display: grid;
+    width: 95%;
+    gap:1.8rem;
+    grid-template-columns: 14rem auto;
+    margin: 0 auto;
+}
+a{
+    color :#363994
+}
+h1 {
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+h2 {
+     font-size: 1.4rem;
+}
+h3 {
+    font-size: 0.87rem;
+}
+h4 {
+    font-size: 0.8rem;
+}
+.protfile-photo img {
+    width:2.8rem ;
+    height:2.8rem ;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.text-mute {
+    color: #7d8da1;
+}
+p {
+    color:#dce1ed;
+}
+b {
+    color:#363949
+}
+.primary {
+    color:#7380ec
+}
+.sucess{
+    color:#41f1b6
+}
+.danger {
+    color:#ff7782;
+}
+.warming {
+    color:#ff4edc
+}
+
+.protfile-photo {
+
+}
+/* Start Aside bar */
+aside {
+    height: 100vh;
+}
+aside .top {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.4rem;
+    border-radius: 10px;
+}
+aside .logo {
+    display: flex;
+    gap:1rem
+}
+aside .top .logo img{
+    width: 150px;
+}
+aside .top div.close {
+    display: none;
+} 
+.date p{
+    color:black
+}
+
+aside .sidebar {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    position: relative;
+    top:1rem;
+    border-radius: 10px;
+}
+aside h3 {
+    font-weight: 400;
+}
+aside .sidebar a {
+    display: flex;
+    color:#7d8da1;
+    margin-left: 2rem;
+    gap:1rem;
+    align-items: center;
+    height: 3.2rem;
+    transition: all .1s ease-in;
+}
+aside .sidebar a span i{
+    font-size: 1.6rem;
+    transition: all .1s ease-in;
+}
+aside .sidebar a:last-child{
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+}
+aside .sidebar a.active{
+    background-color: rgba(132, 139,200, 0.18);
+    color:#1A76D1;
+    margin-left: 0;
+    /* border-left: 5px solid #7380ec; */
+}
+aside .sidebar a.active::before {
+    content: "";
+    width: 6px;
+    height: 100%;
+    background-color: #1A76D1;
+}
+aside .sidebar a:hover {
+    color: #1A76D1;
+}
+aside .sidebar a:hover span {
+    margin-left: 1rem;
+    transition: .4s ease;
+}
+aside .sidebar a span.msg_count{
+    background-color: #ff7782;
+color: #fff;
+padding:  2px 5px;
+font-size: 12px;
+}
+/* End Asidear */
+
+
+/* Main section start */
+main {
+    margin-top: 1.4rem;
+    width: auto;
+}
+main input {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    color: #363949;
+}
+main .date {
+    display: inline-block;
+    background-color:#fff ;
+    border-radius:0.4rem ;
+    margin-top:1rem ;
+    padding: 0.5rem 1.6rem;
+}
+main .insigth {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:1.6rem;
+}
+main .insigth>div {
+    background-color: #fff;
+    padding: 1.8rem;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    box-shadow: 0 2rem 3rem rgba(132, 139, 200, 0.18);
+    transition: all 0.3s ease;
+}
+main .insigth > div:hover {
+    box-shadow: none;
+}
+main .insigth > div span i{
+    background-color: coral;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color:#fff;
+    font-size: 2rem;
+}
+main .insigth > div.expenses span i{
+    background-color:#ff7782;
+}
+main .insigth > div.income span i{
+    background-color:#41f1b6;
+}
+main .insigth > div .middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+main .insigth > div .middle h1 {
+    font-size: 1.6rem;
+}
+main h1 {
+    color:#363949;
+}
+main .insigth h1 {
+    color:#363949;
+}
+main .insigth h3 {
+    color:#363949;
+}
+main .insigth p {
+    color:#363949;
+}
+main .insigth .progress {
+    position: relative;
+    height: 68px;
+    width:68px;
+    border-radius: 50px;
+}
+main .insigth svg {
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    top:0;
+}
+main .insigth svg circle {
+    fill:none;
+    stroke: #7380ec;
+    transform: rotate(270,80,80);
+    stroke-width: 5;
+}
+main .insigth .sales svg circle{
+    stroke-dashoffset: 10;
+    stroke-dasharray: 150;
+}
+main .insigth .expenses svg circle{
+    stroke-dashoffset: 0;
+    stroke-dasharray: 150;
+}
+main .insigth .income svg circle {
+     stroke: #41f1b6;
+}
+main .insigth .progress .number {
+    position: absolute;
+    top:5%;
+    left: 5%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main .recent_order {
+    margin-top: 2rem;
+}
+main .recent_order h2 {
+    color:#363949
+}
+main .recent_order table {
+    background-color:#fff;
+    width: 100%;
+    border-radius: 2rem;
+    padding: 1.8rem;
+    text-align: center;
+    box-shadow: 0 2rem 3rem rgba(132, 139, 200, 0.18);
+    transition: all 0.3s ease;
+    color:#363949;
+}
+main .recent_order table:hover {
+    box-shadow: none;
+}
+main .recent_order table tbody tr {
+    height: 3.8rem;
+    border-bottom: 1px solid #363949;
+    color:#677483;
+}
+main .recent_order table tbody tr td {
+    height: 3.8rem;
+    /* border-bottom: 1px solid #363949; */
+
+}
+/* main .recent_order table tbody tr:last-child td{
+        border: none;
+} */
+
+main .recent_order a {
+    text-align: center;
+    display: block;
+    margin: 1rem;
+}
+
+
+main .recent_order .seeMore {
+    font-size: 18px;
+}
+/* Main section End */
+
