@@ -1,4 +1,4 @@
-//  toshow new date
+//  to show new date
 function displayCurrentDay() {
     const today = new Date();
 

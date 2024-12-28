@@ -4,7 +4,7 @@ main {
     background-color: #fff;
 }
 
-.category-management {
+.order-management {
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -21,7 +21,8 @@ main {
     margin: 0;
 }
 
-.add-category-btn {
+
+.add-order-btn {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -30,35 +31,35 @@ main {
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
-.add-category-btn:hover {
+.add-order-btn:hover {
     background-color: #0056b3;
 }
 
 /* Table Styles */
-.category-table {
+.order-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.category-table th,
-.category-table td {
+.order-table th,
+.order-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.category-table th {
+.order-table th {
     background-color: #f8f9fa;
 }
 
-.category-table td img {
+.order-table td img {
     width: 100px;
     height: 60px;
     border-radius: 5px;
     object-fit: cover;
 }
+
 
 /* Action buttons */
 .action-btns {
@@ -72,7 +73,6 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
-
 .edit-btn {
     background-color: #ffc107;
     color: #fff;
@@ -92,13 +92,13 @@ main {
 }
 
 @media (max-width: 768px) {
-    .category-table th,
-    .category-table td {
+    .order-table th,
+    .order-table td {
         font-size: 12px;
         padding: 8px;
     }
 
-    .category-table td img {
+    .order-table td img {
         width: 40px;
     }
 
@@ -111,10 +111,11 @@ main {
         font-size: 22px;
     }
 
-    .add-category-btn {
+    .add-order-btn {
         padding: 8px 16px;
     }
 }
+
 
 /* Modal Styles */
 .modal {
@@ -129,7 +130,6 @@ main {
     background-color: rgba(0, 0, 0, 0.4);
     padding-top: 50px;
 }
-
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
@@ -139,7 +139,6 @@ main {
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .close {
     color: #aaa;
     font-size: 28px;
@@ -174,7 +173,6 @@ label {
     font-weight: bold;
     color: #333;
 }
-
 input[type="text"], input[type="file"] {
     padding: 10px;
     font-size: 1em;
@@ -219,11 +217,11 @@ input[type="text"]:focus, input[type="file"]:focus {
 }
 
 /* Modal Content for Delete */
-#deleteProductModal .modal-content {
+#editorderModal .modal-content {
     text-align: center;
 }
 
-#deleteProductModal button {
+#editorderModal button {
     margin: 10px;
 }
 

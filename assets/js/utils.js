@@ -18,3 +18,4 @@ function loadPartial(selector, filePath, callback) {
             .catch(error => console.error(error));
     }
 }
+
