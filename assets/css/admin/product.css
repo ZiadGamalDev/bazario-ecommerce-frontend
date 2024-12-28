@@ -232,3 +232,32 @@ label {
         width: 80%;
     }
 }
+
+/* //////////////////////////////////////// */
+
+/* pagination */
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+ }
+ 
+ .pagination-container button {
+    margin: 0 5px;
+    padding: 10px;
+    cursor: pointer;
+ }
+ 
+ .pagination-container button:hover {
+    background-color: #f1f1f1;
+ }
+ 
+ .pagination-container button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+ }
+
+ /* End pagination */
+
+
+  
+

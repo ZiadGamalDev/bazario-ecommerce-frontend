@@ -85,6 +85,9 @@ setInterval(() => {
   updateSlidePosition();
 }, 2500);
 
+
+
+// * Get Some Products
 const fetchProducts = async () => {
   const productList = document.getElementById("product-list");
 
@@ -94,13 +97,12 @@ const fetchProducts = async () => {
   }
 
   try {
-    const response = await fetch(`${baseUrl}/api/products?limit=10`);
+    const response = await fetch(`${baseUrl}/api/products?limit=7`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("Fetched Products:", data);
 
     productList.innerHTML = "";
 
@@ -149,25 +151,36 @@ const fetchProducts = async () => {
     productList.innerHTML = `<p>There was an error fetching the products. Please try again later.</p>`;
   }
 };
-
 fetchProducts();
 
+//      *Get Categories name in home
 const fetchCategories = async () => {
   const hmove = document.querySelector(".hmove");
 
   try {
     const response = await fetch(`${baseUrl}/api/categories`);
     const data = await response.json();
-    console.log(data);
 
     if (data.data) {
-      const categories = [...new Set(data.data.map((product) => product.name))];
-
-      categories.forEach((category) => {
+      // Iterate through categories and create HTML for each one
+      data.data.forEach((category) => {
         const categoryItem = document.createElement("div");
         categoryItem.className = "hitem";
-        categoryItem.textContent = category;
 
+        // Create image element
+        const categoryImage = document.createElement("img");
+        categoryImage.src = category.image;
+        categoryImage.alt = category.name;
+
+        // Create heading element for the category name
+        const categoryName = document.createElement("h3");
+        categoryName.textContent = category.name;
+
+        // Append the image and name to the category item
+        categoryItem.appendChild(categoryImage);
+        categoryItem.appendChild(categoryName);
+
+        // Append the category item to the container
         hmove.appendChild(categoryItem);
       });
     } else {
@@ -179,6 +192,7 @@ const fetchCategories = async () => {
 };
 
 fetchCategories();
+
 
 // * Add to Cart
 const addToCartList = (id) => {
@@ -197,28 +211,80 @@ const addToCartList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`
+      "Authorization": `Bearer ${tokenUrl}`,
     },
-    body: JSON.stringify({ product_id: id })
+    body: JSON.stringify({ product_id: id }),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart.");
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.message === "Product added to cart") {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your cart.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Failed to add item to cart.",
+          icon: "error",
+        });
       }
-      return response.json();
     })
-    .then(() => {
-      Swal.fire({
-        title: "Added!",
-        text: "Product has been added to your cart.",
-        icon: "success",
-      });
-    })
-    .catch(error => {
+    .catch((error) => {
+      console.error("Error:", error);
       Swal.fire({
         title: "Error",
-        text: error.message,
+        text: "Something went wrong while adding to cart.",
         icon: "error",
       });
+    });  
+};
+
+// * Add to wishList
+const addToWishList = (id) => {
+  const tokenUrl = localStorage.getItem("token");
+
+  if (!tokenUrl) {
+    Swal.fire({
+      title: "Login Required",
+      text: "Please login to add items to your wishlist!",
+      icon: "warning",
     });
+    return;
+  }
+
+  fetch(`${baseUrl}/api/wishlist/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${tokenUrl}`,
+    },
+    body: JSON.stringify({ product_id: id }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Wishlist API Response:", result);
+      if (result.message === "Product added to wishlist") {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your wishlist.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Failed to add item to wishlist.",
+          icon: "error",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong while adding to wishlist.",
+        icon: "error",
+      });
+    });  
 };
