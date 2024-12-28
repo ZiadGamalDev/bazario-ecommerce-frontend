@@ -1,9 +1,12 @@
 const displayWishlist = async () => {
   const wishlistBody = document.getElementById("wishlist-table-body");
-  const token = getLoggedInUserToken();
+  const tokenUrl = localStorage.getItem("token");
 
-  if (!token) {
-    wishlistBody.innerHTML = `<p style="text-align:center; font-size: 40px; color: #ffba00; margin-top: 100px;"><i class="fa-solid fa-triangle-exclamation"></i> Please login to view your wishlist!</p>`;
+  if (!tokenUrl) {
+    wishlistBody.innerHTML = `
+        <p style="text-align:center; font-size: 40px; color: #ffba00; margin-top: 100px;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Please login to view your wishlist!
+        </p>`;
     return;
   }
 
@@ -11,55 +14,59 @@ const displayWishlist = async () => {
     const response = await fetch(`${baseUrl}/api/wishlist/view`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenUrl}`,
       },
     });
 
-    console.log("Response:", response); // Debug: Check response object
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
     const data = await response.json();
-    console.log("Data:", data); // Debug: Check response data
 
-    if (response.ok && data.success) {
+    if (data && data.data && data.data.length > 0) {
       wishlistBody.innerHTML = "";
-      if (data.items && data.items.length > 0) {
-        data.items.forEach((item) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-                <td style="font-weight: 600">
-                  <img
-                    src="${item.product.image}"
-                    alt="${item.product.name}"
-                    class="product-image"
-                  />
-                </td>
-                <td>${item.product.name}</td>
-                <td>$${item.product.price.toFixed(2)}</td>
-                <td>
-                  <span class="remove-button" style="justify-content: flex-start; margin-left: 20px;" onclick="removeFromWishlist(${
-                    item.product.id
-                  })">
-                    <i class="fa-solid fa-x"></i>
-                  </span>
-                </td>
-              `;
-          wishlistBody.appendChild(row);
-        });
-      } else {
-        wishlistBody.innerHTML = `<p>Your wishlist is empty.</p>`;
-      }
+
+      data.data.forEach((item) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td style="font-weight: 600">
+              <img
+                src="${item.image}"
+                alt="${item.name}"
+                class="product-image"
+              />
+            </td>
+            <td>${item.name}</td>
+            <td>$${parseFloat(item.price).toFixed(2)}</td>
+            <td>
+              <span class="remove-button" style="justify-content: flex-start; margin-left: 20px;" onclick="removeFromWishlist(${
+                item.id
+              })">
+                <i class="fa-solid fa-x"></i>
+              </span>
+            </td>
+          `;
+        wishlistBody.appendChild(row);
+      });
     } else {
-      wishlistBody.innerHTML = `<p>Error loading wishlist. Please try again later.</p>`;
+      wishlistBody.innerHTML = `
+          <p style="text-align:center; font-size: 18px; color: #555; margin-top: 50px;">Your wishlist is empty.</p>`;
     }
   } catch (error) {
     console.error("Error fetching wishlist:", error);
-    wishlistBody.innerHTML = `<p>There was an error fetching the wishlist. Please try again later.</p>`;
+    wishlistBody.innerHTML = `
+        <p style="text-align:center; font-size: 18px; color: red; margin-top: 50px;">
+          <i class="fa-solid fa-triangle-exclamation"></i> There was an error fetching the wishlist. Please try again later.
+        </p>`;
   }
 };
 
+displayWishlist();
+
 // Remove product from the wishlist
 const removeFromWishlist = (id) => {
-  const token = getLoggedInUserToken();
+  const token = localStorage.getItem("token");
 
   if (!token) {
     Swal.fire({
@@ -80,7 +87,7 @@ const removeFromWishlist = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch("https://ecommerce.ershaad.net/api/wishlist/remove", {
+      fetch(`${baseUrl}/api/wishlist/remove`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,10 +95,15 @@ const removeFromWishlist = (id) => {
         },
         body: JSON.stringify({ productId: id }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return res.json();
+        })
         .then((data) => {
           if (data.success) {
-            displayWishlist(); // Refresh wishlist view
+            displayWishlist();
             Swal.fire({
               title: "Deleted!",
               text: "Product has been removed from the wishlist.",

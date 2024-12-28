@@ -1,0 +1,203 @@
+const displayCart = async () => {
+  const cartBody = document.getElementById("cart-table-body");
+  const totalPrice = document.getElementById("total-price");
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    cartBody.innerHTML = `
+        <p style="text-align:center; font-size: 40px; color: #ffba00; margin-top: 100px;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Please login to view your cart!
+        </p>`;
+    return;
+  }
+
+  try {
+    const res = await fetch(`${baseUrl}/api/cart/view`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    
+
+    if (data && data.data && data.data.length > 0) {
+      cartBody.innerHTML = "";
+      let total = 0;
+
+      data.data.forEach((item) => {
+        const product = item.product;
+        const quantity = item.quantity;
+        const subtotal = parseFloat(product.price) * quantity;
+
+        total += subtotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td style="font-weight: 600">
+              <img
+                src="${product.image}"
+                alt="${product.name}"
+                class="product-image"
+              />
+            </td>
+            <td>${product.name}</td>
+            <td>$${parseFloat(product.price).toFixed(2)}</td>
+            <td>
+              <div class="quantity-controls">
+                <input
+                  type="number"
+                  min="1"
+                  value="${quantity}"
+                  id="quantity-${product.id}"
+                  onchange="updateQuantity(${product.id}, this.value, ${
+          product.price
+        })"
+                />
+                <div class="increaseBtn">
+                  <button onclick="decreaseQuantity(${product.id}, ${
+          product.price
+        })">
+                    <i class="fa-solid fa-minus"></i>
+                  </button>
+                  <button onclick="increaseQuantity(${product.id}, ${
+          product.price
+        })">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>$<span id="subtotal-${product.id}">${subtotal.toFixed(
+          2
+        )}</span></td>
+            <td>
+              <span class="remove-button" onclick="removeFromCart(${
+                product.id
+              })">
+                <i class="fa-solid fa-x"></i>
+              </span>
+            </td>
+          `;
+        cartBody.appendChild(row);
+      });
+
+      totalPrice.innerText = `$${total.toFixed(2)}`;
+    } else {
+      cartBody.innerHTML = `
+          <p style="text-align:center; font-size: 18px; color: #555; margin-top: 50px;">
+            Your cart is empty.
+          </p>`;
+    }
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    cartBody.innerHTML = `
+        <p style="text-align:center; font-size: 18px; color: red; margin-top: 50px;">
+          <i class="fa-solid fa-triangle-exclamation"></i> There was an error fetching your cart. Please try again later.
+        </p>`;
+  }
+};
+
+const increaseQuantity = (id, price) => {
+  const quantityInput = document.getElementById(`quantity-${id}`);
+  let quantity = parseInt(quantityInput.value);
+  quantity += 1;
+  quantityInput.value = quantity;
+
+  updateSubtotal(id, quantity, price);
+};
+
+const decreaseQuantity = (id, price) => {
+  const quantityInput = document.getElementById(`quantity-${id}`);
+  let quantity = parseInt(quantityInput.value);
+  if (quantity > 1) {
+    quantity -= 1;
+    quantityInput.value = quantity;
+    updateSubtotal(id, quantity, price);
+  }
+};
+
+const updateSubtotal = (id, quantity, price) => {
+  const subtotal = quantity * price;
+  document.getElementById(`subtotal-${id}`).innerText = subtotal.toFixed(2);
+  updateTotalPrice();
+};
+
+const updateTotalPrice = () => {
+  const cartBody = document.getElementById("cart-table-body");
+  let total = 0;
+  const rows = cartBody.getElementsByTagName("tr");
+
+  for (let row of rows) {
+    const subtotal = parseFloat(
+      row.querySelector("span[id^='subtotal']").innerText
+    );
+    total += subtotal;
+  }
+
+  document.getElementById("total-price").innerText = `$${total.toFixed(2)}`;
+};
+
+displayCart();
+
+
+const removeFromCart = (id) => {
+    const tokenUrl = localStorage.getItem("token");
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${baseUrl}/api/cart/remove`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${tokenUrl}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId: id }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            if (data.success) {
+              displayWishlist();
+              Swal.fire({
+                title: "Deleted!",
+                text: "Product has been removed from the wishlist.",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: data.message || "Failed to remove item from wishlist.",
+                icon: "error",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+              title: "Error",
+              text: "Something went wrong while removing from wishlist.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+  
