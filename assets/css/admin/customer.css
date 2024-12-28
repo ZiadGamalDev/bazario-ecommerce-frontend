@@ -3,12 +3,10 @@ main {
     padding: 20px;
     background-color: #fff;
 }
-
-.category-management {
+.user-management {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -21,7 +19,7 @@ main {
     margin: 0;
 }
 
-.add-category-btn {
+.add-user-btn {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -31,29 +29,29 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.add-category-btn:hover {
+.add-user-btn:hover {
     background-color: #0056b3;
 }
 
 /* Table Styles */
-.category-table {
+.user-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.category-table th,
-.category-table td {
+.user-table th,
+.user-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.category-table th {
+.user-table th {
     background-color: #f8f9fa;
 }
 
-.category-table td img {
+.user-table td img {
     width: 100px;
     height: 60px;
     border-radius: 5px;
@@ -65,19 +63,16 @@ main {
     display: flex;
     gap: 10px;
 }
-
 .action-btns button {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
 .edit-btn {
     background-color: #ffc107;
     color: #fff;
 }
-
 .edit-btn:hover {
     background-color: #e0a800;
 }
@@ -92,13 +87,13 @@ main {
 }
 
 @media (max-width: 768px) {
-    .category-table th,
-    .category-table td {
+    .user-table th,
+    .user-table td {
         font-size: 12px;
         padding: 8px;
     }
 
-    .category-table td img {
+    .user-table td img {
         width: 40px;
     }
 
@@ -111,11 +106,10 @@ main {
         font-size: 22px;
     }
 
-    .add-category-btn {
+    .add-user-btn {
         padding: 8px 16px;
     }
 }
-
 /* Modal Styles */
 .modal {
     display: none;
@@ -129,7 +123,6 @@ main {
     background-color: rgba(0, 0, 0, 0.4);
     padding-top: 50px;
 }
-
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
@@ -149,7 +142,6 @@ main {
     right: 20px;
     cursor: pointer;
 }
-
 .close:hover,
 .close:focus {
     color: black;
@@ -175,7 +167,8 @@ label {
     color: #333;
 }
 
-input[type="text"], input[type="file"] {
+
+input[type="text"], input[type="file"] ,input[type="email"]{
     padding: 10px;
     font-size: 1em;
     border: 1px solid #ccc;
@@ -217,13 +210,13 @@ input[type="text"]:focus, input[type="file"]:focus {
 .cancel-btn:hover {
     background-color: #e53935;
 }
-
+/*  */
 /* Modal Content for Delete */
-#deleteProductModal .modal-content {
+#deleteUserModal .modal-content {
     text-align: center;
 }
 
-#deleteProductModal button {
+#deleteUserModal button {
     margin: 10px;
 }
 

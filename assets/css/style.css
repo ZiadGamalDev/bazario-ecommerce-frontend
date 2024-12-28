@@ -836,8 +836,8 @@ Preloader Area CSS
   transition: .6s all ease;
 }
 
-.product-tumb img:hover{
-  transform: rotate(10deg);
+.product-tumb img:hover {
+  transform: scale(1.1) rotate(10deg);
 }
 
 .product-details {

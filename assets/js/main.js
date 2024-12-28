@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // loadPartial("header", "pages/components/header-index.html");
   loadPartial(".lastSection", "pages/components/footer.html");
 });
-
-
-// // *reloader
-// window.addEventListener("load", () => {
-//   document.querySelector(".preloader").classList.add("preloader-deactivate");
-// });
 
 // *Header scroll
 document.addEventListener("DOMContentLoaded", function () {
@@ -31,7 +24,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// //      * Logged User and Log out
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -68,8 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-//          * swiper
+// * swiper
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
@@ -161,7 +152,6 @@ const fetchProducts = async () => {
 
 fetchProducts();
 
-//      *Get Categories name in home
 const fetchCategories = async () => {
   const hmove = document.querySelector(".hmove");
 
@@ -207,83 +197,28 @@ const addToCartList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`,
+      "Authorization": `Bearer ${tokenUrl}`
     },
-    body: JSON.stringify({ product_id: id }),
+    body: JSON.stringify({ product_id: id })
   })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Wishlist API Response:", result);
-      if (result.message === "Product added to cart") {
-        Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your cart.",
-          icon: "success",
-        });
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: result.message || "Failed to add item to cart.",
-          icon: "error",
-        });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to add product to cart.");
       }
+      return response.json();
     })
-    .catch((error) => {
-      console.error("Error:", error);
+    .then(() => {
+      Swal.fire({
+        title: "Added!",
+        text: "Product has been added to your cart.",
+        icon: "success",
+      });
+    })
+    .catch(error => {
       Swal.fire({
         title: "Error",
-        text: "Something went wrong while adding to cart.",
+        text: error.message,
         icon: "error",
       });
-    });  
-};
-
-
-
-//          * Add to Wish List
-const addToWishList = (id) => {
-  const tokenUrl = localStorage.getItem("token");
-
-  if (!tokenUrl) {
-    Swal.fire({
-      title: "Login Required",
-      text: "Please login to add items to your wishlist!",
-      icon: "warning",
     });
-    return;
-  }
-
-  fetch(`${baseUrl}/api/wishlist/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`,
-    },
-    body: JSON.stringify({ product_id: id }),
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Wishlist API Response:", result);
-      if (result.message === "Product added to wishlist") {
-        Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your wishlist.",
-          icon: "success",
-        });
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: result.message || "Failed to add item to wishlist.",
-          icon: "error",
-        });
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Something went wrong while adding to wishlist.",
-        icon: "error",
-      });
-    });  
 };

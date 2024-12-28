@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoryName = document.getElementById('categoryName').value;
         const categoryImage = document.getElementById('categoryImage').files[0];
 
+ 
+
         const formData = new FormData();
         formData.append('name', categoryName);
         formData.append('image', categoryImage);
