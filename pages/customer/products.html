@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="../../assets/css/components/header.css">
+    <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/customer/products.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <header></header>
+    <!-- Products Section -->
+    <main>
+        <div class="container">
+            <!-- Categories sidebar -->
+            <div class="sidebar-container">
+                <div id="sidebar">
+                    <div class="title">
+                        <h5>Category</h5>
+                    </div>
+                    <div class="categories">
+                        <ul>
+                        
+                        </ul>
+                    </div>
+                    <div class="title">
+                        <h5>Price</h5>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Selector Filters -->
+            <div class="sort-selector">
+                <div class="sort-by">
+                    <div class="sort-by-search">
+                        <input type="text" class="search" placeholder=" search ">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <select name="" id="sort-by-select">
+                        <option class="sort-by-option" value="all">Features: All</option>
+                        <option class="sort-by-option" value="alphabetical-sort">From A to Z</option>
+                        <option class="sort-by-option" value="alphabetical-reverse">From Z to A</option>
+                        <option class="sort-by-option" value="high-price">Price: High to Low</option>
+                        <option class="sort-by-option" value="low-price">Price: Low to High</option>
+                        <option class="sort-by-option" value="high-rating">Rating: High to Low</option>
+                        <option class="sort-by-option" value="low-rating">Rating: Low to High</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products section -->
+            <div id="product-container"></div>
+
+            <!-- Pagination -->
+            <div id="pagination-container" class="pagination"></div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/customer/products.js"></script>
+</body>
+
+</html>
