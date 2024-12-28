@@ -1,0 +1,681 @@
+/*--------------------------------------------------------------
+# Normalize
+--------------------------------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Roboto:wght@300;400;500;900&display=swap");
+
+:root {
+    --primary: #1A76D1;
+}
+
+html,
+body {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+}
+
+
+/*================================================
+Preloader Area CSS
+=================================================*/
+.preloader {
+    position: fixed;
+    left: 0;
+    width: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    z-index: 9999999;
+    transition: 1s;
+}
+
+.preloader .loader {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: inline-block;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 45%;
+    transform: translateY(-45%);
+    transition: 1s;
+}
+
+.preloader .loader .loader-outter {
+    position: absolute;
+    border: 4px solid #ffffff;
+    border-left-color: transparent;
+    border-bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.preloader .loader .loader-inner {
+    position: absolute;
+    border: 4px solid #ffffff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    left: calc(40% - 21px);
+    top: calc(40% - 21px);
+    border-right: 0;
+    border-top-color: transparent;
+    animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.preloader .loader .indicator {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(1.5);
+}
+
+.preloader .loader .indicator svg polyline {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.preloader .loader .indicator svg polyline#back {
+    stroke: #ffffff;
+}
+
+.preloader .loader .indicator svg polyline#front {
+    stroke: #1A76D1;
+    stroke-dasharray: 12, 36;
+    stroke-dashoffset: 48;
+    animation: dash 1s linear infinite;
+}
+
+.preloader::before,
+.preloader::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 60%;
+    z-index: -1;
+    background: #1A76D1;
+    transition: 1s;
+}
+
+.preloader::after {
+    left: auto;
+    right: 0;
+}
+
+.preloader.preloader-deactivate {
+    visibility: hidden;
+}
+
+.preloader.preloader-deactivate::after,
+.preloader.preloader-deactivate::before {
+    width: 0;
+}
+
+.preloader.preloader-deactivate .loader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@keyframes loader-outter {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader-inner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes dash {
+    62.5% {
+        opacity: 0;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+/*--------------------------------------------------------------
+# Pro Features
+--------------------------------------------------------------*/
+.pro-features {
+    position: fixed;
+    right: -320px;
+    width: 250px;
+    height: auto;
+    line-height: 46px;
+    font-size: 14px;
+    background: #fff;
+    text-align: left;
+    color: #333;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: -4px 0px 5px #00000036;
+    color: #fff;
+    z-index: 9999;
+    padding: 20px 30px 30px 30px;
+    transition: all 0.4s ease;
+}
+
+.pro-features.active {
+    right: 0;
+}
+
+.get-pro {
+    position: absolute;
+    left: -80px;
+    width: 80px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    border-radius: 5px 0 0 5px;
+    background: #1A76D1;
+    text-align: center;
+    color: #fff;
+    top: 0;
+    cursor: pointer;
+    box-shadow: -4px 0px 5px #00000036;
+}
+
+.pro-features li {
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 22px;
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+.pro-features li.title,
+.pro-features li.big-title {
+    font-weight: 600;
+    color: #1A76D1;
+    font-size: 15px;
+}
+
+.pro-features .button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pro-features .button .btn {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 5px;
+    background: #1A76D1;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+}
+
+.pro-features .button .btn::after {
+    content: " ";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background: #2c2d3f;
+    transition: all 0.4s ease-in-out;
+    right: 0;
+}
+
+.pro-features .button .btn:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+}
+
+.pro-features .button .btn span {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 15px 20px;
+    color: #fff;
+    font-size: 1.125em;
+    letter-spacing: 0.3em;
+    z-index: 20;
+    transition: all 0.3s ease-in-out;
+}
+
+.pro-features .button .btn:hover span {
+    color: #fff;
+    animation: scaleUp 0.3s ease-in-out;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+/*--------------------------------------------------------------
+# Scroll Top
+--------------------------------------------------------------*/
+.backTop {
+    background-color: #1A76D1;
+    position: fixed;
+    bottom: 10px;
+    right: 32px;
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0;
+    transition: all .5s ease;
+}
+
+.backTop:hover {
+    background-color: #2c2d3f;
+}
+
+.backTop.active {
+    bottom: 32px;
+    opacity: 1;
+}
+
+
+/*-------------------------------------------------------------
+# Header
+-------------------------------------------------------------*/
+/* Header Area */
+.header {
+    background-color: #fff;
+    width: 100%;
+}
+
+/* Topbar */
+.header .topbar {
+    background-color: #1b2639;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0px;
+    width: 100%;
+}
+
+.header .topbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 70px;
+}
+
+.header .topbar-content p{
+    color: #c2c2c2;
+    font-size: 17px;
+}
+
+/* Top Links */
+.header .topbar-content .top-link ul,
+.header .topbar-content .top-contact ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.header .topbar-content .top-link li,
+.header .topbar-content .top-contact li {
+    margin-right: 15px;
+    color: #c2c2c2;
+}
+
+.header .topbar-content .top-link li a,
+.header .topbar-content .top-contact li a {
+    color: #c2c2c2;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: .4s all;
+}
+
+.header .topbar-content .top-link li:hover a,
+.header .topbar-content .top-contact li a:hover {
+    color: #1A76D1;
+}
+
+/* Top Contact */
+.header .topbar-content .top-contact li {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.header-inner {
+    padding: 20px 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+/* Header Content */
+.header-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 155px;
+}
+
+/* Logo */
+.header .header-content .logo img {
+    width: 120px;
+    height: 50px;
+}
+
+/* Main Menu */
+.header .header-content .main-menu {
+    display: flex;
+    justify-content: center;
+    flex: 4;
+}
+
+.header .header-content .main-menu nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.header .header-content .main-menu nav ul li {
+    margin-right: 20px;
+    position: relative;
+}
+
+.header .header-content .main-menu nav ul li:last-child {
+    margin-right: 0;
+}
+
+.header .header-content .main-menu nav ul li a {
+    color: #2C2D3F;
+    position: relative;
+    display: inline-block;
+    margin: 0 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .80rem;
+    padding: 15px 20px;
+    letter-spacing: .5px;
+    font-weight: 500;
+    opacity: .9;
+    transition: .3s;
+}
+
+.header .header-content .main-menu nav ul li a:hover {
+    color: #1A76D1;
+}
+
+.header .header-content .main-menu nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 5px;
+    border-radius: 2px;
+    background-color: #1A76D1;
+    bottom: 8px;
+    left: -5px;
+    z-index: -1;
+    opacity: 0;
+    transition: .3s;
+}
+
+.header .header-content .main-menu nav ul li a:hover::after {
+    width: 100%;
+    opacity: 1;
+}
+
+/* Get Quote Button */
+.get-quote {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.get-quote .btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #1A76D1;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+}
+
+.get-quote .btn::after {
+    content: " ";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background: #2c2d3f;
+    transition: all 0.4s ease-in-out;
+    right: 0;
+}
+
+.get-quote .btn:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+}
+
+.get-quote .btn span {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 1.125em;
+    letter-spacing: 0.3em;
+    z-index: 20;
+    transition: all 0.3s ease-in-out;
+}
+
+.get-quote .btn:hover span {
+    color: #fff;
+    animation: scaleUp 0.3s ease-in-out;
+}
+
+.get-quote .btn-Reg {
+    position: relative;
+    padding: 12px 22px;
+    border-radius: 4px;
+    background: #1A76D1;
+    color: #fff;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+}
+
+.get-quote .btn-Reg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 100%;
+    color: #f5f5f5;
+    transition: all 0.4s ease-in-out;
+}
+
+.get-quote .btn-Reg:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+    opacity: .4;
+    background: #2c2d3f;
+    color: #f5f5f5;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #1A76D1;
+    color: rgb(236, 236, 236);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -35px;
+    right: -16px;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #1A76D1 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* Dropdown Menu */
+.header .nav li .dropdown {
+    background: #fff;
+    width: 220px;
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    left: -20px;
+    top: 100%;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border-left: 3px solid #2889e4;
+    z-index: 10000;
+}
+
+.header .nav li:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    z-index: 100;
+}
+
+.header .nav li .dropdown li {
+    float: none;
+    margin: 0;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.header .nav li .dropdown li:last-child {
+    border: none;
+}
+
+.header .nav li .dropdown li a {
+    padding: 12px 15px;
+    color: #666;
+    display: block;
+    font-weight: 400;
+}
+
+.header .nav li .dropdown li a:hover {
+    color: #1A76D1;
+}
+
+/* Header Sticky */
+.header.sticky .header-inner {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    padding: 30px 0px;
+    transition: all 0.4s ease;
+    animation: fadeInDown 0.5s both 0.1s;
+    box-shadow: 0px 0px 13px #00000054;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
