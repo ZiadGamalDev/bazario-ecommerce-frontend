@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Categories</title>
+    <title>Dashboard | Orders</title>
     <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
     <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
     <link rel="stylesheet" href="../../assets/css/admin/all.css">
-
     <link rel="stylesheet" href="../../assets/css/admin/order.css">
 </head>
 
@@ -20,66 +19,47 @@
             <div class="order-management">
                 <div class="header">
                     <h1>Order Management</h1>
-                    <button class="add-order-btn" id="openAddModal">Add Order</button>
                 </div>
                 <table class="order-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Total Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="order-list">
-                        <!-- orders will be loaded here dynamically -->
+                        <!-- Orders will be loaded here dynamically -->
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
 
-      <!-- Add order Modal -->
-      <div class="modal" id="addorderModal">
-        <div class="modal-content">
-            <span class="close" id="closeAddModal">&times;</span>
-            <h2>Add Order</h2>
-            <form id="addOrderForm">
-                <label for="orderName">order Name</label>
-                <input type="text" id="orderName" name="orderName" required>
-
-                <label for="orderImage">order Image URL</label>
-                <input type="file" id="orderImage" name="orderImage" required>
-
-                <button type="submit" class="submit-btn">Add Category</button>
-            </form>
-        </div>
-    </div>
-
-     <!-- Edit order Modal -->
-     <div class="modal" id="editorderModal">
+    <!-- Edit Order Modal -->
+    <div class="modal" id="editorderModal">
         <div class="modal-content">
             <span class="close" id="closeEditModal">&times;</span>
             <h2>Edit Order</h2>
             <form id="editOrderForm">
                 <input type="hidden" id="editOrderId">
-                
-                <label for="editOrderName">order Name</label>
+                <label for="editOrderName">Order Name</label>
                 <input type="text" id="editOrderName" name="editOrderName" required>
 
-                <label for="editOrderImage">Order Image URL</label>
-                <input type="file" id="editOrderImage" name="editOrderImage">
+                <label for="editOrderPrice">Total Price</label>
+                <input type="text" id="editOrderPrice" name="editOrderPrice" required>
 
-                <button type="submit" class="submit-btn">Update  Orders</button>
+                <button type="submit" class="submit-btn">Update Order</button>
             </form>
         </div>
     </div>
 
-     <!-- Delete order Modal -->
-     <div class="modal" id="deleteorderModal">
+    <!-- Delete Order Modal -->
+    <div class="modal" id="deleteorderModal">
         <div class="modal-content">
             <span class="close" id="closeDeleteModal">&times;</span>
-            <h2>Are you sure you want to delete this category?</h2>
+            <h2>Are you sure you want to delete this order?</h2>
             <input type="hidden" id="deleteorderId">
             <button class="cancel-btn" id="confirmDeleteBtn">Yes, Delete</button>
             <button class="submit-btn" id="cancelDeleteBtn">Cancel</button>
@@ -92,7 +72,3 @@
 </body>
 
 </html>
-
-
-
-

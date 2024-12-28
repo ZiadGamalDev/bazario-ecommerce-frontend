@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Categories</title>
+    <title>Dashboard | Customer</title>
     <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
     <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
@@ -20,15 +20,16 @@
             <div class="user-management">
                 <div class="header">
                     <h1>User Management</h1>
-                    <button class="add-user-btn" id="openAddModal">Add Category</button>
+                    <button class="add-user-btn" id="openAddModal">Add User</button>
                 </div>
                 <table class="user-table">
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>image</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>image</th>
+                          
                         </tr>
                     </thead>
                     <tbody id="user-list">
@@ -38,7 +39,7 @@
             </div>
         </main>
     </div>
-       <!-- Add Category Modal -->
+       <!-- Add user Modal -->
        <div class="modal" id="addUserModal">
         <div class="modal-content">
             <span class="close" id="closeAddModal">&times;</span>
@@ -47,46 +48,18 @@
                 <label for="UserName">Customer Name</label>
                 <input type="text" id="UserName" name="UserName" required>
 
-                <label for="emailUser">Category Image URL</label>
+                <label for="emailUser"> Email</label>
                 <input type="email" id="emailUser" name="emailUser" required>
+
+                <label for="userImage">customer Image URL</label>
+                <input type="file" id="userImage" name="userImage" required>
 
                 <button type="submit" class="submit-btn">Add User</button>
             </form>
         </div>
     </div>
 
-      <!-- Edit Category Modal -->
-      <div class="modal" id="editUserModal">
-        <div class="modal-content">
-            <span class="close" id="closeEditModal">&times;</span>
-            <h2>Edit User</h2>
-            <form id="editUserForm">
-                <input type="hidden" id="editUserId">
-                
-                <label for="editUserName">User Name</label>
-                <input type="text" id="editUserName" name="UserName" required>
-
-                <label for="editEmail">Email</label>
-                 <input type="email" id="editUserEmail" name="Email" required>
-
-                 <label for="editUserImage">Category Image URL</label>
-                 <input type="file" id="editUserImage" name="userImage">
-
-                <button type="submit" class="submit-btn">Update User</button>
-            </form>
-        </div>
-    </div>
-
-     <!-- Delete Category Modal -->
-     <div class="modal" id="deleteUserModal">
-        <div class="modal-content">
-            <span class="close" id="closeDeleteModal">&times;</span>
-            <h2>Are you sure you want to delete this category?</h2>
-            <input type="hidden" id="deleteUserId">
-            <!-- <button class="cancel-btn" id="confirmDeleteBtn">Yes, Delete</button>
-            <button class="submit-btn" id="cancelDeleteBtn">Cancel</button> -->
-        </div>
-    </div>
+  
 
     <script src="../../assets/js/utils.js"></script>
     <script src="../../assets/js/admin/main.js"></script>

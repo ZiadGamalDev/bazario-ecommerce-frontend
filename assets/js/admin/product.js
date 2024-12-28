@@ -18,15 +18,17 @@ const editStockQuantity = document.getElementById('editStockQuantity');
 const editPrice = document.getElementById('editPrice');
 const deleteProductId = document.getElementById('deleteProductId');
 
-// ///////////////////////////////////////////////////
+ // ///////////////////////////////////////////////////
+ 
 function editProduct(productId) {
-    fetch(`${baseUrl}/api/admin/products/${productId}`)
+    // api/products/2
+    fetch(`${baseUrl}/api/products/${productId}`)
         .then(response => response.json())
         .then(data => {
             const product=data.data;
             editProductId.value=product.id;
             editProductName.value=product.name;
-            editCategoryName.value=product.category;
+            editCategoryName.value=product.category.name;
             editPrice.value=product.price;
             editProductdescription.value=product.description;
             editStockQuantity.value=product.stock_quantity;
@@ -34,8 +36,8 @@ function editProduct(productId) {
         })
         .catch(error => console.error('Error fetching category:', error));
 }
-
 // ////////////////////////////////////////////////////////////
+ 
 function deleteProduct(productId) {
     deleteProductId.value = productId;
     deleteProductModal.style.display = 'block';
@@ -43,7 +45,7 @@ function deleteProduct(productId) {
 // ///////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
-     fetch(`${baseUrl}/api/admin/products`)
+     fetch(`${baseUrl}/api/products`)
         .then(response => response.json())
         .then(data => {
             const products = data.data;
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${product.id}</td>
                     <td><img src="${product.image}" alt="${product.name}"></td>
                     <td>${product.name}</td>
-                    <td>${product.category}</td>
+                    <td>${product.category.name}</td>
                     <td>${product.price}</td>
                     <td>${product.description}</td>
                     <td>${product.stock_quantity}</td>
@@ -86,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteProductModal.style.display = 'none';
         });
 
-        addProductForm.addEventListener('submit', function (event) {
+        addProductForm.addEventListener('submit', function(event) {
             event.preventDefault();
           
             const productName = document.getElementById('productName').value;
@@ -95,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const price = document.getElementById('price').value;
             const descriptionName = document.getElementById('descriptionName').value;
             const stockQuantity = document.getElementById('stockQuantity').value;
-
+ 
 
             const formData = new FormData();
             formData.append('name', productName);
@@ -104,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('price', price);
             formData.append('description', descriptionName);
             formData.append('stock_quantity', stockQuantity);
-
     
             fetch(`${baseUrl}/api/admin/products`, {
                 method: 'POST',
@@ -121,16 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error adding category:', error));
         });
 
-
+ 
         editProductForm.addEventListener('submit', function (event) {
             event.preventDefault();
            
-            const productName = document.getElementById('productName').value;
-            const productImage = document.getElementById('productImage').files[0];
-            const categoryPro = document.getElementById('categoryName').value;
-            const price = document.getElementById('price').value;
-            const descriptionName = document.getElementById('descriptionName').value;
-            const stockQuantity = document.getElementById('stockQuantity').value;
+            const productName = document.getElementById('editProductName').value;
+            const productImage = document.getElementById('editProductImage').files[0];
+            const categoryPro = document.getElementById('editCategory').value;
+            const price = document.getElementById('editPrice').value;
+            const descriptionName = document.getElementById('editProductdescription').value;
+            const stockQuantity = document.getElementById('editStockQuantity').value;
 
     
             const formData = new FormData();
@@ -155,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => response.json())
             .then(() => {
-                addProductModal.style.display = 'none';
+                editProductModal.style.display = 'none';
                 location.reload();
             })
             .catch(error => console.error('Error updating category:', error));
@@ -178,3 +179,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     });
+
+ 

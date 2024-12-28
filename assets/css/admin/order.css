@@ -201,7 +201,7 @@ input[type="text"]:focus, input[type="file"]:focus {
     background-color: #45a049;
 }
 
-.cancel-btn {
+.cancel-btn ,.reject-btn {
     background-color: #f44336;
     color: white;
     border: none;
