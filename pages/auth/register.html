@@ -25,7 +25,7 @@
           <a href="./Login.html">Sign In</a>
         </div>
       </div>
-      <img src="../assets/images/sign_up.svg" alt="Sign up Image" />
+      <img src="../../assets/images/sign_up.svg" alt="Sign up Image" />
     </div>
 
     <!-- Right Section: Form Fields -->
@@ -36,41 +36,12 @@
         </div>
         <h1>Sign Up</h1>
         <form id="register-form">
-          <!-- First Name Field -->
-          <!-- <div class="form-row">
-              <div class="input-group">
-                <input
-                  type="text"
-                  id="reg-firstname"
-                  class="input"
-                  placeholder=""
-                  required
-                />
-                <label class="user-label">First Name</label>
-                <p class="error-msg" id="firstname-error"></p>
-              </div>
-            </div> -->
-          <!-- Last Name Field -->
-          <!-- <div class="form-row">
-              <div class="input-group">
-                <input
-                  type="text"
-                  id="reg-lastname"
-                  class="input"
-                  placeholder=""
-                  required
-                />
-                <label class="user-label">Last Name</label>
-                <p class="error-msg" id="lastname-error"></p>
-              </div>
-            </div> -->
-
+          <!-- Name Field -->
           <div class="form-row">
-            <!-- Username Field -->
             <div class="input-group">
-              <input type="text" id="reg-username" class="input" placeholder="" required />
+              <input type="text" id="reg-name" class="input" placeholder="" required />
               <label class="user-label">User Name</label>
-              <p class="error-msg" id="username-error"></p>
+              <p class="error-msg" id="name-error"></p>
             </div>
           </div>
 
@@ -95,7 +66,7 @@
           <div class="form-row">
             <!-- Confirm Password Field -->
             <div class="input-group">
-              <input type="password" id="reg-ConfirmPassword" class="input" placeholder="" required />
+              <input type="password" id="reg-password-confirmation" class="input" placeholder="" required />
               <label class="user-label">Confirm Password</label>
               <p class="error-msg" id="confirm-password-error"></p>
             </div>
@@ -108,6 +79,7 @@
     </div>
   </div>
 
+  <script src="../../assets/js/utils.js"></script>
   <script src="../../assets/js/auth.js"></script>
 </body>
 
