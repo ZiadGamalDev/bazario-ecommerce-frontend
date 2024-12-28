@@ -1,7 +1,8 @@
 // const baseUrl = 'http://127.0.0.1:8000';
-const baseUrl = "https://ecommerce.ershaad.net";
-const token = "customer-static-token";
-const adminToken = "admin-static-token";
+
+const baseUrl = 'https://ecommerce.ershaad.net';
+const token = 'customer-static-token';
+const adminToken = 'admin-static-token';
 
 function loadPartial(selector, filePath, callback) {
   const element = document.querySelector(selector);
