@@ -1,0 +1,212 @@
+section {
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    width: 90%;
+    max-width:550px;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+ }
+.sub-heading h1{
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    text-align: left;
+}
+.contactFrom {
+    display: grid;
+    gap:3em;
+    margin-top:3em ;
+}
+.para {
+    color:var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.5em;
+    margin-bottom: 1.1em;
+}
+.para2 {
+  text-align: left;
+}
+form {
+    width: 90%;
+ }
+.input {
+    width: 95%;
+    max-width: 700px;
+    border: none;
+    font-size: 0.9rem;
+    padding: 1em;
+    outline: none;
+    margin-bottom: 1em;
+    color:#000;
+    border:1px  rgb(53, 53, 53);
+    border-style: inset;
+}
+.input:focus {
+    border:1px  solid rgb(53, 53, 53)
+}
+input::placeholder,
+textarea::placeholder {
+    text-transform: capitalize;
+}
+.submit {
+    background-color: #181819;
+    border:none;
+    color:white;
+    cursor: pointer;
+    width: 15%;
+    height: 50px;
+}
+@media (min-width:880px) {
+    section{
+        max-width: 1100px;
+    }
+    .contactFrom {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 480px;
+ }
+.mapBg {
+    position: absolute;
+    top:0;
+    right: 0;
+    width: 200px;
+    height: 90%;
+    border-radius: 20px;
+}
+.map {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 90%;
+    height: 90%;
+ }
+.map iframe {
+    width: 100%;
+    height: 100%;   
+}
+
+/* Start Subscription  */
+.subscription {
+   padding-top:var(--section-padding) ;
+   padding-bottom: var(--section-padding); 
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+ 
+ }
+
+.subscription .Sub {
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 30px;
+    text-transform: capitalize;
+    padding: 20px;
+    width: 100%; /**/
+}
+.sub-Subscription  {
+    line-height: 1.8;
+}
+.sub-Subscription p{
+    color:var(--text-color);
+}
+.sub-Subscription h2 {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+
+/*  */
+.sub-Subscription form {
+    display: flex;              
+    gap: 10px;                  
+    align-items: center; 
+    margin-top: 20px;      
+}
+.sub-input {
+    padding: 10px;
+    border: 1px solid #434242 #999999 #434242;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.sub-submit {
+    display: flex;              
+    justify-content: center;    
+    align-items: center;         
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    background-color: #181819
+}
+.contactFrom img ,
+.sub-submit img {
+    width: 20px;          
+    height: 20px;
+}
+ 
+
+.sub-Subscription h3 {
+    font-weight: bold;
+}
+.sub-Subscription .sub-info {
+    margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .subscription {
+          width: 100%;
+    }
+    .subscription .Sub {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+        /* text-align: center; */
+    }
+    .sub-Subscription h2 {
+        font-size: 22px;
+    }
+    .sub-input {
+        width: 100%;  
+        padding: 12px;
+    }
+    .subres {
+        width: 100%;  
+        padding: 12px;
+    }
+
+    .subres img {
+        width: 18px;  
+        height: 18px;
+    }
+
+    .sub-Subscription form {
+        flex-direction: column;  
+        gap: 15px;  
+    }
+}
+
+@media (max-width: 480px) {
+    .sub-Subscription h2 {
+        font-size: 20px;
+    }
+
+    .sub-input {
+        font-size: 16px; 
+    }
+
+    .subres img {
+        width: 16px; 
+        height: 16px;
+    }
+
+    .sub-Subscription p {
+        font-size: 14px; 
+    
+    }
+}
