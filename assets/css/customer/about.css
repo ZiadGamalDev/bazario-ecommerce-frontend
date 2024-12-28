@@ -1,0 +1,148 @@
+/* Start Varible  */
+:root {
+  --main-color: #fff;
+  --section-padding: 80px;
+  --text-color: #777;
+}
+
+/* End Varible  */
+
+/* /Start Section About */
+.about {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.about .container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 992px) {
+  .about .container>div {
+    flex-basis: 45%;
+  }
+}
+
+.about .container .rigthRow h2 {
+  margin: 0 0 30px;
+  font-weight: bold;
+  font-size: 26px;
+  text-transform: capitalize;
+}
+
+.about .container .rigthRow p {
+  color: var(--text-color);
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.about .leftRow img {
+  width: 400px;
+  height: 340px;
+}
+
+.about .rigthRow .content {
+  border-bottom: 1px solid #777;
+}
+
+@media (max-width: 767px) {
+  .about .rigthRow .content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about .leftRow img {
+    margin: 0 auto 20px;
+  }
+}
+
+.rigthRow .contactUs {
+  margin-top: 10px;
+  text-align: left;
+  justify-content: start;
+  font-size: 18px;
+}
+
+.rigthRow .contactUs a {
+  color: rgb(105, 186, 233);
+}
+
+/* End Section About */
+
+/* Start section Team */
+.teamSection {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.teamSection .teamContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  line-height: 1.6;
+}
+
+.teamSection .teamContainer .team {
+  text-align: center;
+}
+
+.teamSection .teamContainer .team img {
+  width: 330px;
+  height: 270px;
+}
+
+.teamSection .teamContainer .team h3 {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.teamSection .teamContainer .team p {
+  color: var(--text-color);
+}
+
+/* End section Team */
+
+/* Start section service */
+
+.service {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.service .serviveContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 30px;
+  margin-top: 80px;
+}
+
+.service .serviveContainer .ser {
+  background-color: white;
+  box-shadow: 5px 5px 5px #aaaaaa;
+  line-height: 1.8;
+  padding: 20px;
+}
+
+.service .serviveContainer img {
+  height: 300px;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.service .serviveContainer .infSer {
+  padding: 20px;
+  text-align: center;
+}
+
+.service .serviveContainer .infSer h3 {
+  margin: 0;
+}
+
+.service .serviveContainer .infSer p {
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* End section service */

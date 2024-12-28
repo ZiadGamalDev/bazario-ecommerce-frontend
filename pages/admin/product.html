@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Products </title>
+    <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
+    <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
+    <link rel="stylesheet" href="../../assets/css/admin/all.css">
+    <link rel="stylesheet" href="../../assets/css/admin/product.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside></aside>
+        <main>
+            <div class="product-management">
+                <div class="header">
+                    <h1>Product Management</h1>
+                    <button class="add-product-btn" id="openAddModal">Add Product</button>
+                </div>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>price</th>
+                            <th>description</th>
+                            <th>stock quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <!-- Categories will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+     <!-- Add Category Modal -->
+     <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <span class="close" id="closeAddModal">&times;</span>
+            <h2>Add Product</h2>
+            <form id="addProductForm">
+                <label for="productName">Product Name</label>
+                <input class="custom-input" type="text" id="productName" name="productName" required>
+
+                <label for="productImage">product Image URL</label>
+                <input class="custom-input" type="file" id="productImage" name="productImage" required>
+
+                <label for="categorySelect">Category</label>
+                <select class="custom-input" name="category" id="categorySelect"></select>
+
+                <label for="price">Price</label>
+                <input class="custom-input" type="number" id="price" name="price" required>
+
+                <label for="descriptionName">description</label>
+                <input class="custom-input" type="text" id="descriptionName" name="descriptionName" required>
+
+                
+                <label for="stockQuantity">stock quantity</label>
+                <input class="custom-input" type="text" id="stockQuantity" name="stockQuantity" required>
+
+                <button type="submit" class="submit-btn">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+      <!-- Edit Category Modal -->
+      <div class="modal" id="editProductModal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModal">&times;</span>
+            <h2>Edit Product</h2>
+            <form id="editProductForm">
+                <input type="hidden" id="editProductId">
+                <label for="editProductName">Product Name</label>
+                <input class="custom-input" type="text" id="editProductName" name="editProductName">
+
+                <label for="editProductImage">product Image URL</label>
+                <input class="custom-input" type="file" id="editProductImage" name="editProductImage">
+
+                <label for="editCategorySelect">Category</label>
+                <select class="custom-input" name="editCategory" id="editCategorySelect"></select>
+
+                <label for="editPrice">Price</label>
+                <input class="custom-input" type="number" id="editPrice" name="editPrice">
+
+                <label for="editProductdescription">description</label>
+                <input class="custom-input" type="text" id="editProductdescription" name="editProductdescription">
+
+                
+                <label for="editStockQuantity">stock quantity</label>
+                <input class="custom-input" type="text" id="editStockQuantity" name="editStockQuantity">
+
+                <button type="submit" class="submit-btn">Edit Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Category Modal -->
+    <div class="modal" id="deleteProductModal">
+        <div class="modal-content">
+            <span class="close" id="closeDeleteModal">&times;</span>
+            <h2>Are you sure you want to delete this Product?</h2>
+            <input type="hidden" id="deleteProductId">
+            <button class="cancel-btn" id="confirmDeleteBtn">Yes, Delete</button>
+            <button class="submit-btn" id="cancelDeleteBtn">Cancel</button>
+        </div>
+    </div>
+ 
+    <!-- Pagination Controls -->
+        <div id="pagination" class="pagination-container">
+         </div>
+    
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/admin/main.js"></script>
+    <script src="../../assets/js/admin/product.js"></script>
+</body>
+
+</html>

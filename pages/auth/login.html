@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../../assets/css/auth.css" />
+  </head>
+  <body>
+    <div class="background-all">
+      <div class="Login-block">
+        <!-- Left Side -->
+        <div class="left_side">
+          <div class="contant-above-login">
+            <p class="big-text">
+              Stay Connected <span id="text-effect">Always</span>
+            </p>
+            <p class="small-text">
+              From here, your point of view regarding travel and the company
+              system may change, and now you can register. We wish you happiness
+              and safety.
+            </p>
+          </div>
+          <div class="image-contant-login"></div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="Container-Login">
+          <div class="Form-login-box">
+            <div class="avatar">
+              <div class="avatar-icon">🔒</div>
+            </div>
+            <h1>Sign in</h1>
+            <form id="login-form" class="login-form">
+              <!-- Email Field -->
+              <div class="input-group">
+                <input
+                  type="email"
+                  id="login-email"
+                  class="input"
+                  placeholder=""
+                  required
+                />
+                <label class="user-label">Email</label>
+              </div>
+
+              <!-- Password Field -->
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="login-password"
+                  class="input"
+                  placeholder=""
+                  required
+                />
+                <label class="user-label">Password</label>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn-ready-login">Sign In</button>
+              <p id="login-error-msg" class="error-msg"></p>
+
+              <!-- Forgot Password and Signup Links -->
+              <div class="links-container">
+                <span
+                  >Don't have an account?
+                  <a href="./register.html">Sign Up</a></span
+                >
+              </div>
+            </form>
+
+            <!-- Separator -->
+            <div class="signup-container">
+              <div class="separator">
+                <hr class="line" />
+                <hr class="line" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+  </body>
+</html>

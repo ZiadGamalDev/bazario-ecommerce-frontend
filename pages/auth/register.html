@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="stylesheet" href="../../assets/css/auth.css" />
+</head>
+
+<body>
+  <div class="registration-block">
+    <!-- Left Section: Image and Text -->
+    <div class="image-register">
+      <div class="contant-above-login">
+        <p class="big-text">
+          Join us in <span id="text-effect">Bazario</span>
+        </p>
+        <p class="small-text">
+          Do not miss out! Sign up for special promotions and discounts from
+          companies.
+        </p>
+        <div class="already">
+          <span>Already have an account?</span>
+          <a href="./Login.html">Sign In</a>
+        </div>
+      </div>
+      <img src="../../assets/images/sign_up.svg" alt="Sign up Image" />
+    </div>
+
+    <!-- Right Section: Form Fields -->
+    <div class="form-field-register">
+      <div class="form-container">
+        <div class="avatar">
+          <div class="avatar-icon">🔒</div>
+        </div>
+        <h1>Sign Up</h1>
+        <form id="register-form">
+          <!-- Name Field -->
+          <div class="form-row">
+            <div class="input-group">
+              <input type="text" id="reg-name" class="input" placeholder="" required />
+              <label class="user-label">User Name</label>
+              <p class="error-msg" id="name-error"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <!-- Email Field -->
+            <div class="input-group">
+              <input type="email" id="reg-email" class="input" placeholder="" required />
+              <label class="user-label">Email</label>
+              <p class="error-msg" id="email-error"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <!-- Password Field -->
+            <div class="input-group">
+              <input type="password" id="reg-password" class="input" placeholder="" required />
+              <label class="user-label">Password</label>
+              <p class="error-msg" id="password-error"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <!-- Confirm Password Field -->
+            <div class="input-group">
+              <input type="password" id="reg-password-confirmation" class="input" placeholder="" required />
+              <label class="user-label">Confirm Password</label>
+              <p class="error-msg" id="confirm-password-error"></p>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">Sign Up</button>
+          <p id="reg-error-msg" class="error-msg"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/utils.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+</body>
+
+</html>
