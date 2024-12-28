@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../assets/css/customer/cart.css" />
+    <link
+      rel="stylesheet"
+      href="../assets/fontawesome-free-6.7.1-web/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <title>Wish List</title>
+  </head>
+  <body>
+    <!-- <div class="preloader">
+      <div class="loader">
+        <div class="loader-outter"></div>
+        <div class="loader-inner"></div>
+
+        <div class="indicator">
+          <svg width="16px" height="12px">
+            <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+            <polyline
+              id="front"
+              points="1 6 4 6 6 11 10 1 12 6 15 6"
+            ></polyline>
+          </svg>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Scroll top Button -->
+    <a href="#" id="backTop" class="backTop">
+      <i class="fa-solid fa-chevron-up"></i>
+    </a>
+
+    <!-- Header -->
+    <header id="header" class="header">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-content">
+          <div class="top-contact">
+            <ul>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-phone"
+                ></i
+                >+880 1234 56789
+              </li>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-envelope"
+                ></i>
+                <a href="mailto:ahmedmostafaabdel3azem@gmail.com"
+                  >support@yourmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <p>Free delivery for orders over 199EG. 20EG delivery on 99+ !</p>
+
+          <div id="nav-links" class="get-quote">
+            <a href="../auth/login.html" id="login-link" class="btn-Reg"
+              >Login</a
+            >
+            <a href="../auth/register.html" id="register-link" class="btn-Reg"
+              >Register</a
+            >
+            <a
+              href="#"
+              id="dashboard-link"
+              class="btn-Reg"
+              style="display: none"
+            ></a>
+            <a href="#" id="logout-btn" class="btn-Reg" style="display: none">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Inner -->
+      <div class="header-inner">
+        <div class="header-content">
+          <div class="logo">
+            <a href="../../index.html"
+              ><img src="../../assets/images/logo.png" alt="Logo"
+            /></a>
+          </div>
+          <div class="main-menu">
+            <nav>
+              <ul class="nav menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="active">
+                  <a href="./products.html"
+                    >Products <i class="fa-solid fa-chevron-down"></i
+                  ></a>
+                  <ul class="dropdown">
+                    <li><a href="./cart.html">Cart</a></li>
+                    <li><a href="./wishlist.html">Wish List</a></li>
+                  </ul>
+                </li>
+                <li><a href="./about.html">ِAbout Us</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div id="nav-links" class="get-quote">
+            <div class="tooltip">
+              <a href="./cart.html" id="login-link" class="btn"
+                ><span><i class="fa-solid fa-bag-shopping"></i></span
+              ></a>
+              <span class="tooltiptext">Cart</span>
+            </div>
+            <div class="tooltip">
+              <a href="./wishlist.html" class="btn"
+                ><span><i class="fa-regular fa-heart"></i></span
+              ></a>
+              <span class="tooltiptext">Wish List</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Wish List Area -->
+    <!-- <div class="headerWish">
+      <h1>Wish List</h1>
+    </div>
+
+    <main style="height: 200px" id="wish-container"></main> -->
+
+    <div class="headerCart">
+      <a href="../../index.html"><i class="fa-solid fa-house-chimney-user"></i></a>
+      <i class="fa-solid fa-angle-right"></i>
+      <h2>Wish List</h2>
+    </div>
+
+    <div class="outer-container">
+      <div class="product-list-container" style="width: 100%; margin-right:40px;">
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>title</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="wishlist-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="lastSection">
+      <div class="top-section">
+        <div class="contact-info-items">
+          <div class="icon">
+            <i class="fa-solid fa-phone-volume"></i>
+          </div>
+          <div class="info">
+            <span>Call Us 7/24</span>
+            <span>+208-555-0112</span>
+          </div>
+        </div>
+        <div class="contact-info-items">
+          <div class="icon">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="info">
+            <span>Make a Quote</span>
+            <a href="mailto:ahmedmostafaabdel3azem@gmail.com"
+              >example@gmail.com</a
+            >
+          </div>
+        </div>
+        <div class="contact-info-items">
+          <div class="icon">
+            <i class="fa-regular fa-clock"></i>
+          </div>
+          <div class="info">
+            <span>Opening Hour</span>
+            <span>Sunday - Fri: 9 AM - 6 PM</span>
+          </div>
+        </div>
+        <div class="contact-info-items">
+          <div class="icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div class="info">
+            <span>Location</span>
+            <span>4517 Washington ave.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="footer-section">
+          <div class="left-footer-section">
+            <div class="logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5c-1.11 0-2 .89-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 7.41V11h2V3h-7z"
+                />
+              </svg>
+              <img src="../assets/images/logo.png" alt="" />
+            </div>
+            <p>
+              Phasellus ultricies aliquam volutpat ullamcorper laoreet neque, a
+              lacinia curabitur lacinia mollis
+            </p>
+
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+
+            <p>© All Copyright 2024 by <b>Bazario</b></p>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Costumers Support</h3>
+          <div class="blue-line"></div>
+          <div class="linkIcons">
+            <a href="#"><i class="fa-solid fa-angles-right"></i> Store List</a>
+            <a href="#"
+              ><i class="fa-solid fa-angles-right"></i> Opening Hours</a
+            >
+            <a href="#"><i class="fa-solid fa-angles-right"></i> Contact Us</a>
+            <a href="#"
+              ><i class="fa-solid fa-angles-right"></i> Return Policy</a
+            >
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <div class="blue-line"></div>
+          <div class="linkIcons">
+            <a href="#"><i class="fa-solid fa-angles-right"></i> About Us</a>
+            <a href="#"><i class="fa-solid fa-angles-right"></i> Testimonial</a>
+            <a href="#"><i class="fa-solid fa-angles-right"></i> Faq</a>
+            <a href="#"><i class="fa-solid fa-angles-right"></i> Blog</a>
+          </div>
+        </div>
+        <div class="footer-section newsletter">
+          <h3>Newsletter</h3>
+          <div class="blue-line"></div>
+          <p>Sign up to searing weekly newsletter to get the latest updates.</p>
+          <div class="subscribe">
+            <input type="email" placeholder="Enter Email Address" />
+            <button>
+              <i class="fa-regular fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/customer/wishlist.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://kit.fontawesome.com/0ce4cbaad9.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

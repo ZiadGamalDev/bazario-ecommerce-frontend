@@ -1,7 +1,7 @@
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_TIME = 30 * 1000;
 
-// التسجيل
+
 const registerForm = document.getElementById("register-form");
 
 if (registerForm) {
@@ -65,13 +65,11 @@ if (registerForm) {
     }
   }
 
-  // حدث عند الخروج من كل حقل
   nameInput.addEventListener("blur", validateName);
   emailInput.addEventListener("blur", validateEmail);
   passwordInput.addEventListener("blur", validatePassword);
   confirmPasswordInput.addEventListener("blur", validateConfirmPassword);
 
-  // إرسال الفورم
   registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -116,7 +114,7 @@ if (registerForm) {
             localStorage.setItem(
               "loggedInUser",
               JSON.stringify(result.data.user)
-            ); // حفظ بيانات المستخدم
+            );
             console.log("Stored token:", localStorage.getItem("token"));
             window.location.href = "/pages/auth/login.html";
           } else {
@@ -130,7 +128,6 @@ if (registerForm) {
   });
 }
 
-// تسجيل الدخول
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
   lockoutTime: null,

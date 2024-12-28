@@ -190,36 +190,31 @@ const fetchCategories = async () => {
 
 fetchCategories();
 
-
-//        * Add to cart
+// * Add to Cart
 const addToCartList = (id) => {
-  const token = localStorage.getItem("token");
+  const tokenUrl = localStorage.getItem("token");
 
-  if (!token) {
+  if (!tokenUrl) {
     Swal.fire({
       title: "Login Required",
-      text: "Please login to add items to your cart!",
+      text: "Please login to add items to your wishlist!",
       icon: "warning",
     });
     return;
   }
 
-  fetch(`https://ecommerce.ershaad.net/api/cart/add`, {
+  fetch(`${baseUrl}/api/cart/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${tokenUrl}`,
     },
     body: JSON.stringify({ product_id: id }),
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart");
-      }
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((result) => {
-      if (result.success) {
+      console.log("Wishlist API Response:", result);
+      if (result.message === "Product added to cart") {
         Swal.fire({
           title: "Added!",
           text: "Product has been added to your cart.",
@@ -228,7 +223,7 @@ const addToCartList = (id) => {
       } else {
         Swal.fire({
           title: "Error",
-          text: result.message || "Unable to add product to cart.",
+          text: result.message || "Failed to add item to cart.",
           icon: "error",
         });
       }
@@ -237,10 +232,10 @@ const addToCartList = (id) => {
       console.error("Error:", error);
       Swal.fire({
         title: "Error",
-        text: "Something went wrong while adding to the cart.",
+        text: "Something went wrong while adding to cart.",
         icon: "error",
       });
-    });
+    });  
 };
 
 
@@ -262,7 +257,7 @@ const addToWishList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 5|nmu5mI8ak1Utx0cnc0K7dtGmDyNhflW3Ykp4fOH9074c14ca",
+      "Authorization": `Bearer ${tokenUrl}`,
     },
     body: JSON.stringify({ product_id: id }),
   })
