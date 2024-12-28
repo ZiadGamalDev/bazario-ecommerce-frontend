@@ -4,11 +4,10 @@ main {
     background-color: #fff;
 }
 
-.category-management {
+.product-management{
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -20,8 +19,7 @@ main {
     font-size: 24px;
     margin: 0;
 }
-
-.add-category-btn {
+.add-product-btn {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -31,29 +29,28 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.add-category-btn:hover {
+.add-product-btn:hover {
     background-color: #0056b3;
 }
-
 /* Table Styles */
-.category-table {
+.product-table{
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.category-table th,
-.category-table td {
+.product-table th,
+.product-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.category-table th {
+.product-table th {
     background-color: #f8f9fa;
 }
 
-.category-table td img {
+.product-table td img {
     width: 100px;
     height: 60px;
     border-radius: 5px;
@@ -92,13 +89,13 @@ main {
 }
 
 @media (max-width: 768px) {
-    .category-table th,
-    .category-table td {
+    .product-table th,
+    .product-table td {
         font-size: 12px;
         padding: 8px;
     }
 
-    .category-table td img {
+    .product-table td img {
         width: 40px;
     }
 
@@ -111,7 +108,7 @@ main {
         font-size: 22px;
     }
 
-    .add-category-btn {
+    .add-product-btn {
         padding: 8px 16px;
     }
 }
@@ -155,6 +152,7 @@ main {
     color: black;
     text-decoration: none;
     cursor: pointer;
+
 }
 
 /* Modal Header */
@@ -175,14 +173,14 @@ label {
     color: #333;
 }
 
-input[type="text"], input[type="file"] {
+input[type="text"], input[type="file"] ,input[type="number"] {
     padding: 10px;
     font-size: 1em;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-input[type="text"]:focus, input[type="file"]:focus {
+input[type="text"]:focus, input[type="file"] ,input[type="number"]:focus {
     border-color: #007bff;
     outline: none;
 }
@@ -219,11 +217,12 @@ input[type="text"]:focus, input[type="file"]:focus {
 }
 
 /* Modal Content for Delete */
-#deleteProductModal .modal-content {
+/* Modal Content for Delete */
+#deleteCategoryModal .modal-content {
     text-align: center;
 }
 
-#deleteProductModal button {
+#deleteCategoryModal button {
     margin: 10px;
 }
 
@@ -233,3 +232,32 @@ input[type="text"]:focus, input[type="file"]:focus {
         width: 80%;
     }
 }
+
+/* //////////////////////////////////////// */
+
+/* pagination */
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+ }
+ 
+ .pagination-container button {
+    margin: 0 5px;
+    padding: 10px;
+    cursor: pointer;
+ }
+ 
+ .pagination-container button:hover {
+    background-color: #f1f1f1;
+ }
+ 
+ .pagination-container button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+ }
+
+ /* End pagination */
+
+
+  
+

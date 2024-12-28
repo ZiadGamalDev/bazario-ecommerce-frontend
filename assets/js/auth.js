@@ -1,175 +1,138 @@
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_TIME = 30 * 1000;
+
+
 const registerForm = document.getElementById("register-form");
 
 if (registerForm) {
-  // const firstnameInput = document.getElementById("reg-firstname");
-  // const lastnameInput = document.getElementById("reg-lastname");
-  const usernameInput = document.getElementById("reg-username");
+  const nameInput = document.getElementById("reg-name");
   const emailInput = document.getElementById("reg-email");
   const passwordInput = document.getElementById("reg-password");
-  const confirmPasswordInput = document.getElementById("reg-ConfirmPassword");
+  const confirmPasswordInput = document.getElementById(
+    "reg-password-confirmation"
+  );
 
-  // const firstnameError = document.getElementById("firstname-error");
-  // const lastnameError = document.getElementById("lastname-error");
-  const usernameError = document.getElementById("username-error");
+  const nameError = document.getElementById("name-error");
   const emailError = document.getElementById("email-error");
   const passwordError = document.getElementById("password-error");
-  const confirmPasswordError = document.getElementById("confirm-password-error");
+  const confirmPasswordError = document.getElementById(
+    "confirm-password-error"
+  );
 
-  // Validation patterns
-  const namePattern = /^[a-zA-Z]{3,}$/; // At least 3 letters
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email format
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // At least 8 chars, 1 uppercase, 1 number
+  const namePattern = /^[a-zA-Z\s]{3,}$/; // اسم مكون من 3 أحرف أو أكثر
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // بريد إلكتروني صالح
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // 8 أحرف على الأقل، حرف كبير ورقم
 
-  let isValid = true;
-
-  // Function to validate First Name
-  // function validateFirstname() {
-  //   if (!namePattern.test(firstnameInput.value.trim())) {
-  //     firstnameError.textContent = "First name must be at least 3 letters.";
-  //     isValid = false;
-  //   } else {
-  //     firstnameError.textContent = "";
-  //   }
-  // }
-
-  // Function to validate Last Name
-  // function validateLastname() {
-  //   if (!namePattern.test(lastnameInput.value.trim())) {
-  //     lastnameError.textContent = "Last name must be at least 3 letters.";
-  //     isValid = false;
-  //   } else {
-  //     lastnameError.textContent = "";
-  //   }
-  // }
-
-  // Function to validate Username
-  function validateUsername() {
-    if (!namePattern.test(usernameInput.value.trim())) {
-      usernameError.textContent = "Username must be at least 3 characters.";
-      isValid = false;
+  function validateName() {
+    if (!namePattern.test(nameInput.value.trim())) {
+      nameError.textContent = "Name must be at least 3 characters.";
+      return false;
     } else {
-      usernameError.textContent = "";
+      nameError.textContent = "";
+      return true;
     }
   }
 
-  // Function to validate Email
   function validateEmail() {
     if (!emailPattern.test(emailInput.value.trim())) {
       emailError.textContent = "Invalid email address.";
-      isValid = false;
+      return false;
     } else {
       emailError.textContent = "";
+      return true;
     }
   }
 
-  // Function to validate Password
   function validatePassword() {
     if (!passwordPattern.test(passwordInput.value.trim())) {
       passwordError.textContent =
         "Password must be at least 8 characters, include 1 uppercase letter and 1 number.";
-      isValid = false;
+      return false;
     } else {
       passwordError.textContent = "";
+      return true;
     }
   }
 
-  // Function to validate Confirm Password
   function validateConfirmPassword() {
     if (passwordInput.value.trim() !== confirmPasswordInput.value.trim()) {
       confirmPasswordError.textContent = "Passwords do not match.";
-      isValid = false;
+      return false;
     } else {
       confirmPasswordError.textContent = "";
+      return true;
     }
   }
 
-  // Add event listeners for blur (on losing focus)
-  // firstnameInput.addEventListener("blur", validateFirstname);
-  // lastnameInput.addEventListener("blur", validateLastname);
-  usernameInput.addEventListener("blur", validateUsername);
+  nameInput.addEventListener("blur", validateName);
   emailInput.addEventListener("blur", validateEmail);
   passwordInput.addEventListener("blur", validatePassword);
   confirmPasswordInput.addEventListener("blur", validateConfirmPassword);
 
-  // Form submission validation
   registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Clear isValid for final check
-    isValid = true;
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    const isConfirmPasswordValid = validateConfirmPassword();
 
-    // Run all validations
-    // validateFirstname();
-    // validateLastname();
-    validateUsername();
-    validateEmail();
-    validatePassword();
-    validateConfirmPassword();
+    if (
+      isNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid
+    ) {
+      const data = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        password: passwordInput.value.trim(),
+        password_confirmation: confirmPasswordInput.value.trim(),
+      };
 
-    if (isValid) {
-      // Proceed with form submission logic
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      const userExists = users.some((user) => user.username === usernameInput.value.trim());
+      console.log("Sending data to API:", data);
 
-      if (userExists) {
-        usernameError.textContent = "Username already exists!";
-      } else {
-        users.push({
-          // firstname: firstnameInput.value.trim(),
-          // lastname: lastnameInput.value.trim(),
-          username: usernameInput.value.trim(),
-          email: emailInput.value.trim(),
-          password: passwordInput.value.trim(),
-          role: "user",
-        });
-        localStorage.setItem("users", JSON.stringify(users));
-        alert("Registration successful! You can now login.");
-        window.location.href = "./login.html";
-      }
+      fetch(`${baseUrl}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          console.log("Response from API:", result);
+          if (result.data) {
+            alert("Registration successful!");
+            localStorage.setItem("token", result.data.token);
+            localStorage.setItem(
+              "loggedInUser",
+              JSON.stringify(result.data.user)
+            );
+            console.log("Stored token:", localStorage.getItem("token"));
+            window.location.href = "/pages/auth/login.html";
+          } else {
+            alert("Registration failed: " + result.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });      
     }
   });
 }
 
-
-// const loginForm = document.getElementById("login-form");
-// if (loginForm) {
-//   loginForm.addEventListener("submit", (e) => {
-//     e.preventDefault();
-
-//     const username = document.getElementById("login-username").value;
-//     const password = document.getElementById("login-password").value;
-//     const errorMsg = document.getElementById("login-error-msg");
-
-//     let users = JSON.parse(localStorage.getItem("users")) || [];
-
-//     let user;
-
-//     if (username === "Admin" && password === "Admin@123") {
-//       user = { username: "Admin", role: "admin" };
-//     } else {
-//       user = users.find(
-//         (u) => u.username === username && u.password === password
-//       );
-//     }
-
-//     if (user) {
-//       localStorage.setItem("loggedInUser", JSON.stringify(user));
-//       alert("Login successful!");
-
-//       if (user.role === "admin") {
-//         window.location.href = "../../index.html"; 
-//       } else {
-//         window.location.href = "../../index.html";
-//       }
-//     } else {
-//       errorMsg.textContent =
-//         "You should register first || Invalid username or password!";
-//     }
-//   });
-// }
-
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_TIME = 30 * 1000;
+        });
+    }
+  });
+}
 
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
@@ -177,11 +140,12 @@ let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
 };
 
 const loginForm = document.getElementById("login-form");
+
 if (loginForm) {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const username = document.getElementById("login-username").value;
+    const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
     const errorMsg = document.getElementById("login-error-msg");
 
@@ -191,47 +155,49 @@ if (loginForm) {
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    let user;
+    fetch(`${baseUrl}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data) {
+          const user = result.data.user;
+          const token = result.data.token;
 
-    if (username === "Admin" && password === "Admin@123") {
-      user = { username: "Admin", role: "admin" };
-    } else {
-      user = users.find(
-        (u) => u.username === username && u.password === password
-      );
-    }
+          localStorage.setItem("userData", JSON.stringify(result.data));
+          localStorage.setItem("loggedInUser", JSON.stringify(user));
+          localStorage.setItem("token", token);
 
-    if (!user) {
-      const existingUser = users.find((u) => u.username === username);
-      if (!existingUser) {
-        errorMsg.textContent = "Username does not exist!";
-      } else {
-        errorMsg.textContent =
-          "Invalid password. Attempts left: " + (MAX_ATTEMPTS - loginAttempts.count);
-      }
-      loginAttempts.count += 1;
+          alert("Login successful!");
 
-      if (loginAttempts.count >= MAX_ATTEMPTS) {
-        loginAttempts.lockoutTime = Date.now() + LOCKOUT_TIME;
-        errorMsg.textContent =
-          "Too many failed attempts. You are locked out for 30 seconds!";
-      }
+          if (user.is_admin) {
+            window.location.href = "../../admin/dashboard.html";
+          } else {
+            window.location.href = "../../index.html";
+          }
+        } else {
+          errorMsg.textContent = "Invalid email or password.";
 
-      localStorage.setItem("loginAttempts", JSON.stringify(loginAttempts));
-      return;
-    }
+          loginAttempts.count += 1;
 
-    loginAttempts = { count: 0, lockoutTime: null };
-    localStorage.setItem("loginAttempts", JSON.stringify(loginAttempts));
+          if (loginAttempts.count >= MAX_ATTEMPTS) {
+            loginAttempts.lockoutTime = Date.now() + LOCKOUT_TIME;
+            errorMsg.textContent =
+              "Too many failed attempts. You are locked out for 30 seconds!";
+          }
 
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    alert("Login successful!");
-
-    if (user.role === "admin") {
-      window.location.href = "../../index.html";
-    } else {
-      window.location.href = "../../index.html";
-    }
+          localStorage.setItem("loginAttempts", JSON.stringify(loginAttempts));
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+      });
   });
 }

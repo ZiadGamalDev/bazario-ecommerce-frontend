@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Customer</title>
+    <link rel="stylesheet" href="../../assets/css/admin/styleAdmin.css">
+    <link rel="stylesheet" href="../../assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin/normalize.css">
+    <link rel="stylesheet" href="../../assets/css/admin/all.css">
+    <link rel="stylesheet" href="../../assets/css/admin/category.css">
+    <link rel="stylesheet" href="../../assets/css/admin/customer.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside></aside>
+        <main>
+            <div class="user-management">
+                <div class="header">
+                    <h1>User Management</h1>
+                    <button class="add-user-btn" id="openAddModal">Add User</button>
+                </div>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>image</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                        <!-- Categories will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+       <!-- Add user Modal -->
+       <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <span class="close" id="closeAddModal">&times;</span>
+            <h2>Add User</h2>
+            <form id="addUserForm">
+                <label for="UserName">Customer Name</label>
+                <input type="text" id="UserName" name="UserName" required>
+
+                <label for="emailUser"> Email</label>
+                <input type="email" id="emailUser" name="emailUser" required>
+
+                <label for="userImage">customer Image URL</label>
+                <input type="file" id="userImage" name="userImage" required>
+
+                <button type="submit" class="submit-btn">Add User</button>
+            </form>
+        </div>
+    </div>
+
+  
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/admin/main.js"></script>
+    <script src="../../assets/js/admin/customer.js"></script>
+</body>
+
+</html>
