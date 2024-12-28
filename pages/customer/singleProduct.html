@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Product</title>
+    <link rel="stylesheet" href="../../assets/css/components/header.css">
+    <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/customer/singleProduct.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <!-- Product Section -->
+        <div class="product-details">
+            <div class="product-img"></div>
+            <div class="details">
+                <div class="details-content">
+                    <h2 class="product-title"></h2>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fa fa-star" data-value="1"></i>
+                            <i class="fa fa-star" data-value="2"></i>
+                            <i class="fa fa-star" data-value="3"></i>
+                            <i class="fa fa-star" data-value="4"></i>
+                            <i class="fa fa-star" data-value="5"></i>
+                        </div>
+                        <span></span>
+                    </div>
+
+                    <div class="product-price">
+                        <div class="price">
+                            <span class="primary-color"></span>
+                            <span class="second-color"></span>
+                        </div>
+                    </div>
+
+                    <div class="product-discription"></div>
+
+                    <div>
+                        <div class="product-category"></div>
+                        <div class="product-stock"></div>
+                    </div>
+
+                    <div class="extra-link">
+                        <strong>Quantity: </strong>
+                        <div class="extra-link1">
+                            <input type="number" name="quantity" value="1" min="1" maxlength="3">
+                        </div>
+                        <div class="extra-link2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h4>Customer Reviews</h4>
+            <div id="reviews-list"></div>
+
+            <div class="submit-review">
+                <h4>Add a Review</h4>
+                <div class="rating-stars" id="rating-stars">
+                    <i class="fa fa-star" data-value="1"></i>
+                    <i class="fa fa-star" data-value="2"></i>
+                    <i class="fa fa-star" data-value="3"></i>
+                    <i class="fa fa-star" data-value="4"></i>
+                    <i class="fa fa-star" data-value="5"></i>
+                </div>
+                <textarea id="review-text" placeholder="Write your review..." required></textarea>
+                <input type="text" id="review-name" placeholder="Name" required />
+        
+                <button id="submit-review-btn">Submit Review</button>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="related-products">
+            <div class="section-title">
+                <h2>Related Products</h2>
+            </div>
+            <div class="section-products">
+                <button class="prev" onclick="moveSlide(-1)">&#8249;</button>
+                <div class="section-products-row">
+
+                </div>
+                <button class="next" onclick="moveSlide(1)">&#8250;</button>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/customer/singleProduct.js"></script>
+</body>
+</html>
