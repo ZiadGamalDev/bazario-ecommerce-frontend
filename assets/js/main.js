@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // loadPartial("header", "pages/components/header-index.html");
   loadPartial(".lastSection", "pages/components/footer.html");
 });
-
-
-// // *reloader
-// window.addEventListener("load", () => {
-//   document.querySelector(".preloader").classList.add("preloader-deactivate");
-// });
 
 // *Header scroll
 document.addEventListener("DOMContentLoaded", function () {
@@ -67,8 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-//          * swiper
+// * swiper
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
@@ -161,7 +153,6 @@ const fetchProducts = async () => {
 };
 fetchProducts();
 
-
 //      *Get Categories name in home
 const fetchCategories = async () => {
   const hmove = document.querySelector(".hmove");
@@ -250,9 +241,7 @@ const addToCartList = (id) => {
     });  
 };
 
-
-
-//          * Add to Wish List
+// * Add to wishList
 const addToWishList = (id) => {
   const tokenUrl = localStorage.getItem("token");
 

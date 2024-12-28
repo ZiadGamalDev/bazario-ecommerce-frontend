@@ -19,11 +19,10 @@ if (registerForm) {
     "confirm-password-error"
   );
 
-  const namePattern = /^[a-zA-Z\s]{3,}$/;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const namePattern = /^[a-zA-Z\s]{3,}$/; // اسم مكون من 3 أحرف أو أكثر
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // بريد إلكتروني صالح
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // 8 أحرف على الأقل، حرف كبير ورقم
 
-  // دوال التحقق
   function validateName() {
     if (!namePattern.test(nameInput.value.trim())) {
       nameError.textContent = "Name must be at least 3 characters.";
@@ -123,6 +122,13 @@ if (registerForm) {
         })
         .catch((error) => {
           console.error("Error:", error);
+        });      
+    }
+  });
+}
+
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_TIME = 30 * 1000;
         });
     }
   });
@@ -162,15 +168,15 @@ if (loginForm) {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          localStorage.setItem("userData", JSON.stringify(result.data));
-
+          const user = result.data.user;
           const token = result.data.token;
 
+          localStorage.setItem("userData", JSON.stringify(result.data));
+          localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
 
           alert("Login successful!");
 
-          const user = result.data.user;
           if (user.is_admin) {
             window.location.href = "../../admin/dashboard.html";
           } else {
