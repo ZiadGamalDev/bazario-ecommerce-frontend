@@ -833,12 +833,11 @@ Preloader Area CSS
 .product-tumb img {
   width: 100%;
   height: 100%;
-  transition: .3s all ease;
+  transition: .6s all ease;
 }
 
-.product-tumb img:hover{
-  transform: scale(1.1);
-  transform: rotate(10deg);
+.product-tumb img:hover {
+  transform: scale(1.1) rotate(10deg);
 }
 
 .product-details {
