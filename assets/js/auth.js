@@ -1,3 +1,7 @@
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_TIME = 30 * 1000;
+
+
 const registerForm = document.getElementById("register-form");
 
 if (registerForm) {
@@ -106,6 +110,11 @@ if (registerForm) {
           if (result.data) {
             alert("Registration successful!");
             localStorage.setItem("token", result.data.token);
+            localStorage.setItem(
+              "loggedInUser",
+              JSON.stringify(result.data.user)
+            );
+            console.log("Stored token:", localStorage.getItem("token"));
             window.location.href = "/pages/auth/login.html";
           } else {
             alert("Registration failed: " + result.message);
@@ -120,6 +129,10 @@ if (registerForm) {
 
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_TIME = 30 * 1000;
+        });
+    }
+  });
+}
 
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
@@ -158,18 +171,20 @@ if (loginForm) {
           const user = result.data.user;
           const token = result.data.token;
 
+          localStorage.setItem("userData", JSON.stringify(result.data));
           localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
 
           alert("Login successful!");
-          if (user.role === "admin") {
+
+          if (user.is_admin) {
             window.location.href = "../../admin/dashboard.html";
           } else {
             window.location.href = "../../index.html";
           }
         } else {
           errorMsg.textContent = "Invalid email or password.";
-          
+
           loginAttempts.count += 1;
 
           if (loginAttempts.count >= MAX_ATTEMPTS) {
