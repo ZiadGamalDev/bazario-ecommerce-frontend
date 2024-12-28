@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  loadPartial("header", "pages/components/header-index.html");
+  // loadPartial("header", "pages/components/header-index.html");
   loadPartial(".lastSection", "pages/components/footer.html");
 });
 
@@ -32,36 +32,42 @@ window.addEventListener("scroll", () => {
 });
 
 // //      * Logged User and Log out
-// const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-// const loginLink = document.getElementById("login-link");
-// const registerLink = document.getElementById("register-link");
-// const dashboardLink = document.getElementById("dashboard-link");
-// const logoutBtn = document.getElementById("logout-btn");
+// * Logged User and Log out
+document.addEventListener("DOMContentLoaded", () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const loginLink = document.getElementById("login-link");
+  const registerLink = document.getElementById("register-link");
+  const dashboardLink = document.getElementById("dashboard-link");
+  const logoutBtn = document.getElementById("logout-btn");
 
-// if (loggedInUser) {
-//   loginLink.style.display = "none";
-//   registerLink.style.display = "none";
+  if (userData) {
+    loginLink.style.display = "none";
+    registerLink.style.display = "none";
 
-//   dashboardLink.style.display = "inline";
-//   dashboardLink.textContent =
-//     loggedInUser.role === "admin"
-//       ? `Hi, ${loggedInUser.username} > Dashboard`
-//       : `Hi, ${loggedInUser.username} > Dashboard`;
-//   dashboardLink.href =
-//     loggedInUser.role === "admin"
-//       ? "../../admin/adminDashboard.html"
-//       : "../../Customer/UserDashboard.html";
+    dashboardLink.style.display = "inline";
+    dashboardLink.textContent =
+      userData.user.is_admin === 1
+        ? `Hi, ${userData.user.name} > Admin Dashboard`
+        : `Hi, ${userData.user.name} > User Dashboard`;
 
-//   logoutBtn.style.display = "inline";
-// } else {
-//   dashboardLink.style.display = "none";
-//   logoutBtn.style.display = "none";
-// }
+    dashboardLink.href =
+      userData.user.is_admin === 1
+        ? "../../admin/adminDashboard.html"
+        : "../../Customer/UserDashboard.html";
 
-// logoutBtn.addEventListener("click", () => {
-//   localStorage.removeItem("loggedInUser");
-//   window.location.reload();
-// });
+    logoutBtn.style.display = "inline";
+  } else {
+    dashboardLink.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("userData");
+    localStorage.removeItem("token");
+    window.location.reload();
+  });
+});
+
 
 //          * swiper
 let currentSlide = 0;
@@ -91,13 +97,24 @@ setInterval(() => {
 const fetchProducts = async () => {
   const productList = document.getElementById("product-list");
 
-  try {
-    const response = await fetch(`https://ecommerce.ershaad.net/api/products`);
-    const data = await response.json();
-    console.log(data);
+  if (!productList) {
+    console.error("Element with ID 'product-list' not found!");
+    return;
+  }
 
-    if (data.data) {
-      const featuredProducts = data.data.slice(0, 4);
+  try {
+    const response = await fetch(`${baseUrl}/api/products?limit=10`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Fetched Products:", data);
+
+    productList.innerHTML = "";
+
+    if (data.data && data.data.length > 0) {
+      const featuredProducts = data.data;
 
       featuredProducts.forEach((product) => {
         const productCard = document.createElement("div");
@@ -110,15 +127,15 @@ const fetchProducts = async () => {
             </a>
           </div>
           <div class="product-details">
-            <span class="product-catagory">${product.category.name}</span>
+            <span class="product-catagory">${product.category?.name}</span>
             <h4>
-              <a href="../../Products/SingleCategory.html?categoryId=${product.category.id}">
+              <a href="../../Products/SingleCategory.html?categoryId=${product.category?.id || "#"}">
                 ${product.name}
               </a>
             </h4>
-            <p>${product.description}</p>
+            <p>${product.description || "No description available."}</p>
             <div class="product-bottom-details">
-              <div class="product-price">${product.price}$</div>
+              <div class="product-price">${product.price ? `${product.price}$` : "Price not available"}</div>
               <div class="product-links">
                 <button onclick="addToWishList(${product.id})">
                   <i class="fal fa-heart"></i>
@@ -134,14 +151,13 @@ const fetchProducts = async () => {
         productList.appendChild(productCard);
       });
     } else {
-      productList.innerHTML = `<p>Sorry, no products found.</p>`;
+      productList.innerHTML = `<p>No products found.</p>`;
     }
   } catch (e) {
-    console.error("Error fetching products:", e);
-    productList.innerHTML = `<p>There was an error fetching the products.</p>`;
+    console.error("Error fetching products:", e.message);
+    productList.innerHTML = `<p>There was an error fetching the products. Please try again later.</p>`;
   }
 };
-
 
 fetchProducts();
 
@@ -150,7 +166,7 @@ const fetchCategories = async () => {
   const hmove = document.querySelector(".hmove");
 
   try {
-    const response = await fetch(`https://ecommerce.ershaad.net/api/categories`);
+    const response = await fetch(`${baseUrl}/api/categories`);
     const data = await response.json();
     console.log(data);
 
@@ -177,8 +193,9 @@ fetchCategories();
 
 //        * Add to cart
 const addToCartList = (id) => {
-  const loggedInUser = localStorage.getItem("loggedInUser");
-  if (!loggedInUser) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
     Swal.fire({
       title: "Login Required",
       text: "Please login to add items to your cart!",
@@ -187,51 +204,91 @@ const addToCartList = (id) => {
     return;
   }
 
-  let cart = JSON.parse(localStorage.getItem(`${loggedInUser}-cart`)) || [];
-  if (!cart.includes(id)) {
-    cart.push(id);
-    localStorage.setItem(`${loggedInUser}-cart`, JSON.stringify(cart));
-    Swal.fire({
-      title: "Added!",
-      text: "Product has been added to your cart.",
-      icon: "success",
+  fetch(`https://ecommerce.ershaad.net/api/cart/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ product_id: id }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to add product to cart");
+      }
+      return response.json();
+    })
+    .then((result) => {
+      if (result.success) {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your cart.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Unable to add product to cart.",
+          icon: "error",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong while adding to the cart.",
+        icon: "error",
+      });
     });
-  } else {
-    Swal.fire({
-      title: "Already in cart",
-      text: "This product is already in your cart.",
-      icon: "info",
-    });
-  }
 };
+
 
 
 //          * Add to Wish List
 const addToWishList = (id) => {
-  const loggedInUser = localStorage.getItem("loggedInUser");
-  if (!loggedInUser) {
+  const tokenUrl = localStorage.getItem("token");
+
+  if (!tokenUrl) {
     Swal.fire({
       title: "Login Required",
-      text: "Please login to add items to your whish List!",
+      text: "Please login to add items to your wishlist!",
       icon: "warning",
     });
     return;
   }
 
-  let wishList = JSON.parse(localStorage.getItem("wishList")) || [];
-  if (!wishList.includes(id)){
-    wishList.push(id);
-    localStorage.setItem(`${loggedInUser}-wishlist`, JSON.stringify(wishList));
-    Swal.fire({
-      title: "Added!",
-      text: "Product has been added to your wishlist.",
-      icon: "success",
-    });
-  } else {
-    Swal.fire({
-      title: "Already in cart",
-      text: "This product is already in your wishlist.",
-      icon: "info",
-    });
-  }
-}
+  fetch(`${baseUrl}/api/wishlist/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 5|nmu5mI8ak1Utx0cnc0K7dtGmDyNhflW3Ykp4fOH9074c14ca",
+    },
+    body: JSON.stringify({ product_id: id }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Wishlist API Response:", result);
+      if (result.message === "Product added to wishlist") {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your wishlist.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Failed to add item to wishlist.",
+          icon: "error",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong while adding to wishlist.",
+        icon: "error",
+      });
+    });  
+};

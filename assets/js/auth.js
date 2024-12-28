@@ -1,3 +1,7 @@
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_TIME = 30 * 1000;
+
+// التسجيل
 const registerForm = document.getElementById("register-form");
 
 if (registerForm) {
@@ -15,10 +19,11 @@ if (registerForm) {
     "confirm-password-error"
   );
 
-  const namePattern = /^[a-zA-Z\s]{3,}$/; // اسم مكون من 3 أحرف أو أكثر
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // بريد إلكتروني صالح
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // 8 أحرف على الأقل، حرف كبير ورقم
+  const namePattern = /^[a-zA-Z\s]{3,}$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
+  // دوال التحقق
   function validateName() {
     if (!namePattern.test(nameInput.value.trim())) {
       nameError.textContent = "Name must be at least 3 characters.";
@@ -60,11 +65,13 @@ if (registerForm) {
     }
   }
 
+  // حدث عند الخروج من كل حقل
   nameInput.addEventListener("blur", validateName);
   emailInput.addEventListener("blur", validateEmail);
   passwordInput.addEventListener("blur", validatePassword);
   confirmPasswordInput.addEventListener("blur", validateConfirmPassword);
 
+  // إرسال الفورم
   registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -106,6 +113,11 @@ if (registerForm) {
           if (result.data) {
             alert("Registration successful!");
             localStorage.setItem("token", result.data.token);
+            localStorage.setItem(
+              "loggedInUser",
+              JSON.stringify(result.data.user)
+            ); // حفظ بيانات المستخدم
+            console.log("Stored token:", localStorage.getItem("token"));
             window.location.href = "/pages/auth/login.html";
           } else {
             alert("Registration failed: " + result.message);
@@ -113,14 +125,12 @@ if (registerForm) {
         })
         .catch((error) => {
           console.error("Error:", error);
-        });      
+        });
     }
   });
 }
 
-const MAX_ATTEMPTS = 3;
-const LOCKOUT_TIME = 30 * 1000;
-
+// تسجيل الدخول
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
   lockoutTime: null,
@@ -155,21 +165,23 @@ if (loginForm) {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          const user = result.data.user;
+          localStorage.setItem("userData", JSON.stringify(result.data));
+
           const token = result.data.token;
 
-          localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
 
           alert("Login successful!");
-          if (user.role === "admin") {
+
+          const user = result.data.user;
+          if (user.is_admin) {
             window.location.href = "../../admin/dashboard.html";
           } else {
             window.location.href = "../../index.html";
           }
         } else {
           errorMsg.textContent = "Invalid email or password.";
-          
+
           loginAttempts.count += 1;
 
           if (loginAttempts.count >= MAX_ATTEMPTS) {
