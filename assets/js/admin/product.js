@@ -178,6 +178,101 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+ });
+
+// ///////////////////////////////////////////////////
+
+// Start pagination 
+// Global variables for pagination
+let currentPage = 1;
+const productsPerPage = 7;  
+let products = []; 
+const productList = document.getElementById('product-list');
+const paginationContainer = document.getElementById('pagination');
+
+// Fetch products and initialize pagination
+function fetchProducts() {
+    fetch(`${baseUrl}/api/products`)
+        .then(response => response.json())
+        .then(data => {
+            products = data.data;  
+            renderPage(currentPage);  
+            renderPagination(); 
+        })
+        .catch(error => console.log('Error fetching products:', error));
+}
+
+ function renderPage(page) {
+     const startIndex = (page - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const currentProducts = products.slice(startIndex, endIndex);
+
+     productList.innerHTML = '';
+
+     currentProducts.forEach(product => {
+        const productRow = document.createElement('tr');
+        productRow.innerHTML = `
+            <td>${product.id}</td>
+            <td><img src="${product.image}" alt="${product.name}"></td>
+            <td>${product.name}</td>
+            <td>${product.category.name}</td>
+            <td>${product.price}</td>
+            <td>${product.description}</td>
+            <td>${product.stock_quantity}</td>
+            <td>
+                <div class="action-btns">
+                    <button class="edit-btn" onclick="editProduct(${product.id})">Edit</button>
+                    <button class="delete-btn" onclick="deleteProduct(${product.id})">Delete</button>
+                </div>
+            </td>
+        `;
+        productList.appendChild(productRow);
     });
+}
+
+ function renderPagination() {
+    const totalPages = Math.ceil(products.length / productsPerPage); 
+    paginationContainer.innerHTML = '';
+
+     if (currentPage > 1) {
+        const prevButton = document.createElement('button');
+        prevButton.textContent = 'Previous';
+        prevButton.onclick = () => changePage(currentPage - 1);
+        paginationContainer.appendChild(prevButton);
+    }
+
+     for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.onclick = () => changePage(i);
+        if (i === currentPage) {
+            pageButton.disabled = true; 
+        }
+        paginationContainer.appendChild(pageButton);
+    }
+
+     if (currentPage < totalPages) {
+        const nextButton = document.createElement('button');
+        nextButton.textContent = 'Next';
+        nextButton.onclick = () => changePage(currentPage + 1);
+        paginationContainer.appendChild(nextButton);
+    }
+}
+
+// page change
+function changePage(page) {
+    currentPage = page;
+    renderPage(currentPage);
+    renderPagination();
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts(); 
+});
+
+
+
+
 
  
