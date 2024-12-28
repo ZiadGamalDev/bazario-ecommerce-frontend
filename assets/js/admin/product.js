@@ -17,39 +17,41 @@ const editProductdescription = document.getElementById('editProductdescription')
 const editStockQuantity = document.getElementById('editStockQuantity');
 const editPrice = document.getElementById('editPrice');
 const deleteProductId = document.getElementById('deleteProductId');
+const categorySelect = document.getElementById('categorySelect');
+const editCategorySelect = document.getElementById('editCategorySelect');
 
- // ///////////////////////////////////////////////////
- 
 function editProduct(productId) {
-    // api/products/2
     fetch(`${baseUrl}/api/products/${productId}`)
         .then(response => response.json())
         .then(data => {
-            const product=data.data;
-            editProductId.value=product.id;
-            editProductName.value=product.name;
-            editCategoryName.value=product.category.name;
-            editPrice.value=product.price;
-            editProductdescription.value=product.description;
-            editStockQuantity.value=product.stock_quantity;
-            editProductModal.style.display = 'block'
+            const product = data.data;
+            editProductId.value = product.id;
+            editProductName.value = product.name;
+            editPrice.value = product.price;
+            editProductdescription.value = product.description;
+            editStockQuantity.value = product.stock_quantity;
+            editProductModal.style.display = 'block';
+            // Set selected category
+            for (option of editCategorySelect.options) {
+                if (option.value == product.category.id) {
+                    option.selected = true;
+                }
+            }
         })
         .catch(error => console.error('Error fetching category:', error));
 }
-// ////////////////////////////////////////////////////////////
- 
+
 function deleteProduct(productId) {
     deleteProductId.value = productId;
     deleteProductModal.style.display = 'block';
 }
-// ///////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
-     fetch(`${baseUrl}/api/products`)
+    fetch(`${baseUrl}/api/products`)
         .then(response => response.json())
         .then(data => {
             const products = data.data;
-            products.forEach(product => { 
+            products.forEach(product => {
                 const productRow = document.createElement('tr');
                 productRow.innerHTML = `
                     <td>${product.id}</td>
@@ -71,113 +73,115 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch((error) => console.log('Error fetching products:', error));
 
-        openAddModal.addEventListener('click', () => {
-            addProductModal.style.display = 'block';
-        });
-        closeAddModal.addEventListener('click', () => {
-            addProductModal.style.display = 'none';
-        });
-        closeEditModal.addEventListener('click', () => {
-            editProductModal.style.display = 'none';
-        });
-        closeDeleteModal.addEventListener('click', () => {
-            deleteProductModal.style.display = 'none';
-        });
-    
-        cancelDeleteBtn.addEventListener('click', () => {
-            deleteProductModal.style.display = 'none';
-        });
+    // Fill category dropdown
+    fetch(`${baseUrl}/api/categories`)
+        .then(response => response.json())
+        .then(data => {
+            const categories = data.data;
+            categories.forEach(category => {
+                const categoryOption = document.createElement('option');
+                categoryOption.value = category.id;
+                categoryOption.textContent = category.name;
+                categorySelect.appendChild(categoryOption);
+                editCategorySelect.appendChild(categoryOption.cloneNode(true));
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
 
-        addProductForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-          
-            const productName = document.getElementById('productName').value;
-            const productImage = document.getElementById('productImage').files[0];
-            const categoryPro = document.getElementById('categoryName').value;
-            const price = document.getElementById('price').value;
-            const descriptionName = document.getElementById('descriptionName').value;
-            const stockQuantity = document.getElementById('stockQuantity').value;
- 
+    openAddModal.addEventListener('click', () => {
+        addProductModal.style.display = 'block';
+    });
+    closeAddModal.addEventListener('click', () => {
+        addProductModal.style.display = 'none';
+    });
+    closeEditModal.addEventListener('click', () => {
+        editProductModal.style.display = 'none';
+    });
+    closeDeleteModal.addEventListener('click', () => {
+        deleteProductModal.style.display = 'none';
+    });
 
-            const formData = new FormData();
-            formData.append('name', productName);
-            formData.append('image', productImage);
-            formData.append('category', categoryPro);
-            formData.append('price', price);
-            formData.append('description', descriptionName);
-            formData.append('stock_quantity', stockQuantity);
-    
-            fetch(`${baseUrl}/api/admin/products`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                }
-            })
+    cancelDeleteBtn.addEventListener('click', () => {
+        deleteProductModal.style.display = 'none';
+    });
+
+    addProductForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const productName = document.getElementById('productName').value;
+        const productImage = document.getElementById('productImage').files[0];
+        const categoryId = document.getElementById('categorySelect').value;
+        const price = document.getElementById('price').value;
+        const descriptionName = document.getElementById('descriptionName').value;
+        const stockQuantity = document.getElementById('stockQuantity').value;
+
+        const formData = new FormData();
+        formData.append('name', productName);
+        formData.append('image', productImage);
+        formData.append('category_id', categoryId);
+        formData.append('price', price);
+        formData.append('description', descriptionName);
+        formData.append('stock_quantity', stockQuantity);
+
+        fetch(`${baseUrl}/api/admin/products`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${adminToken}`,
+            }
+        })
             .then(response => response.json())
             .then(() => {
                 addProductModal.style.display = 'none';
                 location.reload();
             })
             .catch(error => console.error('Error adding category:', error));
-        });
+    });
 
- 
-        editProductForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-           
-            const productName = document.getElementById('editProductName').value;
-            const productImage = document.getElementById('editProductImage').files[0];
-            const categoryPro = document.getElementById('editCategory').value;
-            const price = document.getElementById('editPrice').value;
-            const descriptionName = document.getElementById('editProductdescription').value;
-            const stockQuantity = document.getElementById('editStockQuantity').value;
+    editProductForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    
-            const formData = new FormData();
-            formData.append('name', productName);
-            if (productImage) {
-                formData.append('image', productImage);
+        const productId = editProductId.value;
+        const productName = editProductName.value;
+        const categoryId = editCategorySelect.value;
+        const price = editPrice.value;
+        const description = editProductdescription.value;
+        const stockQuantity = editStockQuantity.value;
+
+        fetch(`${baseUrl}/api/admin/products/${productId}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                name: productName,
+                category_id: categoryId,
+                price: price,
+                description: description,
+                stock_quantity: stockQuantity
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${adminToken}`,
             }
-             formData.append('category', categoryPro);
-            formData.append('price', price);
-            formData.append('description', descriptionName);
-            formData.append('stock_quantity', stockQuantity);
-
-
-            formData.append('_method', 'PUT');
-    
-            fetch(`${baseUrl}/api/admin/products/${editProductId.value}`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                }
-            })
+        })
             .then(response => response.json())
             .then(() => {
                 editProductModal.style.display = 'none';
                 location.reload();
             })
             .catch(error => console.error('Error updating category:', error));
-        });
+    });
 
-        confirmDeleteBtn.addEventListener('click', () => {
-            fetch(`${baseUrl}/api/admin/products/${deleteProductId.value}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                }
-            })
+    confirmDeleteBtn.addEventListener('click', () => {
+        fetch(`${baseUrl}/api/admin/products/${deleteProductId.value}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${adminToken}`,
+            }
+        })
             .then(response => response.json())
             .then(data => {
-                deleteCategoryModal.style.display = 'none';
+                deleteProductModal.style.display = 'none';
                 location.reload();
             })
             .catch(error => console.error('Error deleting category:', error));
-        });
-
-
     });
-
- 
+});
