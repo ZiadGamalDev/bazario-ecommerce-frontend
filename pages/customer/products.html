@@ -33,7 +33,16 @@
                     <div class="title">
                         <h5>Price</h5>
                     </div>
-                    <div></div>
+                    <div class="price-filter">
+                        <div class="input-price">
+                            <input type="number" id="min-price" placeholder=" 0      LE " min="0">
+                        </div>
+                        <span>to</span>
+                        <div class="input-price">
+                            <input type="number" id="max-price" placeholder=" 100      LE " min="0">
+                        </div>
+                        <button id="apply-price-filter">Apply</button>
+                    </div>
                 </div>
             </div>
 
@@ -59,8 +68,6 @@
             <!-- Products section -->
             <div id="product-container"></div>
 
-            <!-- Pagination -->
-            <div id="pagination-container" class="pagination"></div>
         </div>
     </main>
 

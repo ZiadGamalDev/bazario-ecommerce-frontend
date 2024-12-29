@@ -172,6 +172,39 @@ main .container {
     border-radius: 50%;
 }
 
+.price-filter .input-price{
+    display: inline-block;
+}
+
+.price-filter input{
+    width: 65px;
+    height: 20px;
+    text-align: end;
+    border: 0.5px solid #ececec;
+    padding: 10px;
+    text-align: center;
+}
+
+.price-filter input:hover, .price-filter input:focus{
+    border: 0.5px solid var(--primary);
+    outline: none;
+}
+
+.price-filter button{
+    display: block;
+    width: 200px;
+    height: 30px;
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    margin: 10px auto;
+}
+
+.price-filter span{
+    color: var(--text);
+    margin: 0 3px;
+}
+
 
 /*** Selector Filters */
 .sort-selector{
@@ -328,36 +361,4 @@ main .container {
 .product .cart:hover, .product .fa-heart:hover {
     background-color: #569be1;
     color: #fff;
-}
-
-
-.pagination{
-    display: inline-block;
-    margin-bottom: 30px;
-    grid-area: pagination;
-}
-
-.pagination button {
-    margin: 0 5px;
-    padding: 8px 16px;
-    border: 1px solid #bedeff;
-    background-color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.pagination button.active {
-    background-color: #569be1;
-    color: white;
-    border-color: #569be1;
-}
-
-.pagination button.disabled {
-    background-color: #e0e0e0;
-    color: #aaa;
-    cursor: not-allowed;
-}
-
-.pagination button:hover:not(.disabled):not(.active) {
-    background-color: #ddd;
 }

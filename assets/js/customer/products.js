@@ -93,6 +93,14 @@ function displayAllProducts(products) {
             <img src="${product.image}" alt="${product.name}">
             <div class="description">
                 <h5>${product.name}</h5>
+                <div class="star" data-rating="${product.rating}">
+                    <i class="fa fa-star" data-value="1"></i>
+                    <i class="fa fa-star" data-value="2"></i>
+                    <i class="fa fa-star" data-value="3"></i>
+                    <i class="fa fa-star" data-value="4"></i>
+                    <i class="fa fa-star" data-value="5"></i>
+                    <span>${product.rating.toFixed(1)}</span>
+                </div>
                 <h4>${product.price}LE</h4>
             </div>
             <button class="cart-button"><i class="fal fa-shopping-cart cart"></i></button>
@@ -126,6 +134,24 @@ function displayAllProducts(products) {
             updateWishlistButtonStyle(product.id, true);
         }
     });
+    updateProductStars();
+}
+
+//** Update product stars based on ratings **
+function updateProductStars() {
+    var starContainers = document.querySelectorAll(".star");
+    starContainers.forEach((container) => {
+        const rating = parseFloat(container.getAttribute("data-rating"));
+        const stars = container.querySelectorAll(".fa-star");
+
+        stars.forEach((star) => {
+            if (parseFloat(star.getAttribute("data-value")) <= rating) {
+                star.classList.add("active-star");
+            } else {
+                star.classList.remove("active-star");
+            }
+        });
+    });
 }
 
 
@@ -150,6 +176,28 @@ function getByCategory(categoryId) {
         })
         .catch((error) => console.error("Error fetching products by category:", error));
 }
+
+
+// ** Filter Products by Price **
+const minPriceInput = document.getElementById("min-price");
+const maxPriceInput = document.getElementById("max-price");
+const applyPriceFilterButton = document.getElementById("apply-price-filter");
+
+function filterByPrice(products, minPrice, maxPrice) {
+    return products.filter(product => {
+        const price = parseFloat(product.price);
+        return (!minPrice || price >= minPrice) && (!maxPrice || price <= maxPrice);
+    });
+}
+
+applyPriceFilterButton.addEventListener("click", () => {
+    const minPrice = parseFloat(minPriceInput.value) || 0;
+    const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+    const filteredProducts = filterByPrice(currentProducts, minPrice, maxPrice);
+    displayAllProducts(filteredProducts);
+});
+
 
 // ** Search Products **
 const searchInput = document.querySelector(".search");

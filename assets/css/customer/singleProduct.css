@@ -104,10 +104,9 @@ main{
 }
 
 .details-content .rating span{
-    padding-top: 3px;
     margin-left: 15px;
     color: var(--primary);
-    font-size: 16px;
+    font-size: 18px;
     opacity: 1;
 }
 
@@ -544,4 +543,11 @@ main{
 
 .related-products .section-products .next {
     right: 25px;
+}
+
+
+
+.wishlist-added i{
+    background-color: var(--primary) !important;
+    color: #fff !important;
 }
