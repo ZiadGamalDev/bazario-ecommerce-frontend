@@ -149,11 +149,12 @@ main .container {
     padding: 9px 18px;
     margin: 0 0 15px 0;
     justify-content: space-between;
+    transition: .3s all ease-in-out;
 }
 
 #sidebar ul li:hover {
     cursor: pointer;
-    scale: 1.03;
+    transform: scale(1.03);
     color: var(--primary);
     border: 0.5px solid #bedeff;
     box-shadow: 0 0 10px rgba(155, 155, 155, 0.3);
@@ -216,15 +217,23 @@ main .container {
     grid-area: sortSelector;
 }
 
+.sort-by {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .sort-by-search{
-    display: inline-block;
-    margin-right: 360px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 35px;
 }
 
 .sort-by-search .search{
-    border-radius: 30px;
-    padding: 9px 9px 9px 16px;
-    width: 350px;
+    border-radius: 4px;
+    padding: 15px 9px 15px 16px;
+    width: 220px;
     height: 25px;
     margin-left: 10px;
     border: 1px solid #ececec;
@@ -232,9 +241,22 @@ main .container {
     outline: none;
     color: var(--text);
     font-size: .90rem;
+    transition: .4s all ease-in-out;
 }
 
 .sort-by-search .search:hover {
+    border: 1px solid #bedeff;
+}
+
+.sort-by-search .search::placeholder{
+    color:#8b8b8b;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+.sort-by-search .search:focus,
+.sort-by-search .search:not(:placeholder-shown){
+    width: 300px;
     border: 1px solid #bedeff;
 }
 
@@ -278,12 +300,12 @@ main .container {
 .product {
     width: 16%;
     min-width: 270px;
-    padding: 0 12px;
+    padding: 20px 20px;
     border: 1px solid #ececec;
-    border-radius: 25px;
+    border-radius: 4px;
     cursor: pointer;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.03);
-    transition: 0.1s ease;
+    transition: 0.3s ease;
     position: relative;
 }
 
@@ -295,10 +317,16 @@ main .container {
 .product img {
     width: 95%;
     height: 250px;
-    border-radius: 20px;
+    border-radius: 4px;
+    transition: .3s all ease-in-out;
+}
+
+.product img:hover {
+    transform: scale(1.1);
 }
 
 .product .description {
+    border-top: 1px solid #8b8b8b;
     text-align: start;
     padding: 10px 0;
 }
@@ -311,13 +339,15 @@ main .container {
 .product .description h5 {
     padding: 7px 0;
     color: var(--text);
-    font-size: 13px;
+    font-size: 17px;
+    margin-bottom: 10px;
     font-weight: 700;
 }
 
 .product .description .star span{
     font-size: 11px;
     padding-left: 3px;
+    margin-bottom: 6px;
 }
 
 .fa-star {
@@ -337,8 +367,11 @@ main .container {
 }
 
 .product .cart, .product .fa-heart {
-    width: 30px;
-    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
     line-height: 30px;
     border-radius: 50%;
     background-color: #e6f3ff;
@@ -348,6 +381,7 @@ main .container {
     position: absolute;
     bottom: 18px;
     cursor: pointer;
+    transition: .3s all ease-in-out;
 }
 
 .product .fa-heart{
@@ -355,7 +389,7 @@ main .container {
 }
 
 .product .cart {
-    right: 65px;
+    right: 85px;
 }
 
 .product .cart:hover, .product .fa-heart:hover {
