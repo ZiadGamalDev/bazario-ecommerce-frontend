@@ -14,6 +14,12 @@ const ratingNum = document.querySelector(".rating span");
 const productDiscription = document.querySelector(".product-discription");
 const extraLink = document.querySelector(".extra-link2")
 const relatedProductRow = document.querySelector(".section-products-row");
+var reviewList = document.getElementById("reviews-list");
+var submitReviewButton = document.getElementById("submit-review-btn");
+var reviewText = document.getElementById("review-text");
+var ratingStarsContainer = document.getElementById("rating-stars");
+var errorMessege = document.querySelector(".submit-review span");
+var userRating = 0;
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("productId");
 
@@ -70,34 +76,32 @@ function displayProductDetails(product) {
 
 
 //* Add Reviews
-var reviewList = document.getElementById("reviews-list");
-var submitReviewButton = document.getElementById("submit-review-btn");
-var reviewText = document.getElementById("review-text");
-var ratingStarsContainer = document.getElementById("rating-stars");
-var errorMessege = document.querySelector(".submit-review span");
-var userRating = 0;
-
 function displayReviews(productId) {
-    fetch(`${baseUrl}/api/reviews?product_id=${productId}`)
+    fetch(`${baseUrl}/api/products/${productId}`)
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch reviews");
             return response.json();
         })
         .then(data => {
-            const reviews = data.data;
+            // console.log( data.data);
+
+            const product = data.data;
+            console.log(product)
             const reviewList = document.getElementById("reviews-list");
             reviewList.innerHTML = "";
 
-            if (reviews.length === 0) {
+            if (product.reviews.length === 0) {
                 reviewList.innerHTML = `<p>No reviews yet. Be the first to review this product!</p>`;
                 return;
             }
 
-            reviews.forEach(review => {
+            product.reviews.forEach(review => {
+                console.log(review)
                 const reviewDiv = document.createElement("div");
                 reviewDiv.classList.add("review-item");
                 reviewDiv.innerHTML = `
                     <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(review.rating)}</div>
+                    <small>Submitted on: ${review.created_at}</small>
                     <p>${review.feedback}</p>
                 `;
                 reviewList.appendChild(reviewDiv);
@@ -105,6 +109,59 @@ function displayReviews(productId) {
         })
         .catch(error => console.error("Error fetching reviews:", error));
 }
+
+submitReviewButton.addEventListener("click", () => {
+    const reviewTextValue = reviewText.value.trim();
+    if (!token) {
+        console.error("Authorization token is missing or invalid.");
+        errorMessege.textContent = "Authentication failed. Please log in again.";
+        return;
+    }
+
+    if (reviewTextValue && userRating > 0) {
+        console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
+
+        fetch(`${baseUrl}/api/reviews`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                rating: userRating,
+                feedback: reviewTextValue,
+            }),
+        })
+            .then(response => {
+                // console.log(response);
+
+                if (!response.ok) throw new Error("Failed to submit review");
+                return response.json();
+            })
+            .then((data) => {
+                // console.log(data.data);
+
+                reviewText.value = "";
+                userRating = 0;
+                updateStars(ratingStarsContainer, userRating);
+
+                const newReview = data.data;
+                const reviewDiv = document.createElement("div");
+                reviewDiv.classList.add("review-item");
+                reviewDiv.innerHTML = `
+                    <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(parseInt(newReview.rating, 10))}</div>
+                    <small>Submitted on: ${newReview.created_at}</small>
+                    <p>${newReview.feedback}</p>
+                `;
+                const reviewList = document.getElementById("reviews-list");
+                reviewList.prepend(reviewDiv);
+            })
+            .catch(error => console.error("Error submitting review:", error));
+    } else {
+        errorMessege.textContent = "Please complete your data to make a review.";
+    }
+});
 
 
 if (ratingStarsContainer) {
@@ -115,36 +172,6 @@ if (ratingStarsContainer) {
         }
     });
 }
-
-submitReviewButton.addEventListener("click", () => {
-    const reviewTextValue = reviewText.value.trim();
-
-    if (reviewTextValue && userRating > 0) {
-        const formData = new FormData();
-        formData.append("product_id", productId);
-        formData.append("rating", userRating);
-        formData.append("feedback", reviewTextValue);
-
-        fetch(`${baseUrl}/api/reviews`, {
-            method: "POST",
-            // headers: { "Content-Type": "application/json" },
-            body: formData,
-        })
-            .then(response => {
-                if (!response.ok) throw new Error("Failed to submit review");
-                return response.json();
-            })
-            .then(() => {
-                reviewText.value = "";
-                userRating = 0;
-                updateStars(ratingStarsContainer, userRating);
-                displayReviews(productId);
-            })
-            .catch(error => console.error("Error submitting review:", error));
-    } else {
-        errorMessege.textContent = "Please complete your data to make a review.";
-    }
-});
 
 
 // Fetch related products

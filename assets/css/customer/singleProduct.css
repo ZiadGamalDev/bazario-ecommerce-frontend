@@ -324,15 +324,15 @@ main{
     color: #f5c518;
 }
 
-.reviews-section #reviews-list .review-item span, .reviews-section #reviews-list .review-item p{
+.reviews-section #reviews-list .review-item p{
     display: block;
     width: 100%;
 }
 
-.reviews-section #reviews-list .review-item span{
+.reviews-section #reviews-list .review-item small{
     font-size: 11px;
     color: #7E7E7E;
-    margin-bottom: 10px;
+    margin-top: 3px;
 }
 
 .submit-review .rating-stars{
