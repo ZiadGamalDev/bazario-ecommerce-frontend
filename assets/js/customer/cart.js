@@ -1,9 +1,9 @@
 const displayCart = async () => {
   const cartBody = document.getElementById("cart-table-body");
   const totalPrice = document.getElementById("total-price");
-  const token = localStorage.getItem("token");
+  const tokenUrl = localStorage.getItem("token");
 
-  if (!token) {
+  if (!tokenUrl) {
     cartBody.innerHTML = `
         <p style="text-align:center; font-size: 40px; color: #ffba00; margin-top: 100px;">
           <i class="fa-solid fa-triangle-exclamation"></i> Please login to view your cart!
@@ -15,7 +15,7 @@ const displayCart = async () => {
     const res = await fetch(`${baseUrl}/api/cart/view`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenUrl}`,
       },
     });
 
@@ -24,7 +24,6 @@ const displayCart = async () => {
     }
 
     const data = await res.json();
-    
 
     if (data && data.data && data.data.length > 0) {
       cartBody.innerHTML = "";
@@ -77,9 +76,7 @@ const displayCart = async () => {
           2
         )}</span></td>
             <td>
-              <span class="remove-button" onclick="removeFromCart(${
-                product.id
-              })">
+              <span class="remove-button" data-id="${product.id}">
                 <i class="fa-solid fa-x"></i>
               </span>
             </td>
@@ -88,10 +85,49 @@ const displayCart = async () => {
       });
 
       totalPrice.innerText = `$${total.toFixed(2)}`;
+
+      const removeButtons = document.querySelectorAll(".remove-button");
+      removeButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          const id = event.target.closest(".remove-button").getAttribute("data-id");
+          console.log(id);
+          try {
+            const response = await fetch(`${baseUrl}/api/cart/remove`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenUrl}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ product_id: id }),
+            });
+
+            if (response.ok) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Item removed successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              displayCart();
+            } else {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Failed to remove item",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          } catch (error) {
+            console.error("Error removing item:", error);
+          }
+        });
+      });
     } else {
       cartBody.innerHTML = `
-          <p style="text-align:center; font-size: 18px; color: #555; margin-top: 50px;">
-            Your cart is empty.
+          <p style="text-align:center; font-size: 38px; color: #555; margin-top: 100px;">
+            Your cart is empty!
           </p>`;
     }
   } catch (error) {
@@ -102,6 +138,8 @@ const displayCart = async () => {
         </p>`;
   }
 };
+
+displayCart();
 
 const increaseQuantity = (id, price) => {
   const quantityInput = document.getElementById(`quantity-${id}`);
@@ -145,59 +183,65 @@ const updateTotalPrice = () => {
 
 displayCart();
 
+// * Proceed Order
+const proceedOrder = async () => {
+  const tokenUrl = localStorage.getItem("token");
 
-const removeFromCart = (id) => {
-    const tokenUrl = localStorage.getItem("token");
-  
+  if (!tokenUrl) {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Login Required",
+      text: "Please login to proceed with your order.",
       icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`${baseUrl}/api/cart/remove`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${tokenUrl}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ productId: id }),
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            if (data.success) {
-              displayWishlist();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Product has been removed from the wishlist.",
-                icon: "success",
-              });
-            } else {
-              Swal.fire({
-                title: "Error",
-                text: data.message || "Failed to remove item from wishlist.",
-                icon: "error",
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            Swal.fire({
-              title: "Error",
-              text: "Something went wrong while removing from wishlist.",
-              icon: "error",
-            });
-          });
-      }
+      confirmButtonText: "OK",
     });
-  };
-  
+    return;
+  }
+
+  try {
+    const response = await fetch(`${baseUrl}/api/orders/proceed`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenUrl}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Response Data:", data);
+
+    if (data.success || data.status === "success" || data.message === "Order created successfully") {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Order has been proceeded successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      Swal.fire({
+        title: "Unable to Proceed",
+        text: data.message || "There was an issue placing your order.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  } catch (error) {
+    console.log("Error: ", error);
+    Swal.fire({
+      title: "Error",
+      text: "An error occurred. Please try again later.",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  }
+};
+
+document.getElementById("checkout-button").addEventListener("click", proceedOrder);

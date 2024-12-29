@@ -37,15 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
     registerLink.style.display = "none";
 
     dashboardLink.style.display = "inline";
+    var Uname = userData.user.name;
+    var uname = Uname.split(" ");
     dashboardLink.textContent =
       userData.user.is_admin === 1
-        ? `Hi, ${userData.user.name} > Admin Dashboard`
-        : `Hi, ${userData.user.name} > User Dashboard`;
+        ? `Hi, ${uname[0]} > Dashboard`
+        : `Hi, ${uname[0]} > Profile`;
 
     dashboardLink.href =
       userData.user.is_admin === 1
-        ? "../../admin/adminDashboard.html"
-        : "../../Customer/UserDashboard.html";
+        ? "/pages/admin/index.html"
+        : "/pages/customer/userprofile.html";
 
     logoutBtn.style.display = "inline";
   } else {
@@ -87,7 +89,7 @@ setInterval(() => {
 
 
 
-// * Get Some Products
+// *    Get Some Products
 const fetchProducts = async () => {
   const productList = document.getElementById("product-list");
 
@@ -115,16 +117,14 @@ const fetchProducts = async () => {
 
         productCard.innerHTML = `
           <div class="product-tumb">
-            <a href="../../Products/SingleProduct.html?productId=${product.id}">
+            <a href="/pages/customer/singleProduct.html?productId=${product.id}">
               <img src="${product.image}" alt="${product.name}">
             </a>
           </div>
           <div class="product-details">
             <span class="product-catagory">${product.category?.name}</span>
             <h4>
-              <a href="../../Products/SingleCategory.html?categoryId=${product.category?.id || "#"}">
-                ${product.name}
-              </a>
+              ${product.name}
             </h4>
             <p>${product.description || "No description available."}</p>
             <div class="product-bottom-details">
@@ -194,7 +194,7 @@ const fetchCategories = async () => {
 fetchCategories();
 
 
-// * Add to Cart
+// *    Add to Cart
 const addToCartList = (id) => {
   const tokenUrl = localStorage.getItem("token");
 
