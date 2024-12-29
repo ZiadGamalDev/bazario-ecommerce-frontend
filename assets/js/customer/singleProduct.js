@@ -39,15 +39,15 @@ function fetchProductDetails(id) {
 function displayProductDetails(product) {
     productImg.innerHTML = `<img src="${product.image}" alt="" class="productImage">`;
     productTitle.textContent = product.name;
-    // ratingNum.classList.add("ratingNum");
-    // ratingNum.textContent = product.rating;
+    ratingNum.classList.add("ratingNum");
+    ratingNum.textContent = product.rating.toFixed(1);
     productPrice.innerHTML = `${product.price} LE`;
     productDiscription.innerHTML = `<p>${product.description}</p>`;
     productCategory.innerHTML = `<strong>Category: </strong>${product.category.name}.`;
     productStock.innerHTML = `<strong>In Stock: </strong>${product.stock_quantity}`;
 
     extraLink.innerHTML = `
-    <button class="btn1" onclick="addToCart(${product.id})">
+    <button class="btn1" onclick="addToCartList(${product.id})">
         <i class="fal fa-shopping-cart cart"></i>
         Add to Cart
     </button>
@@ -56,102 +56,95 @@ function displayProductDetails(product) {
     </button>
     `;
 
-    // Check if the product is already in the wishlist and update the style
     const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     if (wishlist.includes(product.id)) {
         updateWishlistButtonStyle(product.id, true);
     }
-
-    // updateStars(document.querySelector(".stars"), product.rating);
+    
+    updateStars(document.querySelector(".stars"), product.rating);
 
     fetchRelatedProducts(product.category.id, product.id);
 
-    // displayReviews(product.id);
+    displayReviews(product.id);
 }
 
 
 //* Add Reviews
-// var reviewList = document.getElementById("reviews-list");
-// var submitReviewButton = document.getElementById("submit-review-btn");
-// var reviewText = document.getElementById("review-text");
-// var reviewName = document.getElementById("review-name");
-// var ratingStarsContainer = document.getElementById("rating-stars");
-// var errorMessege = document.querySelector(".submit-review span");
-// var userRating = 0;
+var reviewList = document.getElementById("reviews-list");
+var submitReviewButton = document.getElementById("submit-review-btn");
+var reviewText = document.getElementById("review-text");
+var ratingStarsContainer = document.getElementById("rating-stars");
+var errorMessege = document.querySelector(".submit-review span");
+var userRating = 0;
 
-// function displayReviews(productId) {
-//     fetch(`${baseUrl}/api/products/${productId}/reviews`)
-//         .then(response => response.json())
-//         .then(reviews => {
-//             const reviewList = document.getElementById("reviews-list");
-//             reviewList.innerHTML = "";
-//             reviews.forEach(review => {
-//                 const reviewDiv = document.createElement("div");
-//                 reviewDiv.classList.add("review-item");
-//                 reviewDiv.innerHTML = `
-//                     <h3><strong>${review.name}</strong></h3>
-//                     <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(review.rating)}</div>
-//                     <span>${review.date}</span>
-//                     <p>${review.text}</p>
-//                 `;
-//                 reviewList.appendChild(reviewDiv);
-//             });
-//         })
-//         .catch(error => console.error('Error fetching reviews:', error));
-// }
+function displayReviews(productId) {
+    fetch(`${baseUrl}/api/reviews?product_id=${productId}`)
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch reviews");
+            return response.json();
+        })
+        .then(data => {
+            const reviews = data.data;
+            const reviewList = document.getElementById("reviews-list");
+            reviewList.innerHTML = "";
 
-// ratingStarsContainer.addEventListener("click", (event) => {
-//     if (event.target.classList.contains("fa-star")) {
-//         userRating = parseInt(event.target.getAttribute("data-value"));
-//         updateStars(ratingStarsContainer, userRating);
-//     }
-// });
+            if (reviews.length === 0) {
+                reviewList.innerHTML = `<p>No reviews yet. Be the first to review this product!</p>`;
+                return;
+            }
 
-// function updateStars(starContainer, rating) {
-//     const stars = starContainer.querySelectorAll(".fa-star");
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement("div");
+                reviewDiv.classList.add("review-item");
+                reviewDiv.innerHTML = `
+                    <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(review.rating)}</div>
+                    <p>${review.feedback}</p>
+                `;
+                reviewList.appendChild(reviewDiv);
+            });
+        })
+        .catch(error => console.error("Error fetching reviews:", error));
+}
 
-//     stars.forEach((star) => {
-//         const starValue = parseInt(star.getAttribute("data-value"), 10);
-//         if (starValue <= rating) {
-//             star.classList.add("filled");
-//         } else {
-//             star.classList.remove("filled");
-//         }
-//     });
-// }
 
-// submitReviewButton.addEventListener("click", () => {
-//     const reviewNameValue = reviewName.value.trim();
-//     const reviewTextValue = reviewText.value.trim();
+if (ratingStarsContainer) {
+    ratingStarsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("fa-star")) {
+            userRating = parseInt(event.target.getAttribute("data-value"));
+            updateStars(ratingStarsContainer, userRating);
+        }
+    });
+}
 
-//     if (reviewNameValue && reviewTextValue && userRating > 0) {
+submitReviewButton.addEventListener("click", () => {
+    const reviewTextValue = reviewText.value.trim();
 
-//         const reviewDateAndTime = new Date();
-//         const reviewDate = reviewDateAndTime.toLocaleDateString();
-//         const reviewTime = reviewDateAndTime.toLocaleTimeString();
+    if (reviewTextValue && userRating > 0) {
+        const formData = new FormData();
+        formData.append("product_id", productId);
+        formData.append("rating", userRating);
+        formData.append("feedback", reviewTextValue);
 
-//         let reviews = JSON.parse(localStorage.getItem(`reviews_${productId}`)) || [];
-        
-//         const newReview = {
-//             name: reviewNameValue,
-//             text: reviewTextValue,
-//             rating: userRating,
-//             date: reviewDate,
-//             time: reviewTime,
-//         };
-
-//         reviews.push(newReview);
-//         localStorage.setItem(`reviews_${productId}`, JSON.stringify(reviews));
-
-//         reviewName.value = "";
-//         reviewText.value = "";
-//         userRating = 0; 
-//         updateStars(ratingStarsContainer, userRating);
-//         displayReviews(productId);
-//     } else {
-//         errorMessege.textContent = "Please complete your data to make a review.";
-//     }
-// });
+        fetch(`${baseUrl}/api/reviews`, {
+            method: "POST",
+            // headers: { "Content-Type": "application/json" },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to submit review");
+                return response.json();
+            })
+            .then(() => {
+                reviewText.value = "";
+                userRating = 0;
+                updateStars(ratingStarsContainer, userRating);
+                displayReviews(productId);
+            })
+            .catch(error => console.error("Error submitting review:", error));
+    } else {
+        errorMessege.textContent = "Please complete your data to make a review.";
+    }
+});
 
 
 // Fetch related products
@@ -174,7 +167,6 @@ function fetchRelatedProducts(categoryId, currentProductId) {
 
 // Display related products
 function displayRelatedProducts(products) {
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
     relatedProductRow.innerHTML = "";
     products.forEach((product) => {
@@ -186,17 +178,25 @@ function displayRelatedProducts(products) {
             <img src="${product.image}" alt="${product.name}">
             <div class="related-product-description">
                 <h2>${product.name}</h2>
+                <div class="star">
+                    <i class="fa fa-star" data-value="1"></i>
+                    <i class="fa fa-star" data-value="2"></i>
+                    <i class="fa fa-star" data-value="3"></i>
+                    <i class="fa fa-star" data-value="4"></i>
+                    <i class="fa fa-star" data-value="5"></i>
+                    <span>${product.rating.toFixed(1)}</span>
+                </div>
                 <h4>${product.price} LE</h4>
             </div>
-            <button onclick="addToCart(${product.id})"><i class="fal fa-shopping-cart cart"></i></button>
+            <button onclick="addToCartList(${product.id})"><i class="fal fa-shopping-cart cart"></i></button>
             <button data-wishlist-id="${product.id}" onclick="addToWishList(${product.id})"><i class="fa-regular fa-heart"></i></button>
         `;
 
         relatedProductRow.appendChild(productCard);
 
-        // updateStars(productCard.querySelector(".star"), product.rating);
+        updateStars(productCard.querySelector(".star"), product.rating);
 
-        // Check if the product is already in the wishlist and update the style
+        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
         if (wishlist.includes(product.id)) {
             updateWishlistButtonStyle(product.id, true);
         }
@@ -208,6 +208,7 @@ function displayRelatedProducts(products) {
         });
     });
 }
+
 
 // Update stars based on the rating
 function updateStars(starContainer, rating) {
@@ -224,22 +225,109 @@ function updateStars(starContainer, rating) {
     });
 }
 
-// Activate size options
-document.addEventListener("DOMContentLoaded", () => {
-    if (productId) {
-        fetchProductDetails(productId);
+
+
+// * Add to Cart
+const addToCartList = (id) => {
+    const tokenUrl = localStorage.getItem("token");
+
+    if (!tokenUrl) {
+        console.log("login required");
+        return;
     }
 
-    const sizeOptions = document.querySelectorAll(".product-size ul li a");
-    sizeOptions.forEach((option) => {
-        option.addEventListener("click", (event) => {
-            event.preventDefault();
-            sizeOptions.forEach((opt) => opt.classList.remove("active-size"));
-            option.classList.add("active-size");
+    fetch(`${baseUrl}/api/cart/add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${tokenUrl}`,
+        },
+        body: JSON.stringify({ product_id: id }),
+    })
+        .then((response) => response.json())
+        .then((result) => {
+            if (result.message === "Product added to cart") {
+                Swal.fire({
+                    title: "Added!",
+                    text: "Product has been added to your cart.",
+                    icon: "success",
+                });
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: result.message || "Failed to add item to cart.",
+                    icon: "error",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+                title: "Error",
+                text: "Something went wrong while adding to cart.",
+                icon: "error",
+            });
         });
-    });
-});
+};
 
+// * Add to wishList
+const addToWishList = (id) => {
+    const tokenUrl = localStorage.getItem("token");
+
+    if (!tokenUrl) {
+        console.log("login required");
+
+        return;
+    }
+
+    fetch(`${baseUrl}/api/wishlist/add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${tokenUrl}`,
+        },
+        body: JSON.stringify({ product_id: id }),
+    })
+        .then((response) => response.json())
+        .then((result) => {
+            console.log("Wishlist API Response:", result);
+            if (result.message === "Product added to wishlist") {
+                Swal.fire({
+                    title: "Added!",
+                    text: "Product has been added to your wishlist.",
+                    icon: "success",
+                });
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: result.message || "Failed to add item to wishlist.",
+                    icon: "error",
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+                title: "Error",
+                text: "Something went wrong while adding to wishlist.",
+                icon: "error",
+            });
+        });
+};
+
+
+function updateWishlistButtonStyle(productId, isAdded) {
+    const wishlistButton = document.querySelector(`[data-wishlist-id="${productId}"]`);
+    if (wishlistButton) {
+        if (isAdded) {
+            wishlistButton.innerHTML = `<i class="fa-solid fa-heart"></i>`; 
+            wishlistButton.classList.add("wishlist-added");
+        } else {
+            wishlistButton.innerHTML = `<i class="fa-regular fa-heart"></i>`; 
+            wishlistButton.classList.remove("wishlist-added");
+        }
+    }
+}
 
 
 
@@ -259,3 +347,6 @@ function moveSlide(direction) {
     track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchProductDetails(productId);
+});
