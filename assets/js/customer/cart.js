@@ -1,9 +1,9 @@
 const displayCart = async () => {
   const cartBody = document.getElementById("cart-table-body");
   const totalPrice = document.getElementById("total-price");
-  const token = localStorage.getItem("token");
+  const tokenUrl = localStorage.getItem("token");
 
-  if (!token) {
+  if (!tokenUrl) {
     cartBody.innerHTML = `
         <p style="text-align:center; font-size: 40px; color: #ffba00; margin-top: 100px;">
           <i class="fa-solid fa-triangle-exclamation"></i> Please login to view your cart!
@@ -15,7 +15,7 @@ const displayCart = async () => {
     const res = await fetch(`${baseUrl}/api/cart/view`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenUrl}`,
       },
     });
 
@@ -24,7 +24,6 @@ const displayCart = async () => {
     }
 
     const data = await res.json();
-    
 
     if (data && data.data && data.data.length > 0) {
       cartBody.innerHTML = "";
@@ -77,9 +76,7 @@ const displayCart = async () => {
           2
         )}</span></td>
             <td>
-              <span class="remove-button" onclick="removeFromCart(${
-                product.id
-              })">
+              <span class="remove-button" data-id="${product.id}">
                 <i class="fa-solid fa-x"></i>
               </span>
             </td>
@@ -88,6 +85,33 @@ const displayCart = async () => {
       });
 
       totalPrice.innerText = `$${total.toFixed(2)}`;
+
+      const removeButtons = document.querySelectorAll(".remove-button");
+      removeButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          const id = event.target.closest(".remove-button").getAttribute("data-id");
+          console.log(id);
+          try {
+            const response = await fetch(`${baseUrl}/api/cart/remove`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenUrl}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ product_id: id }),
+            });
+
+            if (response.ok) {
+              alert("Item removed successfully");
+              displayCart();
+            } else {
+              alert("Failed to remove item");
+            }
+          } catch (error) {
+            console.error("Error removing item:", error);
+          }
+        });
+      });
     } else {
       cartBody.innerHTML = `
           <p style="text-align:center; font-size: 18px; color: #555; margin-top: 50px;">
@@ -102,6 +126,8 @@ const displayCart = async () => {
         </p>`;
   }
 };
+
+displayCart();
 
 const increaseQuantity = (id, price) => {
   const quantityInput = document.getElementById(`quantity-${id}`);
@@ -145,59 +171,35 @@ const updateTotalPrice = () => {
 
 displayCart();
 
+// const removeFromCart = (id) => {
+//   debugger;
+//   console.log(id);
 
-const removeFromCart = (id) => {
-    const tokenUrl = localStorage.getItem("token");
-  
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`${baseUrl}/api/cart/remove`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${tokenUrl}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ productId: id }),
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            if (data.success) {
-              displayWishlist();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Product has been removed from the wishlist.",
-                icon: "success",
-              });
-            } else {
-              Swal.fire({
-                title: "Error",
-                text: data.message || "Failed to remove item from wishlist.",
-                icon: "error",
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            Swal.fire({
-              title: "Error",
-              text: "Something went wrong while removing from wishlist.",
-              icon: "error",
-            });
-          });
-      }
-    });
-  };
-  
+//   const tokenUrl = localStorage.getItem("token");
+
+//   fetch(`${baseUrl}/api/cart/remove`, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${tokenUrl}`,
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ productId: id }),
+//   })
+//     .then((res) => {
+//       if (!res.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       return res.json();
+//     })
+//     .then((data) => {
+//       if (data.success) {
+//         displayWishlist();
+//         alert("Success");
+//       } else {
+//         alert("failed");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error:", error);
+//     });
+// };

@@ -40,14 +40,20 @@ const displayWishlist = async () => {
             <td>${item.name}</td>
             <td>$${parseFloat(item.price).toFixed(2)}</td>
             <td>
-              <span class="remove-button" style="justify-content: flex-start; margin-left: 20px;" onclick="removeFromWishlist(${
-                item.id
-              })">
+              <span class="remove-button" data-id="${item.id}" style="justify-content: flex-start; margin-left: 20px;">
                 <i class="fa-solid fa-x"></i>
               </span>
             </td>
           `;
         wishlistBody.appendChild(row);
+      });
+
+      const removeButtons = document.querySelectorAll(".remove-button");
+      removeButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
+          const productId = event.target.closest(".remove-button").getAttribute("data-id");
+          confirmAndRemoveFromWishlist(productId);
+        });
       });
     } else {
       wishlistBody.innerHTML = `
@@ -62,10 +68,7 @@ const displayWishlist = async () => {
   }
 };
 
-displayWishlist();
-
-// Remove product from the wishlist
-const removeFromWishlist = (id) => {
+const confirmAndRemoveFromWishlist = (id) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -93,7 +96,7 @@ const removeFromWishlist = (id) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ productId: id }),
+        body: JSON.stringify({ product_id: id }),
       })
         .then((res) => {
           if (!res.ok) {
@@ -128,3 +131,5 @@ const removeFromWishlist = (id) => {
     }
   });
 };
+
+displayWishlist();
