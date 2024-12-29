@@ -719,7 +719,7 @@ Preloader Area CSS
 # rolling news bar Categories
 --------------------------------------------------------------*/
 .hwrap {
-  overflow: hidden;
+  overflow: scroll;
   margin: 100px 0px;
   padding: 40px 90px 60px 90px;
   border-top: 1px solid #e6e6e6;
@@ -737,7 +737,7 @@ Preloader Area CSS
 }
 
 .hwrap h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
   color: #c5c5c5;
@@ -814,7 +814,7 @@ Preloader Area CSS
 }
 
 .products h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
   color: #c5c5c5;
@@ -1070,7 +1070,7 @@ Preloader Area CSS
 
 
 .latest-posts h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
 }

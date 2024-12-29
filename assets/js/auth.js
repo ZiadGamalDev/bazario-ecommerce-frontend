@@ -127,13 +127,6 @@ if (registerForm) {
   });
 }
 
-const MAX_ATTEMPTS = 3;
-const LOCKOUT_TIME = 30 * 1000;
-        });
-    }
-  });
-}
-
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
   lockoutTime: null,
