@@ -3,6 +3,28 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPartial("footer", "../../../pages/components/footer.html");
 });
 
+// *Header scroll
+document.addEventListener("DOMContentLoaded", function () {
+    window.addEventListener("scroll", function () {
+        var header = document.querySelector(".header");
+        if (window.scrollY > 100) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    });
+});
+
+// *window scroll
+const toTop = document.querySelector(".backTop");
+window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 200) {
+        toTop.classList.add("active");
+    } else {
+        toTop.classList.remove("active");
+    }
+});
+
 const productImg = document.querySelector(".product-img");
 const productTitle = document.querySelector(".product-title");
 const productRate = document.querySelector(".stars");
@@ -66,7 +88,7 @@ function displayProductDetails(product) {
     if (wishlist.includes(product.id)) {
         updateWishlistButtonStyle(product.id, true);
     }
-    
+
     updateStars(document.querySelector(".stars"), product.rating);
 
     fetchRelatedProducts(product.category.id, product.id);
@@ -259,7 +281,11 @@ const addToCartList = (id) => {
     const tokenUrl = localStorage.getItem("token");
 
     if (!tokenUrl) {
-        console.log("login required");
+        Swal.fire({
+            title: "Login Required",
+            text: "Please login to add items to your wishlist!",
+            icon: "warning",
+        });
         return;
     }
 
@@ -267,7 +293,7 @@ const addToCartList = (id) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUrl}`,
+            Authorization: `Bearer ${tokenUrl}`,
         },
         body: JSON.stringify({ product_id: id }),
     })
@@ -302,8 +328,11 @@ const addToWishList = (id) => {
     const tokenUrl = localStorage.getItem("token");
 
     if (!tokenUrl) {
-        console.log("login required");
-
+        Swal.fire({
+            title: "Login Required",
+            text: "Please login to add items to your wishlist!",
+            icon: "warning",
+        });
         return;
     }
 
@@ -311,7 +340,7 @@ const addToWishList = (id) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${tokenUrl}`,
+            Authorization: `Bearer ${tokenUrl}`,
         },
         body: JSON.stringify({ product_id: id }),
     })
@@ -333,11 +362,12 @@ const addToWishList = (id) => {
             }
         })
         .catch((error) => {
-            console.error("Error:", error);
             Swal.fire({
-                title: "Error",
-                text: "Something went wrong while adding to wishlist.",
+                position: "top-end",
                 icon: "error",
+                title: `Error ${error.message}`,
+                showConfirmButton: false,
+                timer: 1500,
             });
         });
 };
@@ -347,10 +377,10 @@ function updateWishlistButtonStyle(productId, isAdded) {
     const wishlistButton = document.querySelector(`[data-wishlist-id="${productId}"]`);
     if (wishlistButton) {
         if (isAdded) {
-            wishlistButton.innerHTML = `<i class="fa-solid fa-heart"></i>`; 
+            wishlistButton.innerHTML = `<i class="fa-solid fa-heart"></i>`;
             wishlistButton.classList.add("wishlist-added");
         } else {
-            wishlistButton.innerHTML = `<i class="fa-regular fa-heart"></i>`; 
+            wishlistButton.innerHTML = `<i class="fa-regular fa-heart"></i>`;
             wishlistButton.classList.remove("wishlist-added");
         }
     }
