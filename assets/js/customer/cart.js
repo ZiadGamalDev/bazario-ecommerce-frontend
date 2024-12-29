@@ -182,3 +182,66 @@ const updateTotalPrice = () => {
 };
 
 displayCart();
+
+// * Proceed Order
+const proceedOrder = async () => {
+  const tokenUrl = localStorage.getItem("token");
+
+  if (!tokenUrl) {
+    Swal.fire({
+      title: "Login Required",
+      text: "Please login to proceed with your order.",
+      icon: "warning",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
+  try {
+    const response = await fetch(`${baseUrl}/api/orders/proceed`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenUrl}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Response Data:", data);
+
+    if (data.success || data.status === "success" || data.message === "Order created successfully") {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Order has been proceeded successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      Swal.fire({
+        title: "Unable to Proceed",
+        text: data.message || "There was an issue placing your order.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  } catch (error) {
+    console.log("Error: ", error);
+    Swal.fire({
+      title: "Error",
+      text: "An error occurred. Please try again later.",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  }
+};
+
+document.getElementById("checkout-button").addEventListener("click", proceedOrder);
