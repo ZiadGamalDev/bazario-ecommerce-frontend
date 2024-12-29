@@ -102,10 +102,22 @@ const displayCart = async () => {
             });
 
             if (response.ok) {
-              alert("Item removed successfully");
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Item removed successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
               displayCart();
             } else {
-              alert("Failed to remove item");
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Failed to remove item",
+                showConfirmButton: false,
+                timer: 1500
+              });
             }
           } catch (error) {
             console.error("Error removing item:", error);
@@ -114,8 +126,8 @@ const displayCart = async () => {
       });
     } else {
       cartBody.innerHTML = `
-          <p style="text-align:center; font-size: 18px; color: #555; margin-top: 50px;">
-            Your cart is empty.
+          <p style="text-align:center; font-size: 38px; color: #555; margin-top: 100px;">
+            Your cart is empty!
           </p>`;
     }
   } catch (error) {
@@ -170,36 +182,3 @@ const updateTotalPrice = () => {
 };
 
 displayCart();
-
-// const removeFromCart = (id) => {
-//   debugger;
-//   console.log(id);
-
-//   const tokenUrl = localStorage.getItem("token");
-
-//   fetch(`${baseUrl}/api/cart/remove`, {
-//     method: "POST",
-//     headers: {
-//       Authorization: `Bearer ${tokenUrl}`,
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ productId: id }),
-//   })
-//     .then((res) => {
-//       if (!res.ok) {
-//         throw new Error("Network response was not ok");
-//       }
-//       return res.json();
-//     })
-//     .then((data) => {
-//       if (data.success) {
-//         displayWishlist();
-//         alert("Success");
-//       } else {
-//         alert("failed");
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//     });
-// };
