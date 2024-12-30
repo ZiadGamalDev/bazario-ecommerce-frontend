@@ -48,13 +48,13 @@ function handleResponse(response) {
               window.location.href = '/pages/errors/forbidden.html';
               break;
           case 404:
-              window.location.href = '/pages/errors/not_found.html';
+              window.location.href = '/pages/errors/not-found.html';
               break;
           case 500:
-              window.location.href = '/pages/errors/server_error.html';
+              window.location.href = '/pages/errors/server-error.html';
               break;
           default:
-              window.location.href = '/pages/errors/general_error.html';
+              window.location.href = '/pages/errors/index.html';
       }
   }
   return response.json();
