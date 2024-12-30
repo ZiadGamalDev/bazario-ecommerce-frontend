@@ -2,6 +2,7 @@ main {
     flex-grow: 1;
     padding: 20px;
     background-color: #fff;
+    border-radius: 15px;
 }
 
 .order-management {
@@ -90,8 +91,59 @@ main {
 .delete-btn:hover {
     background-color: #c82333;
 }
+/* ////////////////////////////////////////////// */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; 
+}
+
+.order-table th, .order-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
 
 @media (max-width: 768px) {
+    .order-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .order-table thead {
+        display: none;
+    }
+    .order-table td {
+        display: block;
+        text-align: right;
+        padding: 8px;
+        position: relative;
+    }
+    .order-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding-left: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .order-table td[data-label="order_details"] {
+        padding-top: 40px;  
+        padding-bottom: 20px;
+        /* height: 40px; */
+    }
+    .order-table td:nth-child(1)::before { content: "ID : "; }
+    .order-table td:nth-child(2)::before { content: "Status :"; }
+    .order-table td:nth-child(3)::before { content: "Total Price : "; }
+    .order-table td:nth-child(4)::before { content: "Data :"; }
+    .order-table td:nth-child(5)::before { content: "order_details : "; }
+    /* .order-table td:nth-child(7)::before { content: "Action : "; } */
+
+
+
     .order-table th,
     .order-table td {
         font-size: 12px;
@@ -101,7 +153,6 @@ main {
     .order-table td img {
         width: 40px;
     }
-
     .category-form {
         width: 90%;
         margin-top: 20px;
@@ -258,128 +309,8 @@ input[type="text"]:focus, input[type="file"]:focus {
 
 
  /* //////////////////////////////////// */
+    
  
-
- /* update */
-
- .container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-/* Sidebar styling for small screens */
-aside {
-    width: 250px; 
-    background-color: #f4f4f4;
-    padding: 20px;
- }
-
-main {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-    overflow-x: hidden;
-}
-
-
-/* Order management section */
-.order-management {
-    margin-top: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.order-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    border: 1px solid #ddd;
-}
-.order-table th,
-.order-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.order-table th {
-    background-color: #f8f9fa;
-}
-
-.order-table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-/* Responsive layout for screens smaller than 1200px */
- 
-@media (max-width: 1200px) {
-    .container {
-        display: flex;
-        flex-direction: column;  
-    }
-
-    aside {
-        /* width: 100%;   */
-        display: none;
-    }
-
-    main {
-        width: 100%;  
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .order-table {
-        margin-top: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    .order-table th,
-    .order-table td {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .order-table {
-        overflow-x: scroll;
-        display: block;
-    }
-
-    .header h1 {
-        font-size: 22px;
-    }
-} 
-
-
-@media (max-width: 480px) {
-    .order-management {
-        padding: 10px;
-        margin-bottom: 0;
-    }
-
-    .order-table {
-        font-size: 12px;
-    }
-
-   
-    .header h1 {
-        font-size: 20px;
-    }
-    .order-table {
-        overflow-x: scroll;
-        display: block;
-    }
-}
-
 
 
  

@@ -2,6 +2,7 @@ main {
     flex-grow: 1;
     padding: 20px;
     background-color: #fff;
+     border-radius: 15px;
 }
 .product-management{
     max-width: 1200px;
@@ -87,34 +88,31 @@ main {
 @media (max-width: 768px) {
     
     .product-table {
-        font-size: 14px; /* Smaller font size for small screens */
+        font-size: 14px; 
     }
 
     .product-table th,
     .product-table td {
-        padding: 8px 10px; /* Reduced padding for small screens */
+        padding: 8px 10px;
     }
 
     .product-table td img {
-        width: 50px; /* Smaller images for small screens */
-        height: 40px; /* Maintain image aspect ratio */
+        width: 50px; 
+        height: 40px; 
     }
 }
 
-/* Additional Adjustments for Very Small Screens (Mobile Portrait) */
 @media (max-width: 480px) {
     .product-table th,
     .product-table td {
-        font-size: 12px; /* Even smaller text on mobile devices */
-        padding: 6px 8px; /* Further reduce padding */
+        font-size: 12px; 
+        padding: 6px 8px; 
     }
 
     .product-table td img {
-        width: 40px; /* Smaller images for even smaller screens */
-        height: 30px; /* Maintain image aspect ratio */
+        width: 40px; 
+        height: 30px; 
     }
-
-    /* Stack table rows for extremely small screens (if needed) */
     .product-table th, .product-table td {
         display: block;
         width: 100%;
@@ -122,11 +120,11 @@ main {
     }
 
     .product-table th {
-        background-color: transparent; /* Make header more flexible */
+        background-color: transparent; 
     }
 
     .product-table td {
-        border-bottom: 1px solid #ddd; /* Maintain a border for readability */
+        border-bottom: 1px solid #ddd; 
     }
 }
 
@@ -162,31 +160,76 @@ main {
     background-color: #c82333;
 }
 
-@media (max-width: 768px) {
-    
-    .product-table th,
-    .product-table td {
-        font-size: 12px;
-        padding: 8px;
-    }
 
-    .product-table td img {
-        width: 40px;
-    }
 
-    .category-form {
-        width: 90%;
-        margin-top: 20px;
-    }
-
-    .header h1 {
-        font-size: 22px;
-    }
-
-    .add-product-btn {
-        padding: 8px 16px;
-    }
+/* Style for the table */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; 
 }
+
+.product-table th, .product-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+    .product-management .header {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .product-management .header h1 {
+        margin-bottom: 10px;
+    }
+    .product-management .header h1 {
+        /* margin-bottom: 10px; */
+        margin-top: -20px;
+    }
+    .product-management .header .add-product-btn { 
+        margin-top: 5px;
+    }
+    .product-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .product-table thead {
+        display: none;
+    }
+
+    .product-table td {
+        display: block;
+        text-align: right;
+        padding: 8px;
+        position: relative;
+    }
+
+    .product-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding-left: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .product-table td[data-label="Description"] {
+        padding-top: 40px;  
+        padding-bottom: 20px;
+     }
+
+    .product-table td:nth-child(1)::before { content: "ID : "; }
+    .product-table td:nth-child(2)::before { content: "Image :"; }
+    .product-table td:nth-child(3)::before { content: "Name : "; }
+    .product-table td:nth-child(4)::before { content: "Category :"; }
+    .product-table td:nth-child(5)::before { content: "Price : "; }
+     .product-table td:nth-child(7)::before { content: "Stock Quantity : "; }
+ }
 
 /* Modal Styles */
 .modal {
@@ -302,7 +345,7 @@ label {
 }
 
 /* Responsiveness */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .modal-content {
         width: 80%;
     }
@@ -314,7 +357,8 @@ label {
 .pagination-container {
     margin-top: 20px;
     text-align: center;
- }
+    margin-left: 220px;
+  }
  
  .pagination-container button {
     margin: 0 5px;
@@ -331,150 +375,4 @@ label {
     cursor: not-allowed;
  }
 
- /* End pagination */
-
-
-  
-
-
- 
-/* //////////////////////////// */
- .container {
-    display: flex;
-    min-height: 100vh;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-}
-
- .sidebar {
-    flex: 1;
-    min-width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-}
-
- main {
-    flex: 3;
-    min-width: 300px;
-}
-
- .product-management {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.add-product-btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-product-btn:hover {
-    background-color: #218838;
-}
-
-/* Table Styling */
-.product-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    overflow-x: auto;
-}
-
-.product-table th,
-.product-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.product-table th {
-    background-color: #f8f9fa;
-}
-
-.product-table td img {
-    width: 100px;
-    height: 60px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-/* Responsive Design */
-
-
-@media (max-width: 1200px) {
-  
-
-    .product-management {
-        padding: 15px;
-    }
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .add-product-btn {
-        margin-top: 10px;
-    }
-
-    .product-table {
-        margin-top: 10px;
-        overflow-x: scroll;
-        display: block;
-     }
- 
-}
-
-@media (max-width: 768px) {
-    .product-table th,
-    .product-table td {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .product-table {
-        overflow-x: scroll;
-        display: block;
-    }
-
-    .header h1 {
-        font-size: 22px;
-    }
-
-    .add-product-btn {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-} 
-
-@media (max-width: 480px) {
-    .product-management {
-        padding: 10px;
-    }
-
-    .product-table {
-        font-size: 12px;
-    }
-
-    .add-product-btn {
-        width: 100%;
-        font-size: 16px;
-        padding: 12px 0;
-    }
-
-    .header h1 {
-        font-size: 20px;
-    }
-}
-
+ /* End pagination */ 
