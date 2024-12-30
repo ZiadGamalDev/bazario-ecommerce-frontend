@@ -283,9 +283,13 @@ main .recent_order table {
     box-shadow: 0 2rem 3rem rgba(132, 139, 200, 0.18);
     transition: all 0.3s ease;
     color:#363949;
-}
+ }
 main .recent_order table:hover {
     box-shadow: none;
+}
+tr {
+    border-bottom: 1px solid #3f4042;
+
 }
 main .recent_order table tbody tr {
     height: 3.8rem;
@@ -294,7 +298,7 @@ main .recent_order table tbody tr {
 }
 main .recent_order table tbody tr td {
     height: 3.8rem;
-    /* border-bottom: 1px solid #363949; */
+    /* border-bottom: 1px solid #81838a; */
 
 }
 /* main .recent_order table tbody tr:last-child td{
@@ -319,12 +323,12 @@ main .recent_order .seeMore {
     .container {
         width: 94%;
         grid-template-columns: 7rem auto;
-     }
+       }
     aside .top .logo img {
        width: 75px;
     }
     aside .sidebar h3 {
-   display: none;
+   /* display: none; */
     } 
     aside .sidebar a:nth-last-child(){
        position: relative;
@@ -332,8 +336,19 @@ main .recent_order .seeMore {
     }
     main .insigth {
        display: grid;
-       grid-template-columns: repeat(1,1fr);
+       grid-template-columns: repeat(2,1fr);
     }
+    main h1 {
+        font-size: 16px;
+    }
+    main .date {
+        width: 100%;
+    }
+    .insigth {
+        display: grid;
+        grid-template-rows: repeat(3,1fr);
+    }
+    
    
    } 
    /* phones */
@@ -341,15 +356,15 @@ main .recent_order .seeMore {
    @media (max-width:768px) {
        .container {
            width: 100%;
-           grid-template-columns: repeat(1,1fr);
-        }
-     aside {
-           position: fixed;
-           width: 18rem;
+           grid-template-columns:60px auto;
+         }
+     aside .sidebar h3 {
+           /* position: absolute;
+           width: 16rem;
            z-index: 3;
-           background-color: #fff;
-           display: none;
-       }
+           background-color: #fff; */
+           /* display: none; */
+         }
     
        aside .top .logo img {
            display: inline;
@@ -372,18 +387,24 @@ main .recent_order .seeMore {
            display: grid;
            grid-template-columns: repeat(1,1fr);
            gap:0.6rem;
-           padding: 40px;
-       }
+        }
        main .recent_order {
-           padding: 30px;
-           margin: 0 auto;
+            margin: 0 auto;
        } 
  .main h1 {
         font-size: 16px;
      }
+     .recent_order table {
+       min-width: 100%;
+     }
+     .recent_order table td {
+        font-size: 12px;
+        font-weight: normal;
+     }
    
    }  
-   /* End responsive */
+   
+ 
 
 /*================================================
 Preloader Area CSS
@@ -528,3 +549,4 @@ Preloader Area CSS
       stroke-dashoffset: 0;
     }
   }
+ 
