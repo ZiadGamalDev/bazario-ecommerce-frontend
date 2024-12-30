@@ -1,8 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadPartial("header", "../../../pages/components/header.html");
     loadPartial("footer", "../../../pages/components/footer.html");
 });
 
+// * Logged User and Log out
+document.addEventListener("DOMContentLoaded", () => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const loginLink = document.getElementById("login-link");
+    const registerLink = document.getElementById("register-link");
+    const dashboardLink = document.getElementById("dashboard-link");
+    const logoutBtn = document.getElementById("logout-btn");
+  
+    if (userData) {
+      loginLink.style.display = "none";
+      registerLink.style.display = "none";
+  
+      dashboardLink.style.display = "inline";
+      var Uname = userData.user.name;
+      var uname = Uname.split(" ");
+      dashboardLink.textContent =
+        userData.user.is_admin === 1
+          ? `Hi, ${uname[0]} > Dashboard`
+          : `Hi, ${uname[0]} > Profile`;
+  
+      dashboardLink.href =
+        userData.user.is_admin === 1
+          ? "/pages/admin/index.html"
+          : "/pages/customer/userprofile.html";
+  
+      logoutBtn.style.display = "inline";
+    } else {
+      dashboardLink.style.display = "none";
+      logoutBtn.style.display = "none";
+    }
+  
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("userData");
+      localStorage.removeItem("token");
+      window.location.reload();
+    });
+  });
+  
+  const menuIcon = document.getElementById("menu-icon");
+  const overlay = document.getElementById("overlay");
+  const closeBtn = document.getElementById("close-btn");
+  const checkbox = document.querySelector('.hamburger .checkbox');
+  const closeButton = document.querySelector('.close-btn');
+  
+  // Toggle overlay and icon animation
+  menuIcon.addEventListener("click", (event) => {
+    overlay.classList.toggle("active");
+    menuIcon.classList.toggle("active");
+    event.stopPropagation();
+  });
+  
+  // Close overlay when clicking close button
+  closeBtn.addEventListener("click", (event) => {
+    overlay.classList.remove("active");
+    menuIcon.classList.remove("active");
+    checkbox.checked = false;
+    event.stopPropagation();
+  });
+  
+  // Close overlay when clicking anywhere else
+  document.addEventListener("click", (event) => {
+    if (overlay.classList.contains("active")) {
+      overlay.classList.remove("active");
+      menuIcon.classList.remove("active");
+      checkbox.checked = false;
+    }
+  });
+  
+  // Prevent closing when clicking inside the overlay
+  overlay.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
 // *Header scroll
 document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", function () {

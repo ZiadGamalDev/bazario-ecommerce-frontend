@@ -237,18 +237,16 @@ input[type="text"]:focus, input[type="file"]:focus {
 .product-info {
     display: flex;
     align-items: center; 
-    /* margin-bottom: 10px;     */
-}
+ }
 
 .product-image {
     width: 50px;
     height: 50px;
-    margin-right: 10px;           
-}
+    margin-right: 10px;
+ }
 
 .product-name {
-    font-weight: bold;
-}
+ }
 
 .quantity-info, .stock-info {
     margin-left: 10px;  
@@ -260,5 +258,128 @@ input[type="text"]:focus, input[type="file"]:focus {
 
 
  /* //////////////////////////////////// */
+ 
+
+ /* update */
+
+ .container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Sidebar styling for small screens */
+aside {
+    width: 250px; 
+    background-color: #f4f4f4;
+    padding: 20px;
+ }
+
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+
+/* Order management section */
+.order-management {
+    margin-top: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+.order-table th,
+.order-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+}
+
+.order-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+/* Responsive layout for screens smaller than 1200px */
+ 
+@media (max-width: 1200px) {
+    .container {
+        display: flex;
+        flex-direction: column;  
+    }
+
+    aside {
+        /* width: 100%;   */
+        display: none;
+    }
+
+    main {
+        width: 100%;  
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-table {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-table th,
+    .order-table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .order-table {
+        overflow-x: scroll;
+        display: block;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+} 
+
+
+@media (max-width: 480px) {
+    .order-management {
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    .order-table {
+        font-size: 12px;
+    }
+
+   
+    .header h1 {
+        font-size: 20px;
+    }
+    .order-table {
+        overflow-x: scroll;
+        display: block;
+    }
+}
+
+
 
  

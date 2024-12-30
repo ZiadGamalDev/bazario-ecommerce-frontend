@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unauthorized Access</title>
+    <link rel="stylesheet" href="../../assets/css/errors/unauthorized.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="error-message">
+            <h1>403</h1>
+            <p>Sorry, you are not authorized to access this page.</p>
+            <button onclick="redirectToHome()">Go to Home</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectToHome() {
+            window.location.href = '/index.html';
+        }
+    </script>  
+</body>
+</html>
