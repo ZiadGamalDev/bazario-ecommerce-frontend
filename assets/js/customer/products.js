@@ -184,7 +184,6 @@ sortBySelect.addEventListener("change", () => {
 // ** Display Products **
 function displayAllProducts(products) {
   productsSection.innerHTML = "";
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
   products.forEach((product) => {
     const productsCard = document.createElement("div");
@@ -224,7 +223,7 @@ function displayAllProducts(products) {
 
     productsSection.appendChild(productsCard);
 
-    // Update wishlist button if product is in wishlist
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     if (wishlist.includes(product.id)) {
       updateWishlistButtonStyle(product.id, true);
     }
@@ -247,6 +246,19 @@ function updateProductStars() {
       }
     });
   });
+}
+
+function updateWishlistButtonStyle(productId, isAdded) {
+  const wishlistButton = document.querySelector(`[data-wishlist-id="${productId}"]`);
+  if (wishlistButton) {
+      if (isAdded) {
+          wishlistButton.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+          wishlistButton.classList.add("wishlist-added");
+      } else {
+          wishlistButton.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+          wishlistButton.classList.remove("wishlist-added");
+      }
+  }
 }
 
 //** Filter products by category **

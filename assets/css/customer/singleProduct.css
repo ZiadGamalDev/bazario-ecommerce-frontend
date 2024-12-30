@@ -276,7 +276,7 @@ main{
     border: 1px solid #ececec;
     border-radius: 15px;
     padding: 40px 50px;
-    margin: 10px 30px;
+    margin: 10px 50px;
 }
 
 .submit-review{
@@ -324,15 +324,15 @@ main{
     color: #f5c518;
 }
 
-.reviews-section #reviews-list .review-item span, .reviews-section #reviews-list .review-item p{
+.reviews-section #reviews-list .review-item p{
     display: block;
     width: 100%;
 }
 
-.reviews-section #reviews-list .review-item span{
+.reviews-section #reviews-list .review-item small{
     font-size: 11px;
     color: #7E7E7E;
-    margin-bottom: 10px;
+    margin-top: 3px;
 }
 
 .submit-review .rating-stars{
@@ -373,7 +373,7 @@ main{
 
 /** Related Products */
 .related-products{
-    margin: 60px 0;
+    margin: 60px 50px;
     display: flex;
     flex-wrap: wrap;
 }
