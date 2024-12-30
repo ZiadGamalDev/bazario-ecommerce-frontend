@@ -216,7 +216,7 @@ function displayAllProducts(products) {
               product.id
             })">${
       product.is_in_wishlist
-        ? `<i class="fa-solid fa-heart heart"></i>`
+        ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
         : `<i class="fa-regular fa-heart heart"></i>`
     }</button>
         `;
@@ -246,19 +246,6 @@ function updateProductStars() {
       }
     });
   });
-}
-
-function updateWishlistButtonStyle(productId, isAdded) {
-  const wishlistButton = document.querySelector(`[data-wishlist-id="${productId}"]`);
-  if (wishlistButton) {
-      if (isAdded) {
-          wishlistButton.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-          wishlistButton.classList.add("wishlist-added");
-      } else {
-          wishlistButton.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-          wishlistButton.classList.remove("wishlist-added");
-      }
-  }
 }
 
 //** Filter products by category **
@@ -355,7 +342,7 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Product has been added successfully to cart",
           showConfirmButton: false,
@@ -406,9 +393,9 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
-          title: "Product has been added successfully to cart",
+          title: "Product has been added successfully to wishlist",
           showConfirmButton: false,
           timer: 1500,
         });

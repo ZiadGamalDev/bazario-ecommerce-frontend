@@ -103,7 +103,7 @@ const displayCart = async () => {
 
             if (response.ok) {
               Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "Item removed successfully",
                 showConfirmButton: false,
@@ -112,7 +112,7 @@ const displayCart = async () => {
               displayCart();
             } else {
               Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "error",
                 title: "Failed to remove item",
                 showConfirmButton: false,

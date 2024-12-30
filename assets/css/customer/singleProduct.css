@@ -234,6 +234,11 @@ main{
     display: inline-block;
     letter-spacing: 0.5px;
     text-decoration: none;
+    transition: .3s ease-in-out all;
+}
+
+.extra-link .extra-link2 .btn1:hover {
+    opacity: .8;
 }
 
 .extra-link .extra-link2 .btn1 i{
@@ -262,6 +267,7 @@ main{
     color: var(--primary);
     border: 1px solid var(--primary);
     cursor: pointer;
+    transition: .3s all ease-in-out;
 }
 
 .extra-link .extra-link2 .btn2 i:hover{
