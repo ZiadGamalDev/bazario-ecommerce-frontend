@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  loadPartial("header", "../../../pages/components/header.html");
   loadPartial("footer", "../../../pages/components/footer.html");
 });
 
@@ -25,6 +24,80 @@ window.addEventListener("scroll", () => {
   }
 });
 
+// * Logged User and Log out
+document.addEventListener("DOMContentLoaded", () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const loginLink = document.getElementById("login-link");
+  const registerLink = document.getElementById("register-link");
+  const dashboardLink = document.getElementById("dashboard-link");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  if (userData) {
+    loginLink.style.display = "none";
+    registerLink.style.display = "none";
+
+    dashboardLink.style.display = "inline";
+    var Uname = userData.user.name;
+    var uname = Uname.split(" ");
+    dashboardLink.textContent =
+      userData.user.is_admin === 1
+        ? `Hi, ${uname[0]} > Dashboard`
+        : `Hi, ${uname[0]} > Profile`;
+
+    dashboardLink.href =
+      userData.user.is_admin === 1
+        ? "/pages/admin/index.html"
+        : "/pages/customer/userprofile.html";
+
+    logoutBtn.style.display = "inline";
+  } else {
+    dashboardLink.style.display = "none";
+    logoutBtn.style.display = "none";
+  }
+
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("userData");
+    localStorage.removeItem("token");
+    window.location.reload();
+  });
+});
+
+const menuIcon = document.getElementById("menu-icon");
+const overlay = document.getElementById("overlay");
+const closeBtn = document.getElementById("close-btn");
+const checkbox = document.querySelector('.hamburger .checkbox');
+const closeButton = document.querySelector('.close-btn');
+
+// Toggle overlay and icon animation
+menuIcon.addEventListener("click", (event) => {
+  overlay.classList.toggle("active");
+  menuIcon.classList.toggle("active");
+  event.stopPropagation();
+});
+
+// Close overlay when clicking close button
+closeBtn.addEventListener("click", (event) => {
+  overlay.classList.remove("active");
+  menuIcon.classList.remove("active");
+  checkbox.checked = false;
+  event.stopPropagation();
+});
+
+// Close overlay when clicking anywhere else
+document.addEventListener("click", (event) => {
+  if (overlay.classList.contains("active")) {
+    overlay.classList.remove("active");
+    menuIcon.classList.remove("active");
+    checkbox.checked = false;
+  }
+});
+
+// Prevent closing when clicking inside the overlay
+overlay.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+
 const productsSection = document.getElementById("product-container");
 const sortBySelect = document.getElementById("sort-by-select");
 const categoriesContainer = document.querySelector(".categories ul");
@@ -33,7 +106,14 @@ let currentProducts = [];
 
 // ** Fetch Products **
 function fetchAllProducts() {
-  fetch(`${baseUrl}/api/products`)
+  const tokenUrl = localStorage.getItem("token");
+
+  fetch(`${baseUrl}/api/products`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${tokenUrl}`,
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Failed to fetch products");
       return response.json();
@@ -130,10 +210,16 @@ function displayAllProducts(products) {
             </div>
             <button class="cart-button" onclick="addToCartList(${
               product.id
-            })"><i class="fal fa-shopping-cart cart"></i></button>
+            })">${
+      product.is_in_cart ? `` : `<i class="fal fa-shopping-cart cart"></i>`
+    }</button>
             <button class="wishlist-button" onclick="addToWishList(${
               product.id
-            })"><i class="fa-regular fa-heart"></i></button>
+            })">${
+      product.is_in_wishlist
+        ? `<i class="fa-solid fa-heart heart"></i>`
+        : `<i class="fa-regular fa-heart heart"></i>`
+    }</button>
         `;
 
     productsSection.appendChild(productsCard);
@@ -257,10 +343,14 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your cart.",
+          position: "top-end",
           icon: "success",
+          title: "Product has been added successfully to cart",
+          showConfirmButton: false,
+          timer: 1500,
         });
+
+        fetchAllProducts();
       } else {
         Swal.fire({
           title: "Error",
@@ -304,10 +394,14 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your wishlist.",
+          position: "top-end",
           icon: "success",
+          title: "Product has been added successfully to cart",
+          showConfirmButton: false,
+          timer: 1500,
         });
+
+        fetchAllProducts();
       } else {
         Swal.fire({
           title: "Error",

@@ -366,12 +366,13 @@ main .container {
     color: var(--primary);
 }
 
-.product .cart, .product .fa-heart {
+.product .cart {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
     line-height: 30px;
     border-radius: 50%;
     background-color: #e6f3ff;
@@ -379,20 +380,41 @@ main .container {
     color: var(--primary);
     border: 1px solid #569be1;
     position: absolute;
-    bottom: 18px;
-    cursor: pointer;
-    transition: .3s all ease-in-out;
 }
 
-.product .fa-heart{
+.product .heart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-size: 23px;
+    line-height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    transition: .3s all ease-in-out;
+    background-color: #e6f3ff;
+    /* font-weight: 500; */
+    color: var(--primary);
+    border: 1px solid #569be1;
+}
+
+.fa-solid {
+    color: red !important;
+}
+
+.product .heart{
     right: 24px;
+    bottom: 18px;
 }
 
 .product .cart {
     right: 85px;
+    bottom: 18px;
 }
 
-.product .cart:hover, .product .fa-heart:hover {
+.product .cart:hover, .product .heart:hover {
     background-color: #569be1;
     color: #fff;
 }
