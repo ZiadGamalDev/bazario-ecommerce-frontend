@@ -13,8 +13,24 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-outter"></div>
+            <div class="loader-inner"></div>
+
+            <div class="indicator">
+                <svg width="16px" height="12px">
+                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <aside></aside>
+     
         <main>
             <div class="product-management">
                 <div class="header">
@@ -42,8 +58,8 @@
         </main>
     </div>
 
-     <!-- Add Category Modal -->
-     <div class="modal" id="addProductModal">
+    <!-- Add Category Modal -->
+    <div class="modal" id="addProductModal">
         <div class="modal-content">
             <span class="close" id="closeAddModal">&times;</span>
             <h2>Add Product</h2>
@@ -63,7 +79,7 @@
                 <label for="descriptionName">description</label>
                 <input class="custom-input" type="text" id="descriptionName" name="descriptionName" required>
 
-                
+
                 <label for="stockQuantity">stock quantity</label>
                 <input class="custom-input" type="text" id="stockQuantity" name="stockQuantity" required>
 
@@ -72,8 +88,8 @@
         </div>
     </div>
 
-      <!-- Edit Category Modal -->
-      <div class="modal" id="editProductModal">
+    <!-- Edit Category Modal -->
+    <div class="modal" id="editProductModal">
         <div class="modal-content">
             <span class="close" id="closeEditModal">&times;</span>
             <h2>Edit Product</h2>
@@ -94,7 +110,7 @@
                 <label for="editProductdescription">description</label>
                 <input class="custom-input" type="text" id="editProductdescription" name="editProductdescription">
 
-                
+
                 <label for="editStockQuantity">stock quantity</label>
                 <input class="custom-input" type="text" id="editStockQuantity" name="editStockQuantity">
 
@@ -113,14 +129,15 @@
             <button class="submit-btn" id="cancelDeleteBtn">Cancel</button>
         </div>
     </div>
- 
+
     <!-- Pagination Controls -->
-        <div id="pagination" class="pagination-container">
-         </div>
-   
-     <script src="../../assets/js/utils.js"></script>
+    <div id="pagination" class="pagination-container">
+    </div>
+
+    <script src="../../assets/js/middleware/authenticate-admin.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <script src="../../assets/js/admin/main.js"></script>
     <script src="../../assets/js/admin/product.js"></script>
-</body>
+ </body>
 
 </html>
