@@ -261,7 +261,7 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Product has been added successfully to cart",
           showConfirmButton: false,
@@ -310,10 +310,9 @@ const addToWishList = (id) => {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Product has been added successfully to cart",
           showConfirmButton: false,
@@ -332,7 +331,7 @@ const addToWishList = (id) => {
     .catch((error) => {
       console.error("Error:", error);
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "error",
         title: `Error ${error.message}`,
         showConfirmButton: false,
