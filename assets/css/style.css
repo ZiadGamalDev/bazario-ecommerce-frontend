@@ -1115,14 +1115,16 @@ Preloader Area CSS
 .product-links {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .product-links button {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 50px;
   line-height: 40px;
   border-radius: 50%;
+  font-size: 18px;
   background-color: #e6f3ff;
   font-weight: 500;
   color: #1a76d1;
