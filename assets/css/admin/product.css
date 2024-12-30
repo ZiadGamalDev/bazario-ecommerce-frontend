@@ -3,7 +3,6 @@ main {
     padding: 20px;
     background-color: #fff;
 }
-
 .product-management{
     max-width: 1200px;
     margin: 0 auto;
@@ -57,6 +56,81 @@ main {
     object-fit: cover;
 }
 
+/* //////////////// */
+
+/* Base Styles for Product Table */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #f8f9fa;
+}
+
+.product-table td img {
+    width: 100px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Media Query for Small Screens (Tablets and Mobile) */
+@media (max-width: 768px) {
+    
+    .product-table {
+        font-size: 14px; /* Smaller font size for small screens */
+    }
+
+    .product-table th,
+    .product-table td {
+        padding: 8px 10px; /* Reduced padding for small screens */
+    }
+
+    .product-table td img {
+        width: 50px; /* Smaller images for small screens */
+        height: 40px; /* Maintain image aspect ratio */
+    }
+}
+
+/* Additional Adjustments for Very Small Screens (Mobile Portrait) */
+@media (max-width: 480px) {
+    .product-table th,
+    .product-table td {
+        font-size: 12px; /* Even smaller text on mobile devices */
+        padding: 6px 8px; /* Further reduce padding */
+    }
+
+    .product-table td img {
+        width: 40px; /* Smaller images for even smaller screens */
+        height: 30px; /* Maintain image aspect ratio */
+    }
+
+    /* Stack table rows for extremely small screens (if needed) */
+    .product-table th, .product-table td {
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+
+    .product-table th {
+        background-color: transparent; /* Make header more flexible */
+    }
+
+    .product-table td {
+        border-bottom: 1px solid #ddd; /* Maintain a border for readability */
+    }
+}
+
+
 /* Action buttons */
 .action-btns {
     display: flex;
@@ -89,6 +163,7 @@ main {
 }
 
 @media (max-width: 768px) {
+    
     .product-table th,
     .product-table td {
         font-size: 12px;
@@ -260,4 +335,146 @@ label {
 
 
   
+
+
+ 
+/* //////////////////////////// */
+ .container {
+    display: flex;
+    min-height: 100vh;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+ .sidebar {
+    flex: 1;
+    min-width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+ main {
+    flex: 3;
+    min-width: 300px;
+}
+
+ .product-management {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-product-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-product-btn:hover {
+    background-color: #218838;
+}
+
+/* Table Styling */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #f8f9fa;
+}
+
+.product-table td img {
+    width: 100px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Responsive Design */
+
+
+@media (max-width: 1200px) {
+  
+
+    .product-management {
+        padding: 15px;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .add-product-btn {
+        margin-top: 10px;
+    }
+
+    .product-table {
+        margin-top: 10px;
+        overflow-x: scroll;
+        display: block;
+     }
+ 
+}
+
+@media (max-width: 768px) {
+    .product-table th,
+    .product-table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .product-table {
+        overflow-x: scroll;
+        display: block;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .add-product-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+} 
+
+@media (max-width: 480px) {
+    .product-management {
+        padding: 10px;
+    }
+
+    .product-table {
+        font-size: 12px;
+    }
+
+    .add-product-btn {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 0;
+    }
+
+    .header h1 {
+        font-size: 20px;
+    }
+}
 
