@@ -134,19 +134,24 @@ function displayReviews(productId) {
 
 submitReviewButton.addEventListener("click", () => {
     const reviewTextValue = reviewText.value.trim();
-    if (!token) {
-        console.error("Authorization token is missing or invalid.");
-        errorMessege.textContent = "Authentication failed. Please log in again.";
+    const tokenUrl = localStorage.getItem("token");
+
+    if (!tokenUrl) {
+        Swal.fire({
+            title: "Login Required",
+            text: "Please login to make a review!",
+            icon: "warning",
+        });
         return;
     }
 
     if (reviewTextValue && userRating > 0) {
-        console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
+        // console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
 
         fetch(`${baseUrl}/api/reviews`, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${tokenUrl}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -158,7 +163,8 @@ submitReviewButton.addEventListener("click", () => {
             .then(response => {
                 // console.log(response);
 
-                if (!response.ok) throw new Error("Failed to submit review");
+                if (!response.ok) 
+                    errorMessege.textContent = "You already make a review.";
                 return response.json();
             })
             .then((data) => {
