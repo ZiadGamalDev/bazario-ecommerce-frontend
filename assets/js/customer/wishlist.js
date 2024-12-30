@@ -83,7 +83,7 @@ const displayWishlist = async () => {
               displayCart();
             } else {
               Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "error",
                 title: "Failed to remove item",
                 showConfirmButton: false,
