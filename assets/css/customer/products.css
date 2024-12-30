@@ -144,8 +144,8 @@ main .container {
     display: flex;
     align-items: center;
     line-height: 20px;
-    border-radius: 25px;
-    border: 1px solid #F2F3F4;
+    border-radius: 5px;
+    border: 1px solid #bedeff;
     padding: 9px 18px;
     margin: 0 0 15px 0;
     justify-content: space-between;
@@ -156,7 +156,7 @@ main .container {
     cursor: pointer;
     transform: scale(1.03);
     color: var(--primary);
-    border: 0.5px solid #bedeff;
+    border: 0.5px solid var(--primary);
     box-shadow: 0 0 10px rgba(155, 155, 155, 0.3);
 }
 
@@ -380,6 +380,7 @@ main .container {
     color: var(--primary);
     border: 1px solid #569be1;
     position: absolute;
+    transition: .3s all ease-in-out;
 }
 
 .product .heart {
@@ -395,13 +396,8 @@ main .container {
     cursor: pointer;
     transition: .3s all ease-in-out;
     background-color: #e6f3ff;
-    /* font-weight: 500; */
     color: var(--primary);
     border: 1px solid #569be1;
-}
-
-.fa-solid {
-    color: red !important;
 }
 
 .product .heart{

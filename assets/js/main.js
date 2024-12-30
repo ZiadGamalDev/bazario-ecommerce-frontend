@@ -27,8 +27,8 @@ window.addEventListener("scroll", () => {
 const menuIcon = document.getElementById("menu-icon");
 const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("close-btn");
-const checkbox = document.querySelector('.hamburger .checkbox');
-const closeButton = document.querySelector('.close-btn');
+const checkbox = document.querySelector(".hamburger .checkbox");
+const closeButton = document.querySelector(".close-btn");
 
 // Toggle overlay and icon animation
 menuIcon.addEventListener("click", (event) => {
@@ -61,7 +61,7 @@ overlay.addEventListener("click", (event) => {
 
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData"));  
   const loginLink = document.getElementById("login-link");
   const registerLink = document.getElementById("register-link");
   const dashboardLink = document.getElementById("dashboard-link");
@@ -75,12 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
     var Uname = userData.user.name;
     var uname = Uname.split(" ");
     dashboardLink.textContent =
-      userData.user.is_admin === 1
+      userData.is_admin === 1
         ? `Hi, ${uname[0]} > Dashboard`
         : `Hi, ${uname[0]} > Profile`;
 
     dashboardLink.href =
-      userData.user.is_admin === 1
+      userData.is_admin === 1
         ? "/pages/admin/index.html"
         : "/pages/customer/userprofile.html";
 
@@ -99,21 +99,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // * swiper
 let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll(".slide");
 const totalSlides = slides.length;
 
-document.querySelector('.next').addEventListener('click', () => {
+document.querySelector(".next").addEventListener("click", () => {
   currentSlide = (currentSlide + 1) % totalSlides;
   updateSlidePosition();
 });
 
-document.querySelector('.prev').addEventListener('click', () => {
+document.querySelector(".prev").addEventListener("click", () => {
   currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
   updateSlidePosition();
 });
 
 function updateSlidePosition() {
-  const slider = document.querySelector('.slider');
+  const slider = document.querySelector(".slider");
   slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
 
@@ -121,8 +121,6 @@ setInterval(() => {
   currentSlide = (currentSlide + 1) % totalSlides;
   updateSlidePosition();
 }, 2500);
-
-
 
 // *    Get Some Products
 const fetchProducts = async () => {
@@ -152,7 +150,9 @@ const fetchProducts = async () => {
 
         productCard.innerHTML = `
           <div class="product-tumb">
-            <a href="/pages/customer/singleProduct.html?productId=${product.id}">
+            <a href="/pages/customer/singleProduct.html?productId=${
+              product.id
+            }">
               <img src="${product.image}" alt="${product.name}">
             </a>
           </div>
@@ -163,14 +163,22 @@ const fetchProducts = async () => {
             </h4>
             <p>${product.description || "No description available."}</p>
             <div class="product-bottom-details">
-              <div class="product-price">${product.price ? `${product.price}$` : "Price not available"}</div>
+              <div class="product-price">${
+                product.price ? `${product.price}$` : "Price not available"
+              }</div>
               <div class="product-links">
-                <button onclick="addToWishList(${product.id})">
-                  <i class="fal fa-heart"></i>
-                </button>
-                <button onclick="addToCartList(${product.id})">
-                  <i class="fal fa-shopping-cart"></i>
-                </button>
+                <button class="cart-button" onclick="addToCartList(${
+                  product.id
+                })">${
+          product.is_in_cart ? `` : `<i class="fal fa-shopping-cart cart"></i>`
+        }</button>
+            <button class="wishlist-button" onclick="addToWishList(${
+              product.id
+            })">${
+          product.is_in_wishlist
+            ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
+            : `<i class="fa-regular fa-heart heart"></i>`
+        }</button>
               </div>
             </div>
           </div>
@@ -228,7 +236,6 @@ const fetchCategories = async () => {
 
 fetchCategories();
 
-
 // *    Add to Cart
 const addToCartList = (id) => {
   const tokenUrl = localStorage.getItem("token");
@@ -246,7 +253,7 @@ const addToCartList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`,
+      Authorization: `Bearer ${tokenUrl}`,
     },
     body: JSON.stringify({ product_id: id }),
   })
@@ -254,10 +261,14 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your cart.",
+          position: "top-end",
           icon: "success",
+          title: "Product has been added successfully to cart",
+          showConfirmButton: false,
+          timer: 1500,
         });
+
+        fetchProducts();
       } else {
         Swal.fire({
           title: "Error",
@@ -270,10 +281,10 @@ const addToCartList = (id) => {
       console.error("Error:", error);
       Swal.fire({
         title: "Error",
-        text: "Something went wrong while adding to cart.",
+        text: `Something went wrong while adding to cart : ${error.message}`,
         icon: "error",
       });
-    });  
+    });
 };
 
 // * Add to wishList
@@ -293,7 +304,7 @@ const addToWishList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`,
+      Authorization: `Bearer ${tokenUrl}`,
     },
     body: JSON.stringify({ product_id: id }),
   })
@@ -302,10 +313,14 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your wishlist.",
+          position: "top-end",
           icon: "success",
+          title: "Product has been added successfully to cart",
+          showConfirmButton: false,
+          timer: 1500,
         });
+
+        fetchProducts();
       } else {
         Swal.fire({
           title: "Error",
@@ -317,9 +332,11 @@ const addToWishList = (id) => {
     .catch((error) => {
       console.error("Error:", error);
       Swal.fire({
-        title: "Error",
-        text: "Something went wrong while adding to wishlist.",
+        position: "top-end",
         icon: "error",
+        title: `Error ${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
       });
-    });  
+    });
 };
