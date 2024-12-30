@@ -383,10 +383,12 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your cart.",
-          icon: "success",
-        });
+            position: "top-end",
+            icon: "success",
+            title: "Item Added successfully to the cart",
+            showConfirmButton: false,
+            timer: 1500
+          });
       } else {
         Swal.fire({
           title: "Error",
@@ -398,9 +400,11 @@ const addToCartList = (id) => {
     .catch((error) => {
       console.error("Error:", error);
       Swal.fire({
-        title: "Error",
-        text: "Something went wrong while adding to cart.",
+        position: "top-end",
         icon: "error",
+        title: "Something went wrong while adding item to the cart",
+        showConfirmButton: false,
+        timer: 1500
       });
     });
 };
@@ -431,10 +435,12 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-          title: "Added!",
-          text: "Product has been added to your wishlist.",
-          icon: "success",
-        });
+            position: "top-end",
+            icon: "success",
+            title: "Item Added successfully to the whitelist",
+            showConfirmButton: false,
+            timer: 1500
+          });
       } else {
         Swal.fire({
           title: "Error",
@@ -444,13 +450,13 @@ const addToWishList = (id) => {
       }
     })
     .catch((error) => {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: `Error ${error.message}`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Error ${error.message}`,
+            showConfirmButton: false,
+            timer: 1500
+          });
     });
 };
 

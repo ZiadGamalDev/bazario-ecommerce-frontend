@@ -19,9 +19,9 @@ if (registerForm) {
     "confirm-password-error"
   );
 
-  const namePattern = /^[a-zA-Z\s]{3,}$/; // اسم مكون من 3 أحرف أو أكثر
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // بريد إلكتروني صالح
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // 8 أحرف على الأقل، حرف كبير ورقم
+  const namePattern = /^[a-zA-Z\s]{3,}$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   function validateName() {
     if (!namePattern.test(nameInput.value.trim())) {
@@ -90,8 +90,6 @@ if (registerForm) {
         password_confirmation: confirmPasswordInput.value.trim(),
       };
 
-      console.log("Sending data to API:", data);
-
       fetch(`${baseUrl}/api/register`, {
         method: "POST",
         headers: {
@@ -106,7 +104,6 @@ if (registerForm) {
           return response.json();
         })
         .then((result) => {
-          console.log("Response from API:", result);
           if (result.data) {
             alert("Registration successful!");
             localStorage.setItem("token", result.data.token);
@@ -114,7 +111,6 @@ if (registerForm) {
               "loggedInUser",
               JSON.stringify(result.data.user)
             );
-            console.log("Stored token:", localStorage.getItem("token"));
             window.location.href = "/pages/auth/login.html";
           } else {
             alert("Registration failed: " + result.message);
@@ -167,8 +163,6 @@ if (loginForm) {
           localStorage.setItem("userData", JSON.stringify(result.data));
           localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
-
-          alert("Login successful!");
 
           if (user.is_admin) {
             window.location.href = "../../admin/dashboard.html";
