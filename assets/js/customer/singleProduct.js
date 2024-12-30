@@ -209,52 +209,52 @@ function displayReviews(productId) {
 }
 
 submitReviewButton.addEventListener("click", () => {
-  const reviewTextValue = reviewText.value.trim();
-  if (!token) {
-    console.error("Authorization token is missing or invalid.");
-    errorMessege.textContent = "Authentication failed. Please log in again.";
-    return;
-  }
+    const reviewTextValue = reviewText.value.trim();
+    const tokenUrl = localStorage.getItem("token");
 
-  if (reviewTextValue && userRating > 0) {
-    console.log("Request Data:", {
-      product_id: productId,
-      rating: userRating,
-      feedback: reviewTextValue,
-    });
+    if (!tokenUrl) {
+        Swal.fire({
+            title: "Login Required",
+            text: "Please login to make a review!",
+            icon: "warning",
+        });
+        return;
+    }
 
-    fetch(`${baseUrl}/api/reviews`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product_id: productId,
-        rating: userRating,
-        feedback: reviewTextValue,
-      }),
-    })
-      .then((response) => {
-        // console.log(response);
+    if (reviewTextValue && userRating > 0) {
+        // console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
 
-        if (!response.ok) throw new Error("Failed to submit review");
-        return response.json();
-      })
-      .then((data) => {
-        // console.log(data.data);
+        fetch(`${baseUrl}/api/reviews`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${tokenUrl}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                rating: userRating,
+                feedback: reviewTextValue,
+            }),
+        })
+            .then(response => {
+                // console.log(response);
 
-        reviewText.value = "";
-        userRating = 0;
-        updateStars(ratingStarsContainer, userRating);
+                if (!response.ok) 
+                    errorMessege.textContent = "You already make a review.";
+                return response.json();
+            })
+            .then((data) => {
+                // console.log(data.data);
 
-        const newReview = data.data;
-        const reviewDiv = document.createElement("div");
-        reviewDiv.classList.add("review-item");
-        reviewDiv.innerHTML = `
-                    <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(
-                      parseInt(newReview.rating, 10)
-                    )}</div>
+                reviewText.value = "";
+                userRating = 0;
+                updateStars(ratingStarsContainer, userRating);
+
+                const newReview = data.data;
+                const reviewDiv = document.createElement("div");
+                reviewDiv.classList.add("review-item");
+                reviewDiv.innerHTML = `
+                    <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(parseInt(newReview.rating, 10))}</div>
                     <small>Submitted on: ${newReview.created_at}</small>
                     <p>${newReview.feedback}</p>
                 `;
