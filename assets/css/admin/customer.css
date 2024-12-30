@@ -226,3 +226,113 @@ input[type="text"]:focus, input[type="file"]:focus {
         width: 80%;
     }
 }
+
+/* ////// ////////////////////////////*/
+/* Update */
+
+/* Base layout for larger screens */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+aside {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-user-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+    padding: 10px;
+    /* border: 1px solid #ddd; */
+    text-align: left;
+}
+
+.user-table th {
+    background-color: #f2f2f2;
+}
+
+/* Scrollable table on small screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    aside {
+        /* width: 100%;
+        height: 200px;  
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 10px; */
+    }
+
+    main {
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .add-user-btn {
+        margin-top: 10px;
+    }
+
+     .user-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .user-table th, .user-table td {
+        white-space: nowrap;
+    }
+}
+
+
+/* Smallest screens (mobile) */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .add-user-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .user-table th, .user-table td {
+        padding: 8px;
+    }
+}
