@@ -156,3 +156,28 @@ padding:  2px 5px;
 font-size: 12px;
 }
 /* End Asidear */
+/* phone */
+@media (max-width:600px) {
+    
+}
+
+/* table */
+
+@media screen and (min-width:601) and (max-width:800) {
+   
+} 
+
+/* //////////////////////////////////////////////////////////////////// */
+
+   
+
+/* Mobile View - Toggle Sidebar */
+@media (max-width: 768px) {
+    aside {
+        left: -250px;  
+        width: 200px;
+    }
+
+   
+}
+

@@ -1,7 +1,6 @@
-// const baseUrl = 'http://127.0.0.1:8000';
 const baseUrl = "https://ecommerce.ershaad.net";
-const token = "customer-static-token";
-const adminToken = "admin-static-token";
+const token = localStorage.getItem("token");
+const adminToken = localStorage.getItem("token");
 
 function loadPartial(selector, filePath, callback) {
   const element = document.querySelector(selector);
@@ -20,29 +19,43 @@ function loadPartial(selector, filePath, callback) {
 }
 
 function logout() {
-  const logoutUrl = `${baseUrl}/api/logout`;
-  const adminToken = localStorage.getItem('admin');
-console.log(logoutUrl);
-  fetch(logoutUrl, {
+  fetch(`${baseUrl}/api/logout`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${adminToken}`,
     },
   })
     .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((data) => {
-      if (data.sucess) {
-        localStorage.removeItem("adminToken");
+      if (response.ok) {
+        localStorage.removeItem("token");
         window.location.href = "/pages/auth/login.html";
-        console.log("sucess");
       } else {
-        console.error("Logout failed:", data.message);
+        throw new Error("Failed to logout");
       }
     })
     .catch((error) => {
       console.error("Error logging out:", error);
     });
+}
+
+function handleResponse(response) {
+  if (!response.ok) {
+      switch (response.status) {
+          case 401:
+              window.location.href = '/pages/errors/unauthorized.html';
+              break;
+          case 403:
+              window.location.href = '/pages/errors/forbidden.html';
+              break;
+          case 404:
+              window.location.href = '/pages/errors/not_found.html';
+              break;
+          case 500:
+              window.location.href = '/pages/errors/server_error.html';
+              break;
+          default:
+              window.location.href = '/pages/errors/general_error.html';
+      }
+  }
+  return response.json();
 }

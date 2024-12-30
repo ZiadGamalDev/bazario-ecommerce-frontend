@@ -1,4 +1,4 @@
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 7;
 const LOCKOUT_TIME = 30 * 1000;
 
 

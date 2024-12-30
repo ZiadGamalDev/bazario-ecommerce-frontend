@@ -2,6 +2,7 @@ main {
     flex-grow: 1;
     padding: 20px;
     background-color: #fff;
+    border-radius: 15px;
 }
 
 .category-management {
@@ -92,6 +93,18 @@ main {
 }
 
 @media (max-width: 768px) {
+
+    .category-management .header {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .category-management .header h1 {
+        /* margin-bottom: 10px; */
+        margin-top: -20px;
+    }
+    .category-management .header .add-category-btn { 
+        margin-top: 5px;
+    }
     .category-table th,
     .category-table td {
         font-size: 12px;
@@ -228,7 +241,7 @@ input[type="text"]:focus, input[type="file"]:focus {
 }
 
 /* Responsiveness */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .modal-content {
         width: 80%;
     }
@@ -237,110 +250,3 @@ input[type="text"]:focus, input[type="file"]:focus {
 
 /* ////////////////////// */
  
-
-/* /////////////////////////////////////////////////// */
- /* update */
-
- /* Base layout for larger screens */
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-aside {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
-
-main {
-    flex-grow: 1;
-    padding: 20px;
-}
-
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.add-category-btn {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.category-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.category-table th, .category-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.category-table th {
-    background-color: #f2f2f2;
-}
-
-/* Scrollable table on small screens */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    aside {
-        width: 100%;
-        
-    }
-
-    main {
-        width: 100%;
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .add-category-btn {
-        margin-top: 10px;
-    }
-
-     .category-table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .category-table th, .category-table td {
-        white-space: nowrap;
-    }
-}
-
-/* Smallest screens (mobile) */
-@media (max-width: 480px) {
-    .header h1 {
-        font-size: 18px;
-    }
-
-    .add-category-btn {
-        width: 100%;
-        padding: 12px;
-    }
-
-    .category-table th, .category-table td {
-        padding: 8px;
-    }
-}
-
-
