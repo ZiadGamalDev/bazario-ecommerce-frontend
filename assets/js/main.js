@@ -24,6 +24,41 @@ window.addEventListener("scroll", () => {
   }
 });
 
+const menuIcon = document.getElementById("menu-icon");
+const overlay = document.getElementById("overlay");
+const closeBtn = document.getElementById("close-btn");
+const checkbox = document.querySelector('.hamburger .checkbox');
+const closeButton = document.querySelector('.close-btn');
+
+// Toggle overlay and icon animation
+menuIcon.addEventListener("click", (event) => {
+  overlay.classList.toggle("active");
+  menuIcon.classList.toggle("active");
+  event.stopPropagation();
+});
+
+// Close overlay when clicking close button
+closeBtn.addEventListener("click", (event) => {
+  overlay.classList.remove("active");
+  menuIcon.classList.remove("active");
+  checkbox.checked = false;
+  event.stopPropagation();
+});
+
+// Close overlay when clicking anywhere else
+document.addEventListener("click", (event) => {
+  if (overlay.classList.contains("active")) {
+    overlay.classList.remove("active");
+    menuIcon.classList.remove("active");
+    checkbox.checked = false;
+  }
+});
+
+// Prevent closing when clicking inside the overlay
+overlay.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));

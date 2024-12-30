@@ -15,23 +15,27 @@ function displayCurrentDay() {
 }
 window.onload = displayCurrentDay;
 // //////////////////////////////////////////////////////////////////
-
+ 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Define the base URL and the API endpoint
-    const apiUrl = `${baseUrl}/api/admin/dashboard/statistics`;
-     
-    // Make the API request
-    fetch(apiUrl, {
+     const apiUrl = `${baseUrl}/api/admin/dashboard/statistics`;
+
+     fetch(apiUrl, {
         method: 'GET',
-       headers: {
-                'Authorization': `Bearer ${adminToken}`,
-       }
-        
+        headers: {
+            'Authorization': `Bearer ${adminToken}`,
+        }
     })
-    .then(response => response.json())
+    .then(response => {
+         if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();  
+    })
     .then(data => {
-        if (data && data.total_sales && data.users_count && data.products_count) {
+         console.log('API Data:', data);
+
+         if (data && data.total_sales !== undefined && data.users_count !== undefined && data.products_count !== undefined) {
              document.querySelector('.total_sales').innerText = data.total_sales;
             document.querySelector('.users_count').innerText = data.users_count;
             document.querySelector('.products_count').innerText = data.products_count;
@@ -43,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error fetching data:', error);
     });
 });
+
 
 // ///////////////////////////////////////////////////////////////
 

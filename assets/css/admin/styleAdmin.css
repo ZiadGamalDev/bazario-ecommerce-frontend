@@ -126,7 +126,7 @@ aside .sidebar a {
     transition: all .1s ease-in;
 }
 aside .sidebar a span i{
-    font-size: 1.6rem;
+    font-size: 1rem;
     transition: all .1s ease-in;
 }
 aside .sidebar a:last-child{
@@ -319,7 +319,7 @@ main .recent_order .seeMore {
     .container {
         width: 94%;
         grid-template-columns: 7rem auto;
-    }
+     }
     aside .top .logo img {
        width: 75px;
     }
@@ -334,21 +334,23 @@ main .recent_order .seeMore {
        display: grid;
        grid-template-columns: repeat(1,1fr);
     }
-   }
-   /* phones */
    
+   } 
+   /* phones */
+
    @media (max-width:768px) {
        .container {
            width: 100%;
            grid-template-columns: repeat(1,1fr);
-       }
-       aside {
+        }
+     aside {
            position: fixed;
            width: 18rem;
            z-index: 3;
            background-color: #fff;
            display: none;
        }
+    
        aside .top .logo img {
            display: inline;
        }
@@ -375,12 +377,15 @@ main .recent_order .seeMore {
        main .recent_order {
            padding: 30px;
            margin: 0 auto;
-       }
+       } 
+ .main h1 {
+        font-size: 16px;
+     }
    
-   }
+   }  
    /* End responsive */
 
-   /*================================================
+/*================================================
 Preloader Area CSS
 =================================================*/
 .preloader {
@@ -523,5 +528,3 @@ Preloader Area CSS
       stroke-dashoffset: 0;
     }
   }
-  
-  
