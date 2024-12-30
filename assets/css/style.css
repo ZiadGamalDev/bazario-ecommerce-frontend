@@ -183,7 +183,6 @@ Preloader Area CSS
   }
 }
 
-
 /*--------------------------------------------------------------
 # Scroll Top
 --------------------------------------------------------------*/
@@ -555,6 +554,215 @@ Preloader Area CSS
   }
 }
 
+/* Small Screen */
+.hamburger {
+  height: 50px;
+  width: 50px;
+  transform: 0.2s;
+  display: none;
+  position: relative;
+}
+
+.hamburger .checkbox {
+  position: absolute;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.line {
+  transition: 0.5s;
+  stroke-width: 6px;
+  stroke: black;
+}
+
+.lineTop {
+  stroke-dasharray: 40 40;
+  stroke-dashoffset: 25;
+}
+
+.lineBottom {
+  stroke-dasharray: 40 40;
+  stroke-dashoffset: 60;
+}
+
+.lineMid {
+  stroke-dasharray: 40 40;
+}
+
+.hamburger .checkbox:checked+svg .line {
+  stroke: #1a76d1;
+}
+
+.hamburger .checkbox:checked+svg .lineTop {
+  stroke-dashoffset: 0;
+  transform-origin: left;
+  transform: rotateZ(45deg) translate(-7px, -5px);
+}
+
+.hamburger .checkbox:checked+svg .lineMid {
+  stroke-dashoffset: 40;
+}
+
+.hamburger .checkbox:checked+svg .lineBottom {
+  stroke-dashoffset: 0;
+  transform-origin: left;
+  transform: rotateZ(-45deg) translate(-5px, 5px);
+}
+
+.header .overlay {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.772);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  z-index: 100000;
+}
+
+.header .overlay.active {
+  left: 0;
+  width: 300px;
+}
+
+.header .overlay .overlay-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header .overlay .close-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  background: none;
+  border: none;
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s all ease-in-out;
+}
+
+.header .overlay .close-btn:hover {
+  color: #1a76d1;
+  border: 1px solid #1a76d1;
+}
+
+.header .menu-icon.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.header .menu-icon.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header .menu-icon.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 1200px) {
+  .header .header-content .main-menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+.overlay.main-menu {
+  display: flex;
+  justify-content: center;
+  flex: 4;
+}
+
+.overlay .main-menu nav ul {
+  flex-direction: column;
+  gap: 50px;
+  list-style: none;
+  display: flex;
+}
+
+.overlay .main-menu nav ul li {
+  margin-right: 20px;
+  position: relative;
+}
+
+.overlay .main-menu nav ul li:last-child {
+  margin-right: 0;
+}
+
+.overlay .main-menu nav ul li a {
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  margin: 0 1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 15px 20px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: 0.3s;
+}
+
+.overlayt .main-menu nav ul li a:hover {
+  color: #1a76d1;
+  border: 1px solid #1a76d1;
+}
+
+.overlay .main-menu nav ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 5px;
+  border-radius: 2px;
+  background-color: #1a76d1;
+  bottom: 8px;
+  left: -5px;
+  z-index: -1;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.overlay .main-menu nav ul li a:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+.header .nav li .dropdown {
+  background: #fff;
+  width: 220px;
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0px;
+  left: -20px;
+  top: 100%;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.1s ease;
+  border-left: 3px solid #2889e4;
+  z-index: 10000;
+}
+
 /*--------------------------------------------------------------
 # Swiper
 --------------------------------------------------------------*/
@@ -719,16 +927,14 @@ Preloader Area CSS
 # rolling news bar Categories
 --------------------------------------------------------------*/
 .hwrap {
-  overflow: hidden;
+  overflow: scroll;
   margin: 100px 0px;
+  padding: 40px 90px 60px 90px;
   border-top: 1px solid #e6e6e6;
-  padding-top: 40px;
   border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 60px;
 }
 
 .hwrap h2 {
-  padding-left: 90px;
   margin: 20px 0px;
   font-size: 2rem;
   font-weight: 300;
@@ -739,46 +945,60 @@ Preloader Area CSS
 }
 
 .hwrap h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
   color: #c5c5c5;
 }
 
 .hwrap .hcontent {
-  background-color: #f9f9f9;
   width: 100%;
+  height: 300px;
 }
 
 .hwrap .hmove {
   display: flex;
-  gap: 200px;
-  animation: tickerh linear 30s infinite;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .hwrap .hitem {
   flex-shrink: 0;
-  padding: 30px 0px;
-  font-size: 25px;
-  text-transform: uppercase;
+  padding: 30px 35px 75px 35px;
+  width: 150px;
   color: #797979;
-  transition: .3s all ease;
+  height: 150px;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid #494949;
+  border-radius: 4px;
+}
+
+.hwrap .hitem img {
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.hwrap .hitem img:hover {
+  transform: scale(1.1);
+}
+
+.hwrap .hitem h3 {
+  width: 100%;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.3s all ease;
 }
 
 .hwrap .hitem:hover {
   color: #1a76d1;
 }
-
-@keyframes tickerh {
-  0% {
-    transform: translateX(100%);
-  }
-
-  100% {
-    transform: translateX(-80%);
-  }
-}
-
 
 /*--------------------------------------------------------------
 # Products
@@ -801,7 +1021,7 @@ Preloader Area CSS
 }
 
 .products h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
   color: #c5c5c5;
@@ -833,7 +1053,7 @@ Preloader Area CSS
 .product-tumb img {
   width: 100%;
   height: 100%;
-  transition: .6s all ease;
+  transition: 0.6s all ease;
 }
 
 .product-tumb img:hover {
@@ -922,7 +1142,6 @@ Preloader Area CSS
   color: #fbb72c;
 }
 
-
 /*--------------------------------------------------------------
 # Banner
 --------------------------------------------------------------*/
@@ -945,7 +1164,7 @@ Preloader Area CSS
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
-  background-image: url("../images/pexels-bohlemedia-1884581.jpg");
+  background-image: url("../images/Big glasses.webp");
   min-width: 580px;
   height: 50vh;
   background-size: cover;
@@ -954,7 +1173,7 @@ Preloader Area CSS
 }
 
 #sm-banner .banner-box:nth-child(2) {
-  background-image: url("..//images/about-left-image.jpg");
+  background-image: url("../images/Big glassses2.jpg");
 }
 
 #sm-banner h4 {
@@ -1055,9 +1274,8 @@ Preloader Area CSS
   align-items: center;
 }
 
-
 .latest-posts h2::after {
-  content: "////////////////////////////////////////////////////////////////";
+  content: "////////////////////////";
   margin-left: 20px;
   font-size: 25px;
 }
@@ -1084,10 +1302,10 @@ Preloader Area CSS
   height: auto;
   border-radius: 4px;
   overflow: hidden;
-  transition: .6s all ease;
+  transition: 0.6s all ease;
 }
 
-.latest-posts .posts-container .post-card img:hover{
+.latest-posts .posts-container .post-card img:hover {
   transform: scale(1.1);
 }
 
@@ -1101,10 +1319,10 @@ Preloader Area CSS
   text-transform: uppercase;
   letter-spacing: 3px;
   cursor: pointer;
-  transition: .3s all ease;
+  transition: 0.3s all ease;
 }
 
-.latest-posts .posts-container .post-card .post-category:hover{
+.latest-posts .posts-container .post-card .post-category:hover {
   background-color: #222;
   color: #e6f3ff;
 }
@@ -1117,7 +1335,7 @@ Preloader Area CSS
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
-  transition: .3s all ease;
+  transition: 0.3s all ease;
 }
 
 .latest-posts .posts-container .post-card h3:hover {
@@ -1141,7 +1359,7 @@ Preloader Area CSS
   text-decoration: none;
   margin-top: 15px;
   font-size: 1.3rem;
-  transition: .6s all ease-in-out;
+  transition: 0.6s all ease-in-out;
 }
 
 .latest-posts .posts-container .post-card a:hover {
@@ -1149,9 +1367,6 @@ Preloader Area CSS
   color: #000;
   border: 1px solid #000;
 }
-
-
-
 
 /*--------------------------------------------------------------
 # Footer

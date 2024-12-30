@@ -1,4 +1,4 @@
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 7;
 const LOCKOUT_TIME = 30 * 1000;
 
 
@@ -127,13 +127,6 @@ if (registerForm) {
   });
 }
 
-const MAX_ATTEMPTS = 3;
-const LOCKOUT_TIME = 30 * 1000;
-        });
-    }
-  });
-}
-
 let loginAttempts = JSON.parse(localStorage.getItem("loginAttempts")) || {
   count: 0,
   lockoutTime: null,
@@ -175,10 +168,8 @@ if (loginForm) {
           localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
 
-          alert("Login successful!");
-
-          if (user.is_admin) {
-            window.location.href = "../../admin/dashboard.html";
+          if (result.data.is_admin) {
+            window.location.href = "../../pages/admin";
           } else {
             window.location.href = "../../index.html";
           }

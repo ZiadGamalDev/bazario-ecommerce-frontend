@@ -24,6 +24,41 @@ window.addEventListener("scroll", () => {
   }
 });
 
+const menuIcon = document.getElementById("menu-icon");
+const overlay = document.getElementById("overlay");
+const closeBtn = document.getElementById("close-btn");
+const checkbox = document.querySelector('.hamburger .checkbox');
+const closeButton = document.querySelector('.close-btn');
+
+// Toggle overlay and icon animation
+menuIcon.addEventListener("click", (event) => {
+  overlay.classList.toggle("active");
+  menuIcon.classList.toggle("active");
+  event.stopPropagation();
+});
+
+// Close overlay when clicking close button
+closeBtn.addEventListener("click", (event) => {
+  overlay.classList.remove("active");
+  menuIcon.classList.remove("active");
+  checkbox.checked = false;
+  event.stopPropagation();
+});
+
+// Close overlay when clicking anywhere else
+document.addEventListener("click", (event) => {
+  if (overlay.classList.contains("active")) {
+    overlay.classList.remove("active");
+    menuIcon.classList.remove("active");
+    checkbox.checked = false;
+  }
+});
+
+// Prevent closing when clicking inside the overlay
+overlay.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -37,15 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
     registerLink.style.display = "none";
 
     dashboardLink.style.display = "inline";
+    var Uname = userData.user.name;
+    var uname = Uname.split(" ");
     dashboardLink.textContent =
       userData.user.is_admin === 1
-        ? `Hi, ${userData.user.name} > Admin Dashboard`
-        : `Hi, ${userData.user.name} > User Dashboard`;
+        ? `Hi, ${uname[0]} > Dashboard`
+        : `Hi, ${uname[0]} > Profile`;
 
     dashboardLink.href =
       userData.user.is_admin === 1
-        ? "../../admin/adminDashboard.html"
-        : "../../Customer/UserDashboard.html";
+        ? "/pages/admin/index.html"
+        : "/pages/customer/userprofile.html";
 
     logoutBtn.style.display = "inline";
   } else {
@@ -85,6 +122,9 @@ setInterval(() => {
   updateSlidePosition();
 }, 2500);
 
+
+
+// *    Get Some Products
 const fetchProducts = async () => {
   const productList = document.getElementById("product-list");
 
@@ -94,13 +134,12 @@ const fetchProducts = async () => {
   }
 
   try {
-    const response = await fetch(`${baseUrl}/api/products?limit=10`);
+    const response = await fetch(`${baseUrl}/api/products?limit=7`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("Fetched Products:", data);
 
     productList.innerHTML = "";
 
@@ -113,16 +152,14 @@ const fetchProducts = async () => {
 
         productCard.innerHTML = `
           <div class="product-tumb">
-            <a href="../../Products/SingleProduct.html?productId=${product.id}">
+            <a href="/pages/customer/singleProduct.html?productId=${product.id}">
               <img src="${product.image}" alt="${product.name}">
             </a>
           </div>
           <div class="product-details">
             <span class="product-catagory">${product.category?.name}</span>
             <h4>
-              <a href="../../Products/SingleCategory.html?categoryId=${product.category?.id || "#"}">
-                ${product.name}
-              </a>
+              ${product.name}
             </h4>
             <p>${product.description || "No description available."}</p>
             <div class="product-bottom-details">
@@ -149,25 +186,36 @@ const fetchProducts = async () => {
     productList.innerHTML = `<p>There was an error fetching the products. Please try again later.</p>`;
   }
 };
-
 fetchProducts();
 
+//      *Get Categories name in home
 const fetchCategories = async () => {
   const hmove = document.querySelector(".hmove");
 
   try {
     const response = await fetch(`${baseUrl}/api/categories`);
     const data = await response.json();
-    console.log(data);
 
     if (data.data) {
-      const categories = [...new Set(data.data.map((product) => product.name))];
-
-      categories.forEach((category) => {
+      // Iterate through categories and create HTML for each one
+      data.data.forEach((category) => {
         const categoryItem = document.createElement("div");
         categoryItem.className = "hitem";
-        categoryItem.textContent = category;
 
+        // Create image element
+        const categoryImage = document.createElement("img");
+        categoryImage.src = category.image;
+        categoryImage.alt = category.name;
+
+        // Create heading element for the category name
+        const categoryName = document.createElement("h3");
+        categoryName.textContent = category.name;
+
+        // Append the image and name to the category item
+        categoryItem.appendChild(categoryImage);
+        categoryItem.appendChild(categoryName);
+
+        // Append the category item to the container
         hmove.appendChild(categoryItem);
       });
     } else {
@@ -180,7 +228,8 @@ const fetchCategories = async () => {
 
 fetchCategories();
 
-// * Add to Cart
+
+// *    Add to Cart
 const addToCartList = (id) => {
   const tokenUrl = localStorage.getItem("token");
 
@@ -197,28 +246,80 @@ const addToCartList = (id) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenUrl}`
+      "Authorization": `Bearer ${tokenUrl}`,
     },
-    body: JSON.stringify({ product_id: id })
+    body: JSON.stringify({ product_id: id }),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart.");
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.message === "Product added to cart") {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your cart.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Failed to add item to cart.",
+          icon: "error",
+        });
       }
-      return response.json();
     })
-    .then(() => {
-      Swal.fire({
-        title: "Added!",
-        text: "Product has been added to your cart.",
-        icon: "success",
-      });
-    })
-    .catch(error => {
+    .catch((error) => {
+      console.error("Error:", error);
       Swal.fire({
         title: "Error",
-        text: error.message,
+        text: "Something went wrong while adding to cart.",
         icon: "error",
       });
+    });  
+};
+
+// * Add to wishList
+const addToWishList = (id) => {
+  const tokenUrl = localStorage.getItem("token");
+
+  if (!tokenUrl) {
+    Swal.fire({
+      title: "Login Required",
+      text: "Please login to add items to your wishlist!",
+      icon: "warning",
     });
+    return;
+  }
+
+  fetch(`${baseUrl}/api/wishlist/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${tokenUrl}`,
+    },
+    body: JSON.stringify({ product_id: id }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Wishlist API Response:", result);
+      if (result.message === "Product added to wishlist") {
+        Swal.fire({
+          title: "Added!",
+          text: "Product has been added to your wishlist.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.message || "Failed to add item to wishlist.",
+          icon: "error",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Something went wrong while adding to wishlist.",
+        icon: "error",
+      });
+    });  
 };

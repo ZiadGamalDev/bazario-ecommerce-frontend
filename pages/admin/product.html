@@ -13,9 +13,24 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-outter"></div>
+            <div class="loader-inner"></div>
+
+            <div class="indicator">
+                <svg width="16px" height="12px">
+                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <aside></aside>
-    
+     
         <main>
             <div class="product-management">
                 <div class="header">
@@ -31,7 +46,7 @@
                             <th>Category</th>
                             <th>price</th>
                             <th>description</th>
-                            <th>stock_quantity</th>
+                            <th>stock quantity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -43,63 +58,63 @@
         </main>
     </div>
 
-     <!-- Add Category Modal -->
-     <div class="modal" id="addProductModal">
+    <!-- Add Category Modal -->
+    <div class="modal" id="addProductModal">
         <div class="modal-content">
             <span class="close" id="closeAddModal">&times;</span>
             <h2>Add Product</h2>
             <form id="addProductForm">
                 <label for="productName">Product Name</label>
-                <input type="text" id="productName" name="productName" required>
+                <input class="custom-input" type="text" id="productName" name="productName" required>
 
                 <label for="productImage">product Image URL</label>
-                <input type="file" id="productImage" name="productImage" required>
+                <input class="custom-input" type="file" id="productImage" name="productImage" required>
 
-                <label for="categoryName">Category Name</label>
-                <input type="text" id="categoryName" name="catgoryName" required>
+                <label for="categorySelect">Category</label>
+                <select class="custom-input" name="category" id="categorySelect"></select>
 
                 <label for="price">Price</label>
-                <input type="number" id="price" name="price" required>
+                <input class="custom-input" type="number" id="price" name="price" required>
 
                 <label for="descriptionName">description</label>
-                <input type="text" id="descriptionName" name="descriptionName" required>
+                <input class="custom-input" type="text" id="descriptionName" name="descriptionName" required>
 
-                
-                <label for="stockQuantity">stock_quantity</label>
-                <input type="text" id="stockQuantity" name="stockQuantity" required>
+
+                <label for="stockQuantity">stock quantity</label>
+                <input class="custom-input" type="text" id="stockQuantity" name="stockQuantity" required>
 
                 <button type="submit" class="submit-btn">Add Product</button>
             </form>
         </div>
     </div>
 
-      <!-- Edit Category Modal -->
-      <div class="modal" id="editProductModal">
+    <!-- Edit Category Modal -->
+    <div class="modal" id="editProductModal">
         <div class="modal-content">
             <span class="close" id="closeEditModal">&times;</span>
             <h2>Edit Product</h2>
             <form id="editProductForm">
                 <input type="hidden" id="editProductId">
-                
                 <label for="editProductName">Product Name</label>
-                <input type="text" id="editProductName" name="editProductName" required>
+                <input class="custom-input" type="text" id="editProductName" name="editProductName">
 
-                <label for="editProductImage">Product Image URL</label>
-                <input type="file" id="editProductImage" name="ProductImage">
+                <label for="editProductImage">product Image URL</label>
+                <input class="custom-input" type="file" id="editProductImage" name="editProductImage">
 
-                <label for="editCategory">category</label>
-                <input type="text" id="editCategory" name="editCategory" required>
+                <label for="editCategorySelect">Category</label>
+                <select class="custom-input" name="editCategory" id="editCategorySelect"></select>
+
+                <label for="editPrice">Price</label>
+                <input class="custom-input" type="number" id="editPrice" name="editPrice">
 
                 <label for="editProductdescription">description</label>
-                <input type="text" id="editProductdescription" name="editProductdescription" required>
-                
-                <label for="editStockQuantity">stock_quantity</label>
-                <input type="text" id="editStockQuantity" name="editStockQuantity" required>
-       
-                <label for="editPrice">Price</label>
-                <input type="number" id="editPrice" name="editPrice" required>
+                <input class="custom-input" type="text" id="editProductdescription" name="editProductdescription">
 
-                <button type="submit" class="submit-btn">Update Product</button>
+
+                <label for="editStockQuantity">stock quantity</label>
+                <input class="custom-input" type="text" id="editStockQuantity" name="editStockQuantity">
+
+                <button type="submit" class="submit-btn">Edit Product</button>
             </form>
         </div>
     </div>
@@ -114,12 +129,13 @@
             <button class="submit-btn" id="cancelDeleteBtn">Cancel</button>
         </div>
     </div>
- 
+
     <!-- Pagination Controls -->
-        <div id="pagination" class="pagination-container">
-         </div>
-   
-     <script src="../../assets/js/utils.js"></script>
+    <div id="pagination" class="pagination-container">
+    </div>
+
+    <script src="../../assets/js/middleware/authenticate-admin.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <script src="../../assets/js/admin/main.js"></script>
     <script src="../../assets/js/admin/product.js"></script>
 

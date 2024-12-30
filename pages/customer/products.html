@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/customer/products.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <a href="#" id="backTop" class="backTop">
+      <i class="fa-solid fa-chevron-up"></i>
+    </a>
+
+    <header id="header" class="header">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-content">
+          <div class="top-contact">
+            <ul>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-phone"
+                ></i>
+                +880 1234 56789
+              </li>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-envelope"
+                ></i>
+                <a href="mailto:ahmedmostafaabdel3azem@gmail.com"
+                  >support@yourmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <p>Free delivery for orders over 199EG. 20EG delivery on 99+ !</p>
+        </div>
+      </div>
+
+      <!-- Header Inner -->
+      <div class="header-inner">
+        <div class="header-content">
+          <div class="logo">
+            <a href="#"
+              ><img src="../../assets/images/logo.png" alt="Logo"
+            /></a>
+          </div>
+          <div class="main-menu">
+            <nav>
+              <ul class="nav menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="active">
+                  <a href="#"
+                    >Products <i class="fa-solid fa-chevron-down"></i
+                  ></a>
+                  <ul class="dropdown">
+                    <li><a href="./cart.html">Cart</a></li>
+                    <li><a href="./wishlist.html">Wish List</a></li>
+                  </ul>
+                </li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div id="nav-links" class="get-quote">
+            <a href="../auth/login.html" id="login-link" class="btn-Reg"
+              >Login</a
+            >
+            <a
+              href="../auth/register.html"
+              id="register-link"
+              class="btn-Reg"
+              >Register</a
+            >
+            <a
+              href="#"
+              id="dashboard-link"
+              class="btn-Reg"
+              style="display: none"
+              ><i class="fa-solid fa-user"></i
+            ></a>
+            <a href="#" id="logout-btn" class="btn-Reg" style="display: none"
+              >Logout</a
+            >
+          </div>
+
+          <div class="hamburger" id="menu-icon">
+            <input class="checkbox" type="checkbox" />
+            <svg fill="none" viewBox="0 0 50 50" height="50" width="50">
+              <path
+                class="lineTop line"
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 11L44 11"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 24H43"
+                class="lineMid line"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 37H43"
+                class="lineBottom line"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div class="overlay" id="overlay">
+        <button class="close-btn" id="close-btn">&times;</button>
+        <div class="main-menu">
+          <nav>
+            <ul class="nav menu">
+              <li><a href="../../index.html">Home</a></li>
+              <li class="active">
+                <a href="#"
+                  >Products <i class="fa-solid fa-chevron-down"></i
+                ></a>
+                <ul class="dropdown">
+                  <li><a href="./cart.html">Cart</a></li>
+                  <li>
+                    <a href="./wishlist.html">Wish List</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="./about.html">About Us</a></li>
+              <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+       
+
+    <!-- Products Section -->
+    <main>
+        <div class="container">
+            <!-- Categories sidebar -->
+            <div class="sidebar-container">
+                <div id="sidebar">
+                    <div class="title">
+                        <h5>Category</h5>
+                    </div>
+                    <div class="categories">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <div class="title">
+                        <h5>Price</h5>
+                    </div>
+                    <div class="price-filter">
+                        <div class="input-price">
+                            <input type="number" id="min-price" placeholder=" 0     LE " min="0">
+                        </div>
+                        <span>to</span>
+                        <div class="input-price">
+                            <input type="number" id="max-price" placeholder=" 100  LE " min="0">
+                        </div>
+                        <button id="apply-price-filter">Apply</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Selector Filters -->
+            <div class="sort-selector">
+                <div class="sort-by">
+                    <div class="sort-by-search">
+                        <input type="text" class="search" placeholder=" search " />
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <select name="" id="sort-by-select">
+                        <option class="sort-by-option" value="all">Features: All</option>
+                        <option class="sort-by-option" value="alphabetical-sort">
+                            From A to Z
+                        </option>
+                        <option class="sort-by-option" value="alphabetical-reverse">
+                            From Z to A
+                        </option>
+                        <option class="sort-by-option" value="high-price">
+                            Price: High to Low
+                        </option>
+                        <option class="sort-by-option" value="low-price">
+                            Price: Low to High
+                        </option>
+                        <option class="sort-by-option" value="high-rating">
+                            Rating: High to Low
+                        </option>
+                        <option class="sort-by-option" value="low-rating">
+                            Rating: Low to High
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products section -->
+            <div id="product-container"></div>
+    </main>
+
+    <footer></footer>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/customer/products.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
+
+</body>
+
+</html>

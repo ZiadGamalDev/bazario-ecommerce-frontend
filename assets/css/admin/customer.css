@@ -42,7 +42,7 @@ main {
 
 .user-table th,
 .user-table td {
-    padding: 12px 15px;
+    padding: 8px 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -52,9 +52,9 @@ main {
 }
 
 .user-table td img {
-    width: 100px;
-    height: 60px;
-    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     object-fit: cover;
 }
 
