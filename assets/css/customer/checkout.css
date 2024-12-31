@@ -175,3 +175,7 @@ body {
 .book-button:hover {
     opacity: .8;
 }
+
+#paypal-button-container {
+    margin-top: 20px;
+}
