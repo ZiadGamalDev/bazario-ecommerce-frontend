@@ -71,6 +71,91 @@ function displayProductDetails(product) {
 
 
 //* Add Reviews
+var reviewList = document.getElementById("reviews-list");
+var submitReviewButton = document.getElementById("submit-review-btn");
+var reviewText = document.getElementById("review-text");
+var ratingStarsContainer = document.getElementById("rating-stars");
+var errorMessege = document.querySelector(".submit-review span");
+var userRating = 0;
+
+function displayReviews(productId) {
+    fetch(`${baseUrl}/api/reviews/${productId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch reviews");
+            return response.json();
+        })
+        .then(data => {
+            console.log( data);
+
+            const reviews = data?.data || [];
+            const reviewList = document.getElementById("reviews-list");
+            reviewList.innerHTML = "";
+
+            if (reviews.length === 0) {
+                reviewList.innerHTML = `<p>No reviews yet. Be the first to review this product!</p>`;
+                return;
+            }
+
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement("div");
+                reviewDiv.classList.add("review-item");
+                reviewDiv.innerHTML = `
+                    <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(review.rating)}</div>
+                    <p>${review.feedback}</p>
+                `;
+                reviewList.appendChild(reviewDiv);
+            });
+        })
+        .catch(error => console.error("Error fetching reviews:", error));
+}
+
+submitReviewButton.addEventListener("click", () => {
+    const reviewTextValue = reviewText.value.trim();
+    if (!token) {
+        console.error("Authorization token is missing or invalid.");
+        errorMessege.textContent = "Authentication failed. Please log in again.";
+        return;
+    }
+
+    if (reviewTextValue && userRating > 0) {
+        console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
+
+        const formData = new FormData();
+        formData.append("product_id", productId);
+        formData.append("rating", userRating);
+        formData.append("feedback", reviewTextValue);
+
+        fetch(`${baseUrl}/api/reviews`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        })
+            .then(response => {
+                console.log(response)
+                // console.log("Response Status:", response.status);
+                if (!response.ok) throw new Error("Failed to submit review");
+                return response.json();
+            })
+            .then(() => {
+                reviewText.value = "";
+                userRating = 0;
+                updateStars(ratingStarsContainer, userRating);
+                displayReviews(productId);
+            })
+            .catch(error => console.error("Error submitting review:", error));
+    } else {
+        errorMessege.textContent = "Please complete your data to make a review.";
+    }
+});
+
+
+//* Add Reviews
 // var reviewList = document.getElementById("reviews-list");
 // var submitReviewButton = document.getElementById("submit-review-btn");
 // var reviewText = document.getElementById("review-text");
