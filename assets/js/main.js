@@ -61,7 +61,7 @@ overlay.addEventListener("click", (event) => {
 
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
-  const userData = JSON.parse(localStorage.getItem("userData"));  
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const loginLink = document.getElementById("login-link");
   const registerLink = document.getElementById("register-link");
   const dashboardLink = document.getElementById("dashboard-link");
@@ -158,27 +158,27 @@ const fetchProducts = async () => {
           </div>
           <div class="product-details">
             <span class="product-catagory">${product.category?.name}</span>
-            <h4>
-              ${product.name}
-            </h4>
+            <h4>${product.name}</h4>
             <p>${product.description || "No description available."}</p>
             <div class="product-bottom-details">
               <div class="product-price">${
                 product.price ? `${product.price}$` : "Price not available"
               }</div>
               <div class="product-links">
-                <button class="cart-button" onclick="addToCartList(${
-                  product.id
-                })">${
-          product.is_in_cart ? `` : `<i class="fal fa-shopping-cart cart"></i>`
-        }</button>
-            <button class="wishlist-button" onclick="addToWishList(${
-              product.id
-            })">${
-          product.is_in_wishlist
-            ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
-            : `<i class="fa-regular fa-heart heart"></i>`
-        }</button>
+                <button class="cart-button" onclick="addToCartList(${product.id})">
+                  ${
+                    product.is_in_cart
+                      ? ``
+                      : `<i class="fal fa-shopping-cart cart"></i>`
+                  }
+                </button>
+                <button class="wishlist-button" onclick="addToWishList(${product.id})">
+                  ${
+                    product.is_in_wishlist
+                      ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
+                      : `<i class="fa-regular fa-heart heart"></i>`
+                  }
+                </button>
               </div>
             </div>
           </div>
@@ -194,6 +194,7 @@ const fetchProducts = async () => {
     productList.innerHTML = `<p>There was an error fetching the products. Please try again later.</p>`;
   }
 };
+
 fetchProducts();
 
 //      *Get Categories name in home
@@ -236,14 +237,14 @@ const fetchCategories = async () => {
 
 fetchCategories();
 
-// *    Add to Cart
+// * Add or Remove from Cart
 const addToCartList = (id) => {
   const tokenUrl = localStorage.getItem("token");
 
   if (!tokenUrl) {
     Swal.fire({
       title: "Login Required",
-      text: "Please login to add items to your wishlist!",
+      text: "Please login to manage your cart!",
       icon: "warning",
     });
     return;
@@ -259,20 +260,36 @@ const addToCartList = (id) => {
   })
     .then((response) => response.json())
     .then((result) => {
+      const button = document.querySelector(
+        `.cart-button[onclick="addToCartList(${id})"]`
+      );
+
       if (result.message === "Product added to cart") {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Product has been added successfully to cart",
+          title: "Product added to cart!",
           showConfirmButton: false,
           timer: 1500,
         });
 
+        button.innerHTML = ``;
+        fetchProducts();
+      } else if (result.message === "Product removed from cart") {
+        Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "Product removed from cart!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        button.innerHTML = `<i class="fal fa-shopping-cart cart"></i>`;
         fetchProducts();
       } else {
         Swal.fire({
           title: "Error",
-          text: result.message || "Failed to add item to cart.",
+          text: result.message || "Failed to update cart.",
           icon: "error",
         });
       }
@@ -280,14 +297,17 @@ const addToCartList = (id) => {
     .catch((error) => {
       console.error("Error:", error);
       Swal.fire({
-        title: "Error",
-        text: `Something went wrong while adding to cart : ${error.message}`,
+        position: "center",
         icon: "error",
+        title: `Error ${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
       });
     });
 };
 
-// * Add to wishList
+
+// * Add to Wishlist
 const addToWishList = (id) => {
   const tokenUrl = localStorage.getItem("token");
 
@@ -310,20 +330,37 @@ const addToWishList = (id) => {
   })
     .then((response) => response.json())
     .then((result) => {
+      const button = document.querySelector(
+        `.wishlist-button[onclick="addToWishList(${id})"]`
+      );
+
       if (result.message === "Product added to wishlist") {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Product has been added successfully to cart",
+          title: "Product added to wishlist!",
           showConfirmButton: false,
           timer: 1500,
         });
 
+        button.innerHTML = `<i style="color: red;" class="fa-solid fa-heart heart"></i>`;
+        fetchProducts();
+      } else if (result.message === "Product removed from wishlist") {
+        Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "Product removed from wishlist!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        // Change the icon back to regular heart
+        button.innerHTML = `<i class="fa-regular fa-heart heart"></i>`;
         fetchProducts();
       } else {
         Swal.fire({
           title: "Error",
-          text: result.message || "Failed to add item to wishlist.",
+          text: result.message || "Failed to update wishlist.",
           icon: "error",
         });
       }
