@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    fetchAndDisplayUserProfile();
+    fetchUserProfile();
 
     fetchUserOrders();
 
@@ -18,41 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function fetchAndDisplayUserProfile() {
+function fetchUserProfile() {
     const storedUser = localStorage.getItem("loggedInUser");
 
     if (storedUser) {
         const user = JSON.parse(storedUser);
         displayUserProfile(user);
-    } else {
-        fetch(`${baseUrl}/api/profile`, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            const user = data.data;
-            // console.log(user);
-
-            localStorage.setItem("loggedInUser", JSON.stringify(user));
-            displayUserProfile(user);
-        })
-        .catch(error => {
-            console.error("Error fetching user profile:", error);
-        });
-    }
+    } 
 }
 
 function displayUserProfile(user) {
     document.getElementById("profile-name").value = user.name;
     document.getElementById("profile-email").value = user.email;
-    document.getElementById("profile-phone").value = user.phone;
-    document.getElementById("profile-address").value = user.address;
+    document.getElementById("profile-phone").value = user.phone || "No phone number added";
+    document.getElementById("profile-address").value = user.address || "No address added";
 
     const profilePicture = document.getElementById("profile-picture");
     profilePicture.src = user.image || "https://ecommerce.ershaad.net/storage/images/default/customer.png";
@@ -83,10 +62,7 @@ function saveUserProfile() {
         },
         body: formData,
     })
-    .then(response => {
-        if (!response.ok) throw new Error("Failed to save profile");
-        return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
         const updatedUser = data.data;
         console.log(updatedUser)
@@ -147,40 +123,52 @@ function handleImageUpload(event) {
 //     userInfo.appendChild(address);
 // }
 
-
 function fetchUserOrders() {
+    const ordersTable = document.querySelector("#orders-table");
+    const ordersTableBody = document.querySelector("#orders-table tbody");
+    const ordersContainer = document.querySelector("#orders-container"); 
+    const userData = JSON.parse(localStorage.getItem("userData")); 
+    const userId = userData.user.id;
+
     fetch(`${baseUrl}/api/orders`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${adminToken}`,
         },
     })
-    .then(response => {
-        if (!response.ok) throw new Error("Failed to fetch orders");
-        return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
-        const orders = data.data;
-        const ordersTableBody = document.querySelector("#orders-table tbody");
+        const orders = data.data.filter(order => order.user.id.toString() === userId);
         ordersTableBody.innerHTML = "";
 
-        orders.forEach(order => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${order.id}</td>
-                <td>${order.status}</td>
-                <td>$${order.total_price}</td>
-                <td>${order.created_at}</td>
-                <td>
-                    ${order.status === "pending"
-                        ? `<button class="cancel-btn" data-id="${order.id}">Cancel</button>`
-                        : `<button class="details-btn" data-id="${order.id}">View Details</button>`}
-                </td>
-            `;
-            ordersTableBody.appendChild(row);
-        });
+        if (orders.length === 0) {
+            ordersTable.style.display = "none";
+            const noOrdersMessage = document.createElement("p");
+            noOrdersMessage.textContent = "You have no orders yet.";
+            noOrdersMessage.classList.add("no-orders-message"); 
+            ordersContainer.appendChild(noOrdersMessage);
+        } else {
+            ordersTable.style.display = ""; 
+            document.querySelector(".no-orders-message")?.remove(); 
 
-        addEventListenersToButtons(orders);
+            orders.forEach(order => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.status}</td>
+                    <td>$${order.total_price}</td>
+                    <td>${order.created_at}</td>
+                    <td>
+                        ${order.status === "pending"
+                            ? `<button class="cancel-btn" data-id="${order.id}">Cancel</button>`
+                            : `<button class="details-btn" data-id="${order.id}">View Details</button>`}
+                    </td>
+                `;
+                ordersTableBody.appendChild(row);
+            });
+
+            addEventListenersToButtons(orders);
+        }
     })
     .catch(error => console.error("Error fetching orders:", error));
 }
