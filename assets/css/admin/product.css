@@ -239,30 +239,31 @@ main {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 50px;
 }
 
 .modal-content {
     background-color: #fff;
-    margin: 5% auto;
+    margin: 2% auto 3%;
     padding: 20px;
     border-radius: 10px;
     width: 50%;
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .close {
+    position: absolute;
     color: #aaa;
-    font-size: 28px;
+    font-size: 38px;
     font-weight: bold;
     position: absolute;
     top: 10px;
     right: 20px;
     cursor: pointer;
+    transition: .3s all ease;
 }
 
 .close:hover,
@@ -270,7 +271,6 @@ main {
     color: black;
     text-decoration: none;
     cursor: pointer;
-
 }
 
 /* Modal Header */
