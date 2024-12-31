@@ -105,7 +105,6 @@ if (registerForm) {
         })
         .then((result) => {
           if (result.data) {
-            alert("Registration successful!");
             localStorage.setItem("token", result.data.token);
             localStorage.setItem(
               "loggedInUser",
@@ -164,8 +163,8 @@ if (loginForm) {
           localStorage.setItem("loggedInUser", JSON.stringify(user));
           localStorage.setItem("token", token);
 
-          if (user.is_admin) {
-            window.location.href = "../../admin/dashboard.html";
+          if (result.data.is_admin) {
+            window.location.href = "../../pages/admin";
           } else {
             window.location.href = "../../index.html";
           }
