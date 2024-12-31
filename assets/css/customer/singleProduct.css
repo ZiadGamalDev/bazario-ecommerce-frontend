@@ -555,5 +555,5 @@ main{
 
 .wishlist-added i{
     background-color: var(--primary) !important;
-    color: #fff !important;
+    color: #ff0000 !important;
 }

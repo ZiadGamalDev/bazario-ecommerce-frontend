@@ -146,16 +146,29 @@ function displayProductDetails(product) {
   productStock.innerHTML = `<strong>In Stock: </strong>${product.stock_quantity}`;
 
   extraLink.innerHTML = `
-    <button class="btn1" onclick="addToCartList(${product.id})">
-        <i class="fal fa-shopping-cart cart"></i>
-        Add to Cart
-    </button>
-    <a href="/pages/customer/checkout.html?productId=${product.id}" class="btn1">
+    ${
+      product.is_in_cart
+        ? ``
+        : `<button class="btn1" onclick="addToCartList(${product.id})">
+            <i class="fal fa-shopping-cart cart"></i>
+            Add to Cart
+          </button>`
+    }
+    
+    <a href="/pages/customer/checkout.html?productId=${
+      product.id
+    }" class="btn1">
         <i class="fa-solid fa-credit-card"></i>
         Puy Now
     </a>
-    <button class="btn2" data-wishlist-id="${product.id}" onclick="addToWishList(${product.id})">
-        <i class="fa-regular fa-heart"></i>
+    <button class="btn2" data-wishlist-id="${
+      product.id
+    }" onclick="addToWishList(${product.id})">
+        ${
+          product.is_in_wishlist
+            ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
+            : `<i class="fa-regular fa-heart heart"></i>`
+        }
     </button>
     `;
 
@@ -383,12 +396,12 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Item Added successfully to the cart",
-            showConfirmButton: false,
-            timer: 1500
-          });
+          position: "top-end",
+          icon: "success",
+          title: "Item Added successfully to the cart",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         Swal.fire({
           title: "Error",
@@ -404,7 +417,7 @@ const addToCartList = (id) => {
         icon: "error",
         title: "Something went wrong while adding item to the cart",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     });
 };
@@ -435,12 +448,12 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Item Added successfully to the whitelist",
-            showConfirmButton: false,
-            timer: 1500
-          });
+          position: "top-end",
+          icon: "success",
+          title: "Item Added successfully to the whitelist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         Swal.fire({
           title: "Error",
@@ -450,13 +463,13 @@ const addToWishList = (id) => {
       }
     })
     .catch((error) => {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `Error ${error.message}`,
-            showConfirmButton: false,
-            timer: 1500
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Error ${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
 };
 
