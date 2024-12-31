@@ -137,16 +137,11 @@ async function loadProductDetails() {
 
     // Price details
     const price = parseFloat(product.price) || 0;
-    const vat = price * 0.08;
-    const cityTax = price * 0.025;
-    const totalPrice = price + vat + cityTax;
 
     document.getElementById("product-price").textContent = `$${price.toFixed(
       2
     )}`;
-    document.getElementById("vat").textContent = `$${vat.toFixed(2)}`;
-    document.getElementById("city-tax").textContent = `$${cityTax.toFixed(2)}`;
-    document.getElementById("total-price").textContent = `$${totalPrice.toFixed(
+    document.getElementById("total-price").textContent = `$${price.toFixed(
       2
     )}`;
   } catch (error) {
