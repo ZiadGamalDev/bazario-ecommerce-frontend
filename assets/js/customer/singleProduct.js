@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     var uname = Uname.split(" ");
     dashboardLink.textContent =
       userData.user.is_admin === 1
-      ? `Dashboard`
-      : `Profile`;
+        ? `Dashboard`
+        : `Profile`;
 
     dashboardLink.href =
       userData.user.is_admin === 1
@@ -146,16 +146,25 @@ function displayProductDetails(product) {
   productStock.innerHTML = `<strong>In Stock: </strong>${product.stock_quantity}`;
 
   extraLink.innerHTML = `
-    <button class="btn1" onclick="addToCartList(${product.id})">
-        <i class="fal fa-shopping-cart cart"></i>
-        Add to Cart
-    </button>
-    <a href="/pages/customer/checkout.html?productId=${product.id}" class="btn1">
+    ${product.is_in_cart
+      ? ``
+      : `<button class="btn1" onclick="addToCartList(${product.id})">
+            <i class="fal fa-shopping-cart cart"></i>
+            Add to Cart
+          </button>`
+    }
+    
+    <a href="/pages/customer/checkout.html?productId=${product.id
+    }" class="btn1">
         <i class="fa-solid fa-credit-card"></i>
         Puy Now
     </a>
-    <button class="btn2" data-wishlist-id="${product.id}" onclick="addToWishList(${product.id})">
-        <i class="fa-regular fa-heart"></i>
+    <button class="btn2" data-wishlist-id="${product.id
+    }" onclick="addToWishList(${product.id})">
+        ${product.is_in_wishlist
+      ? `<i style="color: red;" class="fa-solid fa-heart heart"></i>`
+      : `<i class="fa-regular fa-heart heart"></i>`
+    }
     </button>
     `;
 
@@ -173,7 +182,11 @@ function displayProductDetails(product) {
 
 //* Add Reviews
 function displayReviews(productId) {
-  fetch(`${baseUrl}/api/products/${productId}`)
+  fetch(`${baseUrl}/api/products/${productId}`, {
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Failed to fetch reviews");
       return response.json();
@@ -182,7 +195,7 @@ function displayReviews(productId) {
       // console.log( data.data);
 
       const product = data.data;
-      console.log(product);
+      // console.log(product);
       const reviewList = document.getElementById("reviews-list");
       reviewList.innerHTML = "";
 
@@ -192,13 +205,16 @@ function displayReviews(productId) {
       }
 
       product.reviews.forEach((review) => {
-        console.log(review);
+        // fill review form
+        if (review.user.id === JSON.parse(localStorage.getItem("userData")).user.id) {
+          fillReviewForm(review);
+        }
         const reviewDiv = document.createElement("div");
         reviewDiv.classList.add("review-item");
         reviewDiv.innerHTML = `
                     <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(
-                      review.rating
-                    )}</div>
+          review.rating
+        )}</div>
                     <small>Submitted on: ${review.created_at}</small>
                     <p>${review.feedback}</p>
                 `;
@@ -208,62 +224,92 @@ function displayReviews(productId) {
     .catch((error) => console.error("Error fetching reviews:", error));
 }
 
+function fillReviewForm(review) {
+  reviewText.value = review.feedback;
+  userRating = review.rating;
+  updateStars(ratingStarsContainer, userRating);
+  submitReviewButton.textContent = "Update Review";
+  submitReviewButton.setAttribute("data-review-id", review.id);
+}
+
 submitReviewButton.addEventListener("click", () => {
-    const reviewTextValue = reviewText.value.trim();
-    const tokenUrl = localStorage.getItem("token");
+  const reviewTextValue = reviewText.value.trim();
+  const tokenUrl = localStorage.getItem("token");
+  const reviewId = submitReviewButton.getAttribute("data-review-id");
+
+  if (reviewId) {
+    fetch(`${baseUrl}/api/reviews/${reviewId}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${tokenUrl}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _method: "PUT",
+        product_id: productId,
+        feedback: reviewTextValue,
+        rating: userRating,
+      }),
+    })
+      .then(handleResponse)
+      .then(() => {
+        window.location.reload();
+      });
+  } else {
 
     if (!tokenUrl) {
-        Swal.fire({
-            title: "Login Required",
-            text: "Please login to make a review!",
-            icon: "warning",
-        });
-        return;
+      Swal.fire({
+        title: "Login Required",
+        text: "Please login to make a review!",
+        icon: "warning",
+      });
+      return;
     }
 
     if (reviewTextValue && userRating > 0) {
-        // console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
+      // console.log("Request Data:", { product_id: productId, rating: userRating, feedback: reviewTextValue });
 
-        fetch(`${baseUrl}/api/reviews`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${tokenUrl}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                rating: userRating,
-                feedback: reviewTextValue,
-            }),
+      fetch(`${baseUrl}/api/reviews`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${tokenUrl}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          product_id: productId,
+          rating: userRating,
+          feedback: reviewTextValue,
+        }),
+      })
+        .then(response => {
+          // console.log(response);
+
+          if (!response.ok)
+            errorMessege.textContent = "You already make a review.";
+          return response.json();
         })
-            .then(response => {
-                // console.log(response);
+        .then((data) => {
+          // console.log(data.data);
 
-                if (!response.ok) 
-                    errorMessege.textContent = "You already make a review.";
-                return response.json();
-            })
-            .then((data) => {
-                // console.log(data.data);
+          reviewText.value = "";
+          userRating = 0;
+          updateStars(ratingStarsContainer, userRating);
 
-                reviewText.value = "";
-                userRating = 0;
-                updateStars(ratingStarsContainer, userRating);
-
-                const newReview = data.data;
-                const reviewDiv = document.createElement("div");
-                reviewDiv.classList.add("review-item");
-                reviewDiv.innerHTML = `
+          const newReview = data.data;
+          const reviewDiv = document.createElement("div");
+          reviewDiv.classList.add("review-item");
+          reviewDiv.innerHTML = `
                     <div class="review-rating">${`<i class="fa fa-star"></i>`.repeat(parseInt(newReview.rating, 10))}</div>
                     <small>Submitted on: ${newReview.created_at}</small>
                     <p>${newReview.feedback}</p>
                 `;
-        const reviewList = document.getElementById("reviews-list");
-        reviewList.prepend(reviewDiv);
-      })
-      .catch((error) => console.error("Error submitting review:", error));
-  } else {
-    errorMessege.textContent = "Please complete your data to make a review.";
+          const reviewList = document.getElementById("reviews-list");
+          reviewList.prepend(reviewDiv);
+        })
+        .catch((error) => console.error("Error submitting review:", error));
+    } else {
+      errorMessege.textContent = "Please complete your data to make a review.";
+    }
   }
 });
 
@@ -318,12 +364,10 @@ function displayRelatedProducts(products) {
                 </div>
                 <h4>${product.price} LE</h4>
             </div>
-            <button onclick="addToCartList(${
-              product.id
-            })"><i class="fal fa-shopping-cart cart"></i></button>
-            <button data-wishlist-id="${product.id}" onclick="addToWishList(${
-      product.id
-    })"><i class="fa-regular fa-heart"></i></button>
+            <button onclick="addToCartList(${product.id
+      })"><i class="fal fa-shopping-cart cart"></i></button>
+            <button data-wishlist-id="${product.id}" onclick="addToWishList(${product.id
+      })"><i class="fa-regular fa-heart"></i></button>
         `;
 
     relatedProductRow.appendChild(productCard);
@@ -383,12 +427,12 @@ const addToCartList = (id) => {
     .then((result) => {
       if (result.message === "Product added to cart") {
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Item Added successfully to the cart",
-            showConfirmButton: false,
-            timer: 1500
-          });
+          position: "top-end",
+          icon: "success",
+          title: "Item Added successfully to the cart",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         Swal.fire({
           title: "Error",
@@ -404,7 +448,7 @@ const addToCartList = (id) => {
         icon: "error",
         title: "Something went wrong while adding item to the cart",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     });
 };
@@ -435,12 +479,12 @@ const addToWishList = (id) => {
       console.log("Wishlist API Response:", result);
       if (result.message === "Product added to wishlist") {
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Item Added successfully to the whitelist",
-            showConfirmButton: false,
-            timer: 1500
-          });
+          position: "top-end",
+          icon: "success",
+          title: "Item Added successfully to the whitelist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         Swal.fire({
           title: "Error",
@@ -450,13 +494,13 @@ const addToWishList = (id) => {
       }
     })
     .catch((error) => {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `Error ${error.message}`,
-            showConfirmButton: false,
-            timer: 1500
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Error ${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
 };
 
