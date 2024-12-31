@@ -1,0 +1,186 @@
+/*--------------------------------------------------------------
+# Normalize
+--------------------------------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Roboto:wght@300;400;500;900&display=swap");
+
+:root {
+    --primary: #1A76D1;
+    --text: #2C2D3F;
+}
+
+html,
+body {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+}
+
+
+
+/** Container **/
+.container {
+    margin: 20px auto;
+    max-width: 1200px;
+    display: flex;
+}
+
+.user-card {
+    position: relative;
+    text-align: center;
+    width: 180px;
+    height: 170px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow-x: hidden;
+    box-shadow: 0px 1px 2px 0px rgba(72, 72, 72, 0.2), 0px 0px 1px 0px rgba(72, 72, 72, 0.2);
+}
+
+.user-img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    box-shadow: 0 0 12px #b3b3b3;
+    border-radius: 100%;
+    overflow: hidden;
+    background-size: 100%;
+    border: 6px solid #fff;
+    position: relative;
+    margin: 0 auto 2em;
+    border: none;
+}
+
+.user-img img {
+    width: 100px;
+    height: 100px;
+}
+
+.username {
+    color: var(--text);
+    display: block;
+    padding: 0 1em;
+    word-wrap: break-word;
+}
+
+.section {
+    float: left;
+    display: block;
+    margin: 0 15px;
+    width: 65%;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px 0px rgba(72, 72, 72, 0.2), 0px 0px 1px 0px rgba(72, 72, 72, 0.2);
+}
+
+.section-container {
+    padding: 2em 3em;
+    margin: 20px;
+}
+
+.section-container .user-info,
+.section-container .user-orders-section {
+    color: var(--text);
+    line-height: 2;
+    letter-spacing: 1.1px;
+    margin-bottom: 50px;
+}
+
+.info-title,
+.user-orders-title,
+#order-details h3 {
+    border-bottom: 0.5px solid #ececec;
+    margin-bottom: 30px;
+    color: var(--text);
+    position: relative;
+}
+
+.info-title::after,
+.user-orders-title::after,
+#order-details h3::after {
+    content: "";
+    width: 80px;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary);
+    border-radius: 100px;
+}
+
+.info-content{
+    line-height: 2.5;
+}
+
+.info-content input{
+    border: none;
+    padding: 5px;
+}
+
+#profile-message {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #e6f3ff;
+    padding: 12px 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #f8f9fa;
+}
+
+#order-details {
+    padding: 15px;
+    border: 1px solid #ececec;
+    margin-top: 20px;
+}
+
+#orders-table tbody button, #close-details-btn, .info-content button{
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#orders-table tbody .details-btn:hover {
+    background-color: #0056b3;
+}
+
+#orders-table tbody .cancel-btn{
+    background-color: #dc3545;
+}
+
+#orders-table tbody .cancel-btn:hover {
+    background-color: #c82333;
+}

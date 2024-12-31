@@ -82,8 +82,8 @@ ul {
 /*  */
 /* Strat overlay Section*/
 
-.overlay {
-    background-image: url("../../images/71DQMiLiGZL._SX3000_.jpg");
+.overlay2 {
+    background-image: url("../../images/swiper4.png");
     background-size: cover;
     height: 400px;
     position: relative;
@@ -92,7 +92,7 @@ ul {
     min-width: 800px;
 }
 
-.overlay::before {
+.overlay2::before {
     content: "";
     position: absolute;
     left: 0;
@@ -102,7 +102,7 @@ ul {
     background-color: rgb(0 0 0 / 50%);
 }
 
-.overlay .inter-text {
+.overlay2 .inter-text {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -112,7 +112,7 @@ ul {
     max-width: 100%;
 }
 
-.overlay .inter-text h2 {
+.overlay2 .inter-text h2 {
     margin: 0;
     font-size: 30px;
     font-weight: bold;
@@ -120,7 +120,7 @@ ul {
     text-transform: capitalize;
 }
 
-.overlay .inter-text p {
+.overlay2 .inter-text p {
     line-height: 1.8;
     color: var(--main-color);
     font-style: italic;

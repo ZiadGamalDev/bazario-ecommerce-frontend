@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/customer/userprofile.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <header></header>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="user-card">
+                <div class="user-img">
+                    <img id="profile-picture" src="https://via.placeholder.com/150" alt="User Image">
+                </div>
+                <input type="file" id="profile-picture-upload" accept="image/*">
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-container">
+                <div class="user-info">
+                    <h2 class="info-title">User Info</h2>
+                    <div class="info-content">
+                        <label>Name: <input type="text" id="profile-name"></label><br>
+                        <label>Email: <input type="email" id="profile-email"></label><br>
+                        <label>Phone: <input type="text" id="profile-phone"></label><br>
+                        <label>Address: <input type="text" id="profile-address"></label><br>
+                        <button id="save-profile-btn">Save</button>
+                    </div>
+                </div>
+                <div class="user-orders-section">
+                    <h2 class="user-orders-title">User Orders</h2>
+                    <div id="orders-container">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Status</th>
+                                <th>Total Price</th>
+                                <th>Created At</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                    <div id="order-details" style="display: none;">
+                        <h3>Order Details</h3>
+                        <table id="order-details-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <button id="close-details-btn">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/customer/userprofile.js"></script>
+</body>
+
+</html>

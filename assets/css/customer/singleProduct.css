@@ -104,10 +104,9 @@ main{
 }
 
 .details-content .rating span{
-    padding-top: 3px;
     margin-left: 15px;
     color: var(--primary);
-    font-size: 16px;
+    font-size: 18px;
     opacity: 1;
 }
 
@@ -235,6 +234,11 @@ main{
     display: inline-block;
     letter-spacing: 0.5px;
     text-decoration: none;
+    transition: .3s ease-in-out all;
+}
+
+.extra-link .extra-link2 .btn1:hover {
+    opacity: .8;
 }
 
 .extra-link .extra-link2 .btn1 i{
@@ -263,6 +267,7 @@ main{
     color: var(--primary);
     border: 1px solid var(--primary);
     cursor: pointer;
+    transition: .3s all ease-in-out;
 }
 
 .extra-link .extra-link2 .btn2 i:hover{
@@ -277,7 +282,7 @@ main{
     border: 1px solid #ececec;
     border-radius: 15px;
     padding: 40px 50px;
-    margin: 10px 30px;
+    margin: 10px 50px;
 }
 
 .submit-review{
@@ -325,15 +330,15 @@ main{
     color: #f5c518;
 }
 
-.reviews-section #reviews-list .review-item span, .reviews-section #reviews-list .review-item p{
+.reviews-section #reviews-list .review-item p{
     display: block;
     width: 100%;
 }
 
-.reviews-section #reviews-list .review-item span{
+.reviews-section #reviews-list .review-item small{
     font-size: 11px;
     color: #7E7E7E;
-    margin-bottom: 10px;
+    margin-top: 3px;
 }
 
 .submit-review .rating-stars{
@@ -374,7 +379,7 @@ main{
 
 /** Related Products */
 .related-products{
-    margin: 60px 0;
+    margin: 60px 50px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -544,4 +549,11 @@ main{
 
 .related-products .section-products .next {
     right: 25px;
+}
+
+
+
+.wishlist-added i{
+    background-color: var(--primary) !important;
+    color: #fff !important;
 }

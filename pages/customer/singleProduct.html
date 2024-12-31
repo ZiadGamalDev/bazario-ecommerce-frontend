@@ -1,105 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Single Product</title>
-    <link rel="stylesheet" href="../../assets/css/components/header.css">
-    <link rel="stylesheet" href="../../assets/css/components/footer.css">
-    <link rel="stylesheet" href="../../assets/css/customer/singleProduct.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-    <header></header>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/customer/singleProduct.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <a href="#" id="backTop" class="backTop">
+      <i class="fa-solid fa-chevron-up"></i>
+    </a>
+
+    <header id="header" class="header">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-content">
+          <div class="top-contact">
+            <ul>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-phone"
+                ></i>
+                +880 1234 56789
+              </li>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-envelope"
+                ></i>
+                <a href="mailto:ahmedmostafaabdel3azem@gmail.com"
+                  >support@yourmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <p>Free delivery for orders over 199EG. 20EG delivery on 99+ !</p>
+        </div>
+      </div>
+
+      <!-- Header Inner -->
+      <div class="header-inner">
+        <div class="header-content">
+          <div class="logo">
+            <a href="#"
+              ><img src="../../assets/images/logo.png" alt="Logo"
+            /></a>
+          </div>
+          <div class="main-menu">
+            <nav>
+              <ul class="nav menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="active">
+                  <a href="./products.html"
+                    >Products <i class="fa-solid fa-chevron-down"></i
+                  ></a>
+                  <ul class="dropdown">
+                    <li><a href="./cart.html">Cart</a></li>
+                    <li><a href="./wishlist.html">Wish List</a></li>
+                  </ul>
+                </li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div id="nav-links" class="get-quote">
+            <a href="../auth/login.html" id="login-link" class="btn-Reg"
+              >Login</a
+            >
+            <a href="../auth/register.html" id="register-link" class="btn-Reg"
+              >Register</a
+            >
+            <a
+              href="#"
+              id="dashboard-link"
+              class="btn-Reg"
+              style="display: none"
+              ><i class="fa-solid fa-user"></i
+            ></a>
+            <a href="#" id="logout-btn" class="btn-Reg" style="display: none"
+              >Logout</a
+            >
+          </div>
+
+          <!-- <div id="menu-icon" class="menu-icon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div> -->
+
+          <div class="hamburger" id="menu-icon">
+            <input class="checkbox" type="checkbox" />
+            <svg fill="none" viewBox="0 0 50 50" height="50" width="50">
+              <path
+                class="lineTop line"
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 11L44 11"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 24H43"
+                class="lineMid line"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 37H43"
+                class="lineBottom line"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div class="overlay" id="overlay">
+        <button class="close-btn" id="close-btn">&times;</button>
+        <div class="main-menu">
+          <nav>
+            <ul class="nav menu">
+              <li><a href="../../index.html">Home</a></li>
+              <li class="active">
+                <a href="./products.html"
+                  >Products <i class="fa-solid fa-chevron-down"></i
+                ></a>
+                <ul class="dropdown">
+                  <li><a href="./cart.html">Cart</a></li>
+                  <li><a href="./wishlist.html">Wish List</a></li>
+                </ul>
+              </li>
+              <li><a href="./about.html">About Us</a></li>
+              <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
 
     <main>
-        <!-- Product Section -->
-        <div class="product-details">
-            <div class="product-img"></div>
-            <div class="details">
-                <div class="details-content">
-                    <h2 class="product-title"></h2>
-                    <div class="rating">
-                        <div class="stars">
-                            <i class="fa fa-star" data-value="1"></i>
-                            <i class="fa fa-star" data-value="2"></i>
-                            <i class="fa fa-star" data-value="3"></i>
-                            <i class="fa fa-star" data-value="4"></i>
-                            <i class="fa fa-star" data-value="5"></i>
-                        </div>
-                        <span></span>
-                    </div>
-
-                    <div class="product-price">
-                        <div class="price">
-                            <span class="primary-color"></span>
-                            <span class="second-color"></span>
-                        </div>
-                    </div>
-
-                    <div class="product-discription"></div>
-
-                    <div>
-                        <div class="product-category"></div>
-                        <div class="product-stock"></div>
-                    </div>
-
-                    <div class="extra-link">
-                        <strong>Quantity: </strong>
-                        <div class="extra-link1">
-                            <input type="number" name="quantity" value="1" min="1" maxlength="3">
-                        </div>
-                        <div class="extra-link2">
-
-                        </div>
-                    </div>
-                </div>
+      <!-- Product Section -->
+      <div class="product-details">
+        <div class="product-img"></div>
+        <div class="details">
+          <div class="details-content">
+            <h2 class="product-title"></h2>
+            <div class="rating">
+              <div class="stars">
+                <i class="fa fa-star" data-value="1"></i>
+                <i class="fa fa-star" data-value="2"></i>
+                <i class="fa fa-star" data-value="3"></i>
+                <i class="fa fa-star" data-value="4"></i>
+                <i class="fa fa-star" data-value="5"></i>
+              </div>
+              <span></span>
             </div>
+
+            <div class="product-price">
+              <div class="price">
+                <span class="primary-color"></span>
+                <span class="second-color"></span>
+              </div>
+            </div>
+
+            <div class="product-discription"></div>
+
+            <div>
+              <div class="product-category"></div>
+              <div class="product-stock"></div>
+            </div>
+
+            <div class="extra-link">
+              <strong>Quantity: </strong>
+              <div class="extra-link1">
+                <input
+                  type="number"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  maxlength="3"
+                />
+              </div>
+              <div class="extra-link2"></div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Reviews Section -->
-        <div class="reviews-section">
-            <h4>Customer Reviews</h4>
-            <div id="reviews-list"></div>
+      <!-- Reviews Section -->
+      <div class="reviews-section">
+        <h4>Customer Reviews</h4>
+        <div id="reviews-list"></div>
 
-            <div class="submit-review">
-                <h4>Add a Review</h4>
-                <div class="rating-stars" id="rating-stars">
-                    <i class="fa fa-star" data-value="1"></i>
-                    <i class="fa fa-star" data-value="2"></i>
-                    <i class="fa fa-star" data-value="3"></i>
-                    <i class="fa fa-star" data-value="4"></i>
-                    <i class="fa fa-star" data-value="5"></i>
-                </div>
-                <textarea id="review-text" placeholder="Write your review..." required></textarea>
-                <input type="text" id="review-name" placeholder="Name" required />
-        
-                <button id="submit-review-btn">Submit Review</button>
-                <span></span>
-            </div>
+        <div class="submit-review">
+          <h4>Add a Review</h4>
+          <div class="rating-stars" id="rating-stars">
+            <i class="fa fa-star" data-value="1"></i>
+            <i class="fa fa-star" data-value="2"></i>
+            <i class="fa fa-star" data-value="3"></i>
+            <i class="fa fa-star" data-value="4"></i>
+            <i class="fa fa-star" data-value="5"></i>
+          </div>
+          <textarea
+            id="review-text"
+            placeholder="Write your review..."
+            required
+          ></textarea>
+
+          <button id="submit-review-btn">Submit Review</button>
+          <span></span>
         </div>
+      </div>
 
-        <!-- Related Products Section -->
-        <div class="related-products">
-            <div class="section-title">
-                <h2>Related Products</h2>
-            </div>
-            <div class="section-products">
-                <button class="prev" onclick="moveSlide(-1)">&#8249;</button>
-                <div class="section-products-row">
-
-                </div>
-                <button class="next" onclick="moveSlide(1)">&#8250;</button>
-            </div>
+      <!-- Related Products Section -->
+      <div class="related-products">
+        <div class="section-title">
+          <h2>Related Products</h2>
         </div>
+        <div class="section-products">
+          <button class="prev" onclick="moveSlide(-1)">&#8249;</button>
+          <div class="section-products-row"></div>
+          <button class="next" onclick="moveSlide(1)">&#8250;</button>
+        </div>
+      </div>
     </main>
 
     <footer></footer>
 
     <script src="../../assets/js/utils.js"></script>
     <script src="../../assets/js/customer/singleProduct.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
 </html>

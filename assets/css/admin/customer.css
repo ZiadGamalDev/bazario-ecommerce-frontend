@@ -87,6 +87,18 @@ main {
 }
 
 @media (max-width: 768px) {
+    .user-management .header {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .user-management .header h1 {
+        /* margin-bottom: 10px; */
+        margin-top: -25px;
+        font-size: 18px;
+    }
+    .user-management .header .add-user-btn { 
+        margin-top: 5px;
+    }
     .user-table th,
     .user-table td {
         font-size: 12px;
@@ -220,9 +232,12 @@ input[type="text"]:focus, input[type="file"]:focus {
     margin: 10px;
 }
 
-/* Responsiveness */
-@media screen and (max-width: 768px) {
+/*Responsiveness */ 
+ @media (max-width: 768px) {
     .modal-content {
         width: 80%;
     }
 }
+
+/* ////// ////////////////////////////*/
+ 

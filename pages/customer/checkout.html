@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/customer/checkout.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <title>Bazario E-commerce</title>
+  </head>
+  <body>
+    <a href="#" id="backTop" class="backTop">
+      <i class="fa-solid fa-chevron-up"></i>
+    </a>
+
+    <header id="header" class="header">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-content">
+          <div class="top-contact">
+            <ul>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-phone"
+                ></i>
+                +880 1234 56789
+              </li>
+              <li>
+                <i
+                  style="color: #1a76d1; margin-right: 8px"
+                  class="fa fa-envelope"
+                ></i>
+                <a href="mailto:ahmedmostafaabdel3azem@gmail.com"
+                  >support@yourmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <p>Free delivery for orders over 199EG. 20EG delivery on 99+ !</p>
+        </div>
+      </div>
+
+      <!-- Header Inner -->
+      <div class="header-inner">
+        <div class="header-content">
+          <div class="logo">
+            <a href="#"
+              ><img src="../../assets/images/logo.png" alt="Logo"
+            /></a>
+          </div>
+          <div class="main-menu">
+            <nav>
+              <ul class="nav menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="active">
+                  <a href="./products.html"
+                    >Products <i class="fa-solid fa-chevron-down"></i
+                  ></a>
+                  <ul class="dropdown">
+                    <li><a href="./cart.html">Cart</a></li>
+                    <li><a href="./wishlist.html">Wish List</a></li>
+                  </ul>
+                </li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./contact.html">Contact Us</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div id="nav-links" class="get-quote">
+            <a href="../auth/login.html" id="login-link" class="btn-Reg"
+              >Login</a
+            >
+            <a href="../auth/register.html" id="register-link" class="btn-Reg"
+              >Register</a
+            >
+            <a
+              href="#"
+              id="dashboard-link"
+              class="btn-Reg"
+              style="display: none"
+              ><i class="fa-solid fa-user"></i
+            ></a>
+            <a href="#" id="logout-btn" class="btn-Reg" style="display: none"
+              >Logout</a
+            >
+          </div>
+
+          <div class="hamburger" id="menu-icon">
+            <input class="checkbox" type="checkbox" />
+            <svg fill="none" viewBox="0 0 50 50" height="50" width="50">
+              <path
+                class="lineTop line"
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 11L44 11"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 24H43"
+                class="lineMid line"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="4"
+                stroke="black"
+                d="M6 37H43"
+                class="lineBottom line"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div class="overlay" id="overlay">
+        <button class="close-btn" id="close-btn">&times;</button>
+        <div class="main-menu">
+          <nav>
+            <ul class="nav menu">
+              <li><a href="../../index.html">Home</a></li>
+              <li class="active">
+                <a href="./products.html"
+                  >Products <i class="fa-solid fa-chevron-down"></i
+                ></a>
+                <ul class="dropdown">
+                  <li><a href="./cart.html">Cart</a></li>
+                  <li><a href="./wishlist.html">Wish List</a></li>
+                </ul>
+              </li>
+              <li><a href="./about.html">About Us</a></li>
+              <li><a href="./contact.html">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="left">
+        <div class="card">
+          <img
+            id="product-image"
+            src=""
+            alt="Product Image"
+            class="product-image"
+          />
+          <div class="product-details">
+            <h2 id="product-title">Product Name</h2>
+            <p class="rating">
+              <span id="product-rating">0</span>
+              <span id="product-reviews">(0 reviews)</span>
+            </p>
+            <ul class="product-info">
+              <li id="product-category">Category: -</li>
+              <li id="product-description">Description: -</li>
+              <li id="product-stock">In Stock: -</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <h3>Reservation Summary</h3>
+        <div class="reservation-summary">
+          <p>
+            You selected:
+            <strong id="product-summary">-</strong>
+          </p>
+        </div>
+        <div class="price-summary">
+          <h3>Your price summary</h3>
+          <div class="priceDetail">
+            <h2>Price: <span id="product-price">$0.00</span></h2>
+            <h3>8% VAT: <span id="vat">$0.00</span></h3>
+            <h4>City Tax: <span id="city-tax">$0.00</span></h4>
+            <p>
+              <strong>Total Price: <span id="total-price">$0.00</span></strong>
+            </p>
+          </div>
+          <button id="book-button" class="book-button">Request To Book</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/customer/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://kit.fontawesome.com/0ce4cbaad9.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

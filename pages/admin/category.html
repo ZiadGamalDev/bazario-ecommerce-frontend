@@ -13,8 +13,24 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-outter"></div>
+            <div class="loader-inner"></div>
+
+            <div class="indicator">
+                <svg width="16px" height="12px">
+                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <aside></aside>
+
         <main>
             <div class="category-management">
                 <div class="header">
@@ -85,9 +101,12 @@
         </div>
     </div>
 
+ 
+    <script src="../../assets/js/middleware/authenticate-admin.js"></script>
     <script src="../../assets/js/utils.js"></script>
     <script src="../../assets/js/admin/main.js"></script>
     <script src="../../assets/js/admin/category.js"></script>
+ 
 </body>
 
 </html>
