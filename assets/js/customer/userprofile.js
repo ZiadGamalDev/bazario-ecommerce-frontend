@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    loadPartial("header", "../../../pages/components/header.html");
     loadPartial("footer", "../../../pages/components/footer.html");
+    const tokenUrl = localStorage.getItem("token");
 
-    if (!token) {
-        console.error("Authorization token is missing or invalid.");
-        const errorMessage = document.querySelector("#error-message");
-        errorMessage.textContent = "Authentication failed. Please log in again.";
-        return;
+    if (!tokenUrl) {
+      window.location.href = "/pages/auth/login.html";
+      return;
     }
 
     fetchUserProfile();
@@ -16,6 +14,99 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("save-profile-btn").addEventListener("click", saveUserProfile);
     document.getElementById("profile-picture-upload").addEventListener("change", handleImageUpload);
 });
+
+// *Header scroll
+document.addEventListener("DOMContentLoaded", function () {
+    window.addEventListener("scroll", function () {
+      var header = document.querySelector(".header");
+      if (window.scrollY > 100) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    });
+  });
+  
+  // *window scroll
+  const toTop = document.querySelector(".backTop");
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 200) {
+      toTop.classList.add("active");
+    } else {
+      toTop.classList.remove("active");
+    }
+  });
+  
+  const menuIcon = document.getElementById("menu-icon");
+  const overlay = document.getElementById("overlay");
+  const closeBtn = document.getElementById("close-btn");
+  const checkbox = document.querySelector(".hamburger .checkbox");
+  const closeButton = document.querySelector(".close-btn");
+  
+  // Toggle overlay and icon animation
+  menuIcon.addEventListener("click", (event) => {
+    overlay.classList.toggle("active");
+    menuIcon.classList.toggle("active");
+    event.stopPropagation();
+  });
+  
+  // Close overlay when clicking close button
+  closeBtn.addEventListener("click", (event) => {
+    overlay.classList.remove("active");
+    menuIcon.classList.remove("active");
+    checkbox.checked = false;
+    event.stopPropagation();
+  });
+  
+  // Close overlay when clicking anywhere else
+  document.addEventListener("click", (event) => {
+    if (overlay.classList.contains("active")) {
+      overlay.classList.remove("active");
+      menuIcon.classList.remove("active");
+      checkbox.checked = false;
+    }
+  });
+  
+  // Prevent closing when clicking inside the overlay
+  overlay.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+  
+  // * Logged User and Log out
+  document.addEventListener("DOMContentLoaded", () => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const loginLink = document.getElementById("login-link");
+    const registerLink = document.getElementById("register-link");
+    const dashboardLink = document.getElementById("dashboard-link");
+    const logoutBtn = document.getElementById("logout-btn");
+  
+    if (userData) {
+      loginLink.style.display = "none";
+      registerLink.style.display = "none";
+  
+      dashboardLink.style.display = "inline";
+      dashboardLink.textContent =
+        userData.is_admin === 1
+          ? `Dashboard`
+          : `Profile`;
+  
+      dashboardLink.href =
+        userData.is_admin === 1
+          ? "/pages/admin/index.html"
+          : "/pages/customer/userprofile.html";
+  
+      logoutBtn.style.display = "inline";
+    } else {
+      dashboardLink.style.display = "none";
+      logoutBtn.style.display = "none";
+    }
+  
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("userData");
+      localStorage.removeItem("token");
+      window.location.reload();
+    });
+  });
 
 
 function fetchUserProfile() {
@@ -65,7 +156,6 @@ function saveUserProfile() {
     .then(handleResponse)
     .then(data => {
         const updatedUser = data.data;
-        console.log(updatedUser)
 
         localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
 
