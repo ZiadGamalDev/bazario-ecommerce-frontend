@@ -17,15 +17,12 @@ async function redirectIfAuth() {
         const data = await response.json();
 
         if (data.is_admin) {
-            // Redirect to the admin dashboard if the user is authenticated as an admin.
             window.location.href = '/pages/admin';
         } else {
-            // Redirect to a user-specific dashboard or home page if they are not an admin.
             window.location.href = '/index.html';
         }
     } catch (error) {
-        console.error(error); // Log the error for debugging.
-        // Do nothing to allow access to the current page (e.g., login or signup).
+        console.error(error);
     }
 }
 
