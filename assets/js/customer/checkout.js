@@ -1,3 +1,5 @@
+var productData = null;
+
 // * Logged User and Log out
 document.addEventListener("DOMContentLoaded", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -15,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     var uname = Uname.split(" ");
     dashboardLink.textContent =
       userData.user.is_admin === 1
-      ? `Dashboard`
-      : `Profile`;
+        ? `Dashboard`
+        : `Profile`;
 
     dashboardLink.href =
       userData.user.is_admin === 1
@@ -110,6 +112,7 @@ async function loadProductDetails() {
     const response = await fetch(`${baseUrl}/api/products/${productId}`);
     if (!response.ok) throw new Error("Failed to fetch product details.");
     const { data: product } = await response.json();
+    productData = product;
 
     // Populate UI with product data
     document.getElementById("product-image").src =
@@ -122,15 +125,13 @@ async function loadProductDetails() {
     document.getElementById("product-reviews").textContent = product.reviews
       ? `(${product.reviews.length} reviews)`
       : "(No reviews)";
-    document.getElementById("product-category").textContent = `Category: ${
-      product.category.name || "-"
-    }`;
+    document.getElementById("product-category").textContent = `Category: ${product.category.name || "-"
+      }`;
     document.getElementById(
       "product-description"
     ).textContent = `Description: ${product.description || "-"}`;
-    document.getElementById("product-stock").textContent = `In Stock: ${
-      product.stock_quantity || "-"
-    }`;
+    document.getElementById("product-stock").textContent = `In Stock: ${product.stock_quantity || "-"
+      }`;
     document.getElementById("product-summary").textContent =
       product.name || "-";
 
@@ -214,7 +215,7 @@ async function placeOrder() {
   const tokenUrl = localStorage.getItem("token");
 
   if (!tokenUrl) {
-    alert("Token not found. Please log in.");
+    alert("Please log in.");
     return;
   }
 
@@ -229,21 +230,21 @@ async function placeOrder() {
     });
 
     if (response.ok) {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Order Placed Successfully",
-            showConfirmButton: false,
-            timer: 1500
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Order Placed Successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
     } else {
-        Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Failed to place the order",
-            showConfirmButton: false,
-            timer: 1500
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to place the order",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   } catch (error) {
     console.error(error);
@@ -253,12 +254,30 @@ async function placeOrder() {
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", function () {
-    const bookButton = document.getElementById("book-button");
-    if (bookButton) {
-      bookButton.addEventListener("click", placeOrder);
-    } else {
-      console.error("Button with id 'book-button' not found.");
-    }
-  
-    loadProductDetails();
-  });
+  const bookButton = document.getElementById("book-button");
+  if (bookButton) {
+    bookButton.addEventListener("click", placeOrder);
+  } else {
+    console.error("Button with id 'book-button' not found.");
+  }
+
+  loadProductDetails();
+});
+
+paypal.Buttons({
+  createOrder: function (data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: productData.price
+        }
+      }]
+    });
+  },
+  onApprove: function (data, actions) {
+    placeOrder();
+    return actions.order.capture().then(function (details) {
+      alert('Transaction completed by ' + details.payer.name.given_name);
+    });
+  }
+}).render('#paypal-button-container');
