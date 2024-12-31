@@ -32,6 +32,7 @@ function loadOrders() {
                     <td>${order.id}</td>
                     <td>${order.total_price}</td>
                     <td>${order.created_at}</td>
+                    <td>${order.user.name}</td>
                     <td><a href="product.html?product_id=${order.id}" target="_blank">Details</a></td>
                     <td>${actionButtons}</td>
                 `;
