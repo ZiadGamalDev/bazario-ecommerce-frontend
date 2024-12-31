@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
     var uname = Uname.split(" ");
     dashboardLink.textContent =
       userData.is_admin === 1
-        ? `Hi, ${uname[0]} > Dashboard`
-        : `Hi, ${uname[0]} > Profile`;
+        ? `Dashboard`
+        : `Profile`;
 
     dashboardLink.href =
       userData.is_admin === 1
