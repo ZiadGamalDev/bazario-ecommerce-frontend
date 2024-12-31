@@ -1,3 +1,5 @@
+const infoContent = document.querySelector('.info-content span')
+
 document.addEventListener("DOMContentLoaded", () => {
     loadPartial("header", "../../../pages/components/header.html");
     loadPartial("footer", "../../../pages/components/footer.html");
@@ -71,11 +73,13 @@ function saveUserProfile() {
 
         displayUserProfile(updatedUser);
 
-        alert("Profile updated successfully!");
+        infoContent.innerHTML += "Profile updated successfully!";
+        infoContent.style.color = 'green';
     })
     .catch(error => {
         console.error("Error saving profile:", error);
-        alert("Failed to update profile.");
+        infoContent.innerHTML += "Failed to update profile.";
+        infoContent.style.color = 'red';
     });
 }
 
@@ -90,55 +94,24 @@ function handleImageUpload(event) {
     }
 }
 
-// function displayUserProfile(user) {
-//     const username = document.createElement("p");
-//     username.classList.add('username');
-//     username.textContent = `@${user.name.split(' ').join("-")}`;
-
-//     const img = document.createElement('img');
-//     img.src = user.image;
-//     img.alt = "User Image";
-
-//     const name = document.createElement('h3');
-//     name.textContent = `Name: ${user.name}`;
-
-//     const email = document.createElement('h3');
-//     email.textContent = `Email: ${user.email}`;
-
-//     const phone = document.createElement('h3');
-//     phone.textContent = `Phone: ${user.phone}`;
-
-//     const address = document.createElement('h3');
-//     address.textContent = `Address: ${user.address}`;
-
-//     const userCard = document.querySelector('.user-card');
-//     const userImg = document.querySelector('.user-img');
-//     const userInfo = document.querySelector('.user-info');
-
-//     userImg.appendChild(img);
-//     userCard.appendChild(username);
-//     userInfo.appendChild(name);
-//     userInfo.appendChild(email);
-//     userInfo.appendChild(phone);
-//     userInfo.appendChild(address);
-// }
 
 function fetchUserOrders() {
     const ordersTable = document.querySelector("#orders-table");
     const ordersTableBody = document.querySelector("#orders-table tbody");
     const ordersContainer = document.querySelector("#orders-container"); 
-    const userData = JSON.parse(localStorage.getItem("userData")); 
-    const userId = userData.user.id;
+    // const userData = JSON.parse(localStorage.getItem("userData")); 
+    // const userId = userData.user.id;
 
     fetch(`${baseUrl}/api/orders`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${adminToken}`,
+            Authorization: `Bearer ${token}`,
         },
     })
     .then(handleResponse)
     .then(data => {
-        const orders = data.data.filter(order => order.user.id.toString() === userId);
+        console.log(data.data);
+        const orders = data.data;
         ordersTableBody.innerHTML = "";
 
         if (orders.length === 0) {
@@ -186,19 +159,38 @@ function addEventListenersToButtons(orders) {
     document.querySelectorAll(".cancel-btn").forEach(button => {
         button.addEventListener("click", () => {
             const orderId = button.dataset.id;
-            if (confirm("Are you sure you want to cancel this order?")) {
-                cancelOrder(orderId);
-            }
+    
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you really want to cancel this order?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, keep it",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    cancelOrder(orderId);
+                    Swal.fire({
+                        title: "Canceled!",
+                        text: "Your order has been canceled successfully.",
+                        icon: "success",
+                    });
+                }
+            });
         });
     });
+    
 }
 
 
 function cancelOrder(orderId) {
-    fetch(`${baseUrl}/api/orders/${orderId}`, {
-        method: "DELETE",
+    fetch(`${baseUrl}/api/orders/${orderId}/cancel`, {
+        method: "POST", 
         headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", 
         },
     })
     .then(response => {
@@ -206,11 +198,24 @@ function cancelOrder(orderId) {
         return response.json();
     })
     .then(() => {
-        alert("Order canceled successfully!");
-        fetchUserOrders(); 
+        Swal.fire({
+            title: "Order Canceled",
+            text: "Your order has been successfully canceled.",
+            icon: "success",
+        }).then(() => {
+            fetchUserOrders(); 
+        });
     })
-    .catch(error => console.error("Error canceling order:", error));
+    .catch(error => {
+        console.error("Error canceling order:", error);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to cancel the order. Please try again later.",
+            icon: "error",
+        });
+    });
 }
+
 
 
 function viewOrderDetails(order) {
