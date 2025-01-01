@@ -143,26 +143,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const productId = editProductId.value;
         const productName = editProductName.value;
+        const productImage = document.getElementById('editProductImage').files[0];
         const categoryId = editCategorySelect.value;
         const price = editPrice.value;
         const description = editProductdescription.value;
         const stockQuantity = editStockQuantity.value;
 
+        const formData = new FormData();
+        formData.append('name', productName);
+        formData.append('image', productImage);
+        formData.append('category_id', categoryId);
+        formData.append('price', price);
+        formData.append('description', description);
+        formData.append('stock_quantity', stockQuantity);
+        formData.append('_method', 'PUT');
+
         fetch(`${baseUrl}/api/admin/products/${productId}`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                name: productName,
-                category_id: categoryId,
-                price: price,
-                description: description,
-                stock_quantity: stockQuantity
-            }),
+            method: 'POST',
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${adminToken}`,
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update product');
+                }
+                return response.text();
+            })
             .then(() => {
                 editProductModal.style.display = 'none';
                 location.reload();

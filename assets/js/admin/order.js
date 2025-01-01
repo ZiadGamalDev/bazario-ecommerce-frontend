@@ -24,7 +24,11 @@ function loadOrders() {
                         <button class="delete-btn" onclick="rejectOrder(${order.id})">Reject</button>
                     </div>`;
                 } else {
-                    const statusColor = order.status === 'confirmed' ? 'green' : 'red';
+                    const statusColor = order.status === 'confirmed' 
+                        ? 'green' 
+                        : order.status === 'canceled'
+                            ? 'orange'
+                            : 'red';
                     actionButtons = `<p style="color: ${statusColor};">${order.status}</p>`;
                 }
 
