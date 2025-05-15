@@ -1,28 +1,99 @@
-# Glasses Store E-commerce Project
+# Bazario Frontend – Eyeglasses E-Commerce Website 🕶️
 
-## Project Description
+Bazario is a fully responsive and functional e-commerce frontend for an eyeglasses store. Built entirely with native HTML, CSS, and JavaScript (Vanilla JS), this platform offers a complete user experience with shopping, cart, order tracking, and profile management — connected to a Laravel REST API backend.
 
-The Glasses Store E-commerce Project is designed to provide a user-friendly platform for browsing and purchasing glasses. The application includes:
+## 🔗 Live Demo
 
-- **Responsive Frontend**: Built with pure HTML, CSS, and JavaScript to ensure compatibility and performance across various devices.
-- **Dynamic Backend**: Powered by Laravel to handle product management, user authentication, and order processing.
-- **Modular Design**: Uses partials for reusable frontend components like the navbar and footer.
-- **Scalability**: The structure allows easy addition of new features and enhancements in the future.
+- [https://ecommerce-frontend.ershaad.net/](https://ecommerce-frontend.ershaad.net/)
+- [https://ziadgamaldev.github.io/bazario-ecommerce-frontend/](https://ziadgamaldev.github.io/bazario-ecommerce-frontend/)
 
----
+## ✨ Features
 
-### Features
+### 👤 Customer Side
+- Home page with featured products
+- Browse all products
+- Filter by category, price, and sorting
+- Product details page
+- Add to wishlist and cart
+- Place and track orders
+- Profile page with order history
+- JWT-based login, registration, and logout
 
-1. **Homepage**: Showcasing featured products and promotions.
-2. **Product Pages**: Detailed views of individual glasses with options to add to the cart.
-3. **User Authentication**: Secure login and registration for customers.
-4. **Cart and Checkout**: Easy-to-use cart system with seamless checkout functionality.
-5. **Admin Panel**: Manage products, orders, and users (Laravel backend).
+### 🛠️ Admin Panel
+- Login authentication
+- CRUD for:
+  - Categories
+  - Products
+  - Orders
+- Admin dashboard with management panels
 
----
+## 🔐 Authentication
+- JWT-based authentication using localStorage
+- Login, register, and logout functionality
+- Redirects based on user roles
 
-### Future Enhancements
+## 🧪 Seeded Users
 
-- Add advanced search and filtering for products.
-- Integrate payment gateway for secure online transactions.
-- Implement user reviews and ratings for products.
+**Customer:**
+- `customer1@example.com` / `123456`
+
+**Admin:**
+- `admin@example.com` / `123456`
+
+## 🛠️ Technologies Used
+- HTML5, CSS3
+- JavaScript (Vanilla)
+- RESTful APIs (Laravel Backend)
+- JWT Authentication
+
+## 📁 Project Structure
+```
+assets/
+├── css/
+├── js/
+│   ├── admin/
+│   ├── customer/
+│   └── components/
+├── images/
+pages/
+├── admin/
+├── auth/
+├── customer/
+└── components/
+```
+
+## 🖼️ Screenshots
+
+[![Landing Page](public/landing-page.png)](public/landing-page.png)
+
+[![Customer Register](public/customer-register.jpeg)](public/customer-register.jpeg)
+
+[![Product Listing with Filters](public/customer-products-list-filter.jpeg)](public/customer-products-list-filter.jpeg)
+
+[![Payment with PayPal](public/customer-product-payment-paypal.jpeg)](public/customer-product-payment-paypal.jpeg)
+
+[![Admin Dashboard](public/admin-dashboard.jpeg)](public/admin-dashboard.jpeg)
+
+[![Categories Management](public/admin-categories-management.jpeg)](public/admin-categories-management.jpeg)
+
+## 📌 Project Highlights
+- Fully modular structure using includes/partials
+- Completely responsive without external frameworks
+- Role-based access between admin and customers
+
+## 👥 Contributors
+
+This project was a team collaboration as part of the ITI intake:
+
+- **Ziad Gamal** – Frontend & Backend Integration
+- **Ahmed Mostafa**
+- **Heba Sabri**
+- **Sohaila Abd Elazeem**
+
+## 📚 Related Projects
+
+- 👉 [Backend Repository (Laravel)](https://github.com/ZiadGamalDev/bazario-ecommerce-backend)
+
+## 📝 Note
+
+Bazario was developed during the **Information Technology Institute (ITI)** program, a leading tech education institute in Egypt affiliated with the Ministry of Communications and Information Technology.
